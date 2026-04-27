@@ -4,11 +4,6 @@ Public website and engineering blog for SpaceScale.
 
 ## Requires
 
-- Astro v6
-- TypeScript
-- Tailwind CSS
-- MDX
-- SolidJS islands
 - Bun
 
 ## Install dependencies
