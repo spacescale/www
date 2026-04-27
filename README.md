@@ -6,13 +6,13 @@ Public website and engineering blog for SpaceScale.
 
 - Bun
 
-## Install dependencies
+## Install deps
 
 ```sh
 bun install
 ```
 
-## Start the dev environment
+##  development 
 
 ```sh
 bun dev
