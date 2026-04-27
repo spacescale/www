@@ -1,4 +1,4 @@
-# SpaceScale WWW
+## www
 
 Public website and engineering blog for SpaceScale.
 
