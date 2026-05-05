@@ -1,38 +1,73 @@
 ---
-const navLinks = [
-    {
-        label: "Engineering",
-        href: "/engineering",
-    },
-    {
-        label: "LinkedIn",
-        href: "https://www.linkedin.com/company/spacescale",
-    },
-];
+// Header component with navigation
 ---
 
-<header class="site-header" aria-label="Primary navigation">
-    <div class="site-header-inner">
-        <a class="brand-lockup" href="/" aria-label="SpaceScale home">
-            <span class="brand-mark" aria-hidden="true">
-                <!-- These empty spans become the SpaceScale square-dot logo in CSS. -->
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-            </span>
+<header
+  class="fixed top-0 left-0 right-0 z-50 bg-background"
+>
+  <nav class="container mx-auto px-6 py-4">
+    <div class="flex items-center justify-between">
+      <!-- Logo -->
+      <div class="flex items-center space-x-2">
+        <img src="/images/logos/logo.svg" alt="SpaceScale Logo" class="" />
+      </div>
 
-            <span class="brand-name">SpaceScale</span>
+      <!-- Desktop Navigation and CTA -->
+      <div class="hidden md:flex items-center space-x-8">
+        <a
+          href="/"
+          class="text-text-secondary text-[14px] font-500 hover:text-text-primary transition-colors"
+        >
+          Engineering
         </a>
+        <a
+          href="/blog"
+          class="text-text-secondary text-[14px] font-500 hover:text-text-primary transition-colors"
+        >
+          LinkedIn
+        </a>
+        <button
+          class="bg-text-light text-background cursor-pointer px-4 py-2 font-medium text-[14px] hover:opacity-90 transition-opacity"
+        >
+         Read how we are building it
+        </button>
+      </div>
 
-        <nav class="site-nav" aria-label="Main menu">
-            {navLinks.map((link) => <a href={link.href}>{link.label}</a>)}
-
-            <a class="nav-cta" href="/engineering">Read how we are building it</a>
-        </nav>
+      <!-- Mobile Menu Button -->
+      <button class="md:hidden text-text-secondary">
+        <svg
+          class="w-6 h-6"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
     </div>
+
+    <!-- Mobile Navigation (hidden by default) -->
+    <div
+      class="hidden md:hidden mt-4 pt-4 border-t border-border-default"
+    >
+      <div class="flex flex-col space-y-4">
+        <a
+          href="/"
+          class="text-text-secondary text-[14px] font-500 hover:text-text-primary transition-colors"
+        >
+          Engineering
+        </a>
+        <a
+          href="/blog"
+          class="text-text-secondary text-[14px] font-500 hover:text-text-primary transition-colors"
+        >
+          LinkedIn
+        </a>
+      </div>
+    </div>
+  </nav>
 </header>

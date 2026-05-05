@@ -1,0 +1,117 @@
+---
+
+---
+
+<section class="bg-background">
+  <div class="container mx-auto px-6">
+    <div class="border border-border-default py-20 overflow-hidden">
+      <div class="grid grid-cols-1 lg:grid-cols-2">
+        <!-- Left: copy -->
+        <div class="p-10 flex flex-col gap-5 justify-center">
+          <h2 class="text-[32px] font-400 text-text-primary leading-tight">
+            Container UX. Bare-Metal<br />Execution.
+          </h2>
+          <p class="text-[15px] text-text-secondary leading-relaxed max-w-xs">
+            Push a standard OCI container image. We give you a serverless
+            deployment experience backed by extreme multi-tenant isolation.
+          </p>
+        </div>
+
+        <!-- Right: terminal mockup -->
+        <div
+          class="border-t lg:border-t-0 border-border-default p-8 flex items-center justify-center"
+        >
+          <div
+            class="w-full max-w-md bg-[#0C0E11] border border-border-default rounded-xl overflow-hidden"
+          >
+            <!-- Window chrome -->
+            <div
+              class="flex items-center gap-2 px-4 py-3 border-b border-border-default bg-card"
+            >
+              <span class="w-2.5 h-2.5 rounded-full bg-[#FF5F57]"></span>
+              <span class="w-2.5 h-2.5 rounded-full bg-[#FEBC2E]"></span>
+              <span class="w-2.5 h-2.5 rounded-full bg-[#28C840]"></span>
+              <span class="ml-3 font-terminal text-[11px] text-text-secondary"
+                >spacescale — deploy</span
+              >
+            </div>
+
+            <!-- Terminal body -->
+            <div class="p-5 font-terminal text-[12px] space-y-3">
+              <!-- Command line -->
+              <div class="flex gap-2">
+                <span class="text-text-secondary select-none flex-shrink-0"
+                  >$</span
+                >
+                <span class="text-text-primary break-all">
+                  spacescale deploy my-org/trading-api/latest --region va,bhs
+                </span>
+              </div>
+
+              <!-- Empty line -->
+              <div class="h-1"></div>
+
+              <!-- Resolving -->
+              <div class="flex items-start gap-2">
+                <span class="text-yellow-400 flex-shrink-0">[~]</span>
+                <span class="text-text-secondary">
+                  Resolving image manifest for
+                  <span class="text-text-primary"
+                    >my-org/trading-api/latest</span
+                  >...
+                </span>
+              </div>
+
+              <!-- Manifest verified -->
+              <div class="flex items-start gap-2">
+                <span class="text-accent-mint flex-shrink-0">[+]</span>
+                <span class="text-text-secondary">
+                  Manifest verified: 3 layers,
+                  <span class="text-text-primary">847MB</span> compressed.
+                </span>
+              </div>
+
+              <!-- Empty line -->
+              <div class="h-1"></div>
+
+              <!-- Bidding -->
+              <div class="flex items-start gap-2">
+                <span class="text-yellow-400 flex-shrink-0">[~]</span>
+                <span class="text-text-secondary"
+                  >Bidding into bare-metal auction pool...</span
+                >
+              </div>
+
+              <!-- Progress bar -->
+              <div class="flex items-center gap-3 pl-6">
+                <div
+                  class="flex-1 h-1.5 bg-terminal rounded-full overflow-hidden"
+                >
+                  <div
+                    class="h-full bg-accent-mint rounded-full w-[35%] progress-animate"
+                  >
+                  </div>
+                </div>
+                <span class="text-text-secondary text-[11px]">35%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .progress-animate {
+    animation: progress-fill 3s ease-in-out infinite alternate;
+  }
+  @keyframes progress-fill {
+    from {
+      width: 10%;
+    }
+    to {
+      width: 65%;
+    }
+  }
+</style>

@@ -1,0 +1,73 @@
+<!-- Push once. Run everywhere. -->
+<section class="md:py-46 py-20 bg-card  border-t-default">
+  <div class="container mx-auto px-6">
+    <div class="text-center mb-16">
+      <p class="text-text-accent text-sm uppercase tracking-widest mb-3">
+        INTUITIVE NATURE
+      </p>
+      <h2 class="text-title mb-4">
+        Push once. <span class="text-text-gray">Run everywhere.</span>
+      </h2>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+
+      <div class="pl-5 relative grad-border-l">
+        <div class="w-16 h-16 mr-auto flex items-center justify-start">
+          <img src="/images/blog/refresh.svg" alt="Instant FailOver" />
+        </div>
+        <h3 class="text-text-primary text-left text-[20px] font-600 mb-4">
+          Instant FailOver
+        </h3>
+        <p class="text-text-secondary text-left text-[15px] leading-relaxed">
+          Powered by a decentralized control plane. If a node fails, our router
+          instantly redirects your users to healthy replicas at neural speed.
+        </p>
+      </div>
+
+      <div class="pl-5 relative grad-border-l">
+        <div class="w-16 h-16 mr-auto flex items-center justify-start">
+          <img src="/images/blog/earth.svg" alt="Global Edge Routing" />
+        </div>
+        <h3 class="text-text-primary text-left text-[20px] font-600 mb-4">
+          Global Edge Routing
+        </h3>
+        <p class="text-text-secondary text-left text-[15px] leading-relaxed">
+          Deploy once across regions. SpaceScale routes traffic to the nearest
+          healthy physical node and gives web services, private services, and
+          TCP workloads first-class network paths.
+        </p>
+      </div>
+
+      <div class="pl-5 relative grad-border-l">
+        <div class="w-16 h-16 mr-auto flex items-center justify-start">
+          <img src="/images/blog/send.svg" alt="Zero-Drop Rollouts" />
+        </div>
+        <h3 class="text-text-primary text-left text-[20px] font-600 mb-4">
+          Zero-Drop Rollouts
+        </h3>
+        <p class="text-text-secondary text-left text-[15px] leading-relaxed">
+          Deploy updates without dropping active users. We wait for it to pass
+          health checks, and seamlessly route new traffic to it naturally.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+  .grad-border-l::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(
+      to bottom,
+      #ffffff 0%,
+      #262B33 30%,
+      transparent 160%
+    );
+  }
+</style>

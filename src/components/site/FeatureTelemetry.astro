@@ -1,0 +1,147 @@
+---
+const logs = [
+  { ts: "12:04:31.882", type: "stdout", msg: "Request processed in 2ms",        warn: false },
+  { ts: "12:04:31.901", type: "stdout", msg: "Cache hit: user_session_4a2f",     warn: false },
+  { ts: "12:04:32.004", type: "stderr", msg: "WARN: connection pool at 80%",     warn: true  },
+  { ts: "12:04:32.118", type: "stdout", msg: "Request processed in 3ms",         warn: false },
+  { ts: "12:04:32.340", type: "event",  msg: "Health check passed (IAD-04)",     warn: false },
+  { ts: "12:04:32.558", type: "stdout", msg: "Request processed in 1ms",         warn: false },
+  { ts: "12:04:33.002", type: "event",  msg: "TLS cert renewed (auto)",          warn: false },
+  { ts: "12:04:33.214", type: "stdout", msg: "Request processed in 2ms",         warn: false },
+  { ts: "12:04:33.440", type: "stdout", msg: "WebSocket connection opened",      warn: false },
+  { ts: "12:04:33.802", type: "stderr", msg: "WARN: slow query 48ms",            warn: true  },
+  { ts: "12:04:34.001", type: "stdout", msg: "Request processed in 1ms",         warn: false },
+  { ts: "12:04:34.220", type: "event",  msg: "Replica BHS-09 synced",            warn: false },
+  { ts: "12:04:34.558", type: "stdout", msg: "Request processed in 2ms",         warn: false },
+  { ts: "12:04:34.890", type: "stdout", msg: "Cache hit: pricing_feed_v3",       warn: false },
+];
+
+const badgeClass: Record<string, string> = {
+  stdout: "bg-[#0d2540] text-[#60a5fa]",
+  stderr: "bg-[#2d1400] text-[#fb923c]",
+  event:  "bg-[#0d2318] text-[#4ade80]",
+};
+
+const metrics = [
+  { label: "CPU",         value: "23%",          pct: 23 },
+  { label: "MEMORY",      value: "4.2 / 16 GB",  pct: 26 },
+  { label: "DISK I/O",    value: "120 MB/s read", pct: 40 },
+  { label: "NETWORK IN",  value: "840 Mbps",      pct: 80 },
+  { label: "NETWORK OUT", value: "320 Mbps",      pct: 45 },
+];
+
+const events = [
+  { label: "VM booted (IAD-04)",         time: "118ms",    done: true  },
+  { label: "VM booted (BHS-09)",         time: "134ms",    done: true  },
+  { label: "Health checks registered",   time: "12:04:28", done: true  },
+  { label: "TLS provisioned (ACME)",     time: "12:04:29", done: true  },
+  { label: "L4 Router configured",       time: "12:04:29", done: true  },
+  { label: "DNS A records live",         time: "12:04:30", done: true  },
+  { label: "First request received",     time: "12:04:31", done: true  },
+  { label: "Auto-scaled replica 2",      time: "12:04:32", done: true  },
+  { label: "Cert renewed (auto)",        time: "12:04:33", done: false },
+  { label: "Config hot-reload",          time: "pending",  done: false },
+];
+---
+
+<section class="py-24 bg-background">
+  <div class="container mx-auto px-6">
+
+    <!-- Section header -->
+    <div class="text-center mb-16">
+      <p class="text-text-accent text-sm uppercase tracking-widest mb-3">OBSERVABILITY</p>
+      <h2 class="text-title text-text-primary mb-6">Live Telemetry & Logs</h2>
+      <p class="text-body text-text-secondary max-w-2xl mx-auto">
+        Zero ops does not mean zero visibility. Stream stdout, stderr, lifecycle
+        events, and VM telemetry in real time.
+      </p>
+    </div>
+
+    <!-- Single outer card, 3 columns with dividers -->
+    <div class="bg-card border border-border-default rounded-xl overflow-hidden grid grid-cols-1 lg:grid-cols-3">
+
+      <!-- ── Column 1: LOG STREAM ── -->
+      <div class="border-b lg:border-b-0 lg:border-r border-border-default p-6 flex flex-col">
+        <!-- Header -->
+        <div class="flex items-center justify-between mb-5">
+          <span class="font-terminal text-[10px] uppercase tracking-[0.18em] text-text-secondary">Log Stream</span>
+          <span class="flex items-center gap-1.5 font-terminal text-[10px] text-accent-mint">
+            <span class="w-1.5 h-1.5 rounded-full bg-accent-mint animate-pulse"></span>
+            live
+          </span>
+        </div>
+
+        <!-- Log rows -->
+        <div class="space-y-2.5 font-terminal text-[11px]">
+          {logs.map((l) => (
+            <div class="flex items-center gap-2 min-w-0">
+              <span class="text-text-secondary flex-shrink-0 tabular-nums">{l.ts}</span>
+              <span class={`flex-shrink-0 px-1.5 py-px rounded text-[9px] font-terminal ${badgeClass[l.type]}`}>
+                {l.type}
+              </span>
+              <span class={`truncate ${l.warn ? "text-[#fb923c]" : "text-text-secondary"}`}>
+                {l.msg}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- ── Column 2: VM TELEMETRY ── -->
+      <div class="border-b lg:border-b-0 lg:border-r border-border-default p-6 flex flex-col">
+        <!-- Header -->
+        <span class="font-terminal text-[10px] uppercase tracking-[0.18em] text-text-secondary mb-6">
+          VM Telemetry
+        </span>
+
+        <div class="flex flex-col gap-5 flex-1">
+          {metrics.map((m) => (
+            <div class="flex flex-col gap-1.5">
+              <div class="flex items-center justify-between">
+                <span class="font-terminal text-[10px] uppercase tracking-widest text-text-secondary">{m.label}</span>
+                <span class="font-terminal text-[11px] text-text-primary">{m.value}</span>
+              </div>
+              <div class="w-full h-2 bg-terminal rounded-full overflow-hidden">
+                <div class="h-full bg-accent-mint rounded-full" style={`width:${m.pct}%`}></div>
+              </div>
+            </div>
+          ))}
+
+          <!-- Uptime (no bar) -->
+          <div class="flex items-center justify-between pt-2 mt-auto border-t border-border-default">
+            <span class="font-terminal text-[10px] uppercase tracking-widest text-text-secondary">Uptime</span>
+            <span class="font-terminal text-[11px] text-text-primary">14d 6h 32m</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Column 3: LIFECYCLE EVENTS ── -->
+      <div class="p-6 flex flex-col">
+        <!-- Header -->
+        <span class="font-terminal text-[10px] uppercase tracking-[0.18em] text-text-secondary mb-5">
+          Lifecycle Events
+        </span>
+
+        <div class="flex flex-col gap-3">
+          {events.map((e) => (
+            <div class="flex items-center justify-between gap-3 min-w-0">
+              <div class="flex items-center gap-2.5 min-w-0">
+                <!-- Dot -->
+                <span class={`w-2 h-2 rounded-full flex-shrink-0 ${e.done ? "bg-accent-mint" : "bg-[#3a3f48]"}`}></span>
+                <!-- Label -->
+                <span class={`text-[12px] truncate ${e.done ? "text-text-primary" : "text-text-secondary"}`}>
+                  {e.label}
+                </span>
+              </div>
+              <!-- Timestamp -->
+              <span class={`font-terminal text-[11px] flex-shrink-0 ${e.done ? "text-accent-mint" : "text-text-secondary"}`}>
+                {e.time}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>

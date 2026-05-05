@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SpaceScale — Orbital Globe (Spinning)</title>
+    <style>
+      body {
+        margin: 0;
+        background: #0a0d11;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+      }
+    </style>
+  </head>
+  <body>
+    <svg
+      viewBox="0 0 680 500"
+      xmlns="http://www.w3.org/2000/svg"
+      style="max-width: 680px; width: 100%"
+    >
+      <style>
+        @keyframes pulse {
+          0%,
+          100% {
+            opacity: 0.3;
+          }
+          50% {
+            opacity: 0.8;
+          }
+        }
+        @keyframes dash {
+          to {
+            stroke-dashoffset: -20;
+          }
+        }
+        @keyframes spinGlobe {
+          0% {
+            rx: 60;
+          }
+          25% {
+            rx: 180;
+          }
+          50% {
+            rx: 60;
+          }
+          75% {
+            rx: 180;
+          }
+          100% {
+            rx: 60;
+          }
+        }
+        @keyframes spinMeridian1 {
+          0% {
+            rx: 60;
+            transform: rotate(0deg);
+          }
+          50% {
+            rx: 140;
+            transform: rotate(180deg);
+          }
+          100% {
+            rx: 60;
+            transform: rotate(360deg);
+          }
+        }
+        @keyframes spinMeridian2 {
+          0% {
+            rx: 120;
+            transform: rotate(0deg);
+          }
+          50% {
+            rx: 40;
+            transform: rotate(180deg);
+          }
+          100% {
+            rx: 120;
+            transform: rotate(360deg);
+          }
+        }
+        @keyframes spinMeridianA {
+          0% {
+            rx: 60;
+          }
+          25% {
+            rx: 0;
+          }
+          50% {
+            rx: 60;
+          }
+          75% {
+            rx: 180;
+          }
+          100% {
+            rx: 60;
+          }
+        }
+        @keyframes spinMeridianB {
+          0% {
+            rx: 120;
+          }
+          25% {
+            rx: 60;
+          }
+          50% {
+            rx: 0;
+          }
+          75% {
+            rx: 60;
+          }
+          100% {
+            rx: 120;
+          }
+        }
+        @keyframes spinMeridianC {
+          0% {
+            rx: 180;
+          }
+          25% {
+            rx: 120;
+          }
+          50% {
+            rx: 60;
+          }
+          75% {
+            rx: 0;
+          }
+          100% {
+            rx: 180;
+          }
+        }
+        .globe-line {
+          fill: none;
+          stroke: #8b8d94;
+          stroke-width: 0.5;
+          stroke-dasharray: 4 4;
+          opacity: 0.3;
+        }
+        .globe-outer {
+          fill: none;
+          stroke: #8b8d94;
+          stroke-width: 0.5;
+          stroke-dasharray: 6 6;
+          opacity: 0.3;
+        }
+        .globe-equator {
+          fill: none;
+          stroke: #8b8d94;
+          stroke-width: 0.5;
+          stroke-dasharray: 4 4;
+          opacity: 0.3;
+        }
+        .meridian {
+          fill: none;
+          stroke: #8b8d94;
+          stroke-width: 0.5;
+          stroke-dasharray: 4 4;
+          opacity: 0.2;
+          transform-origin: center;
+        }
+        .m1 {
+          animation: spinMeridianA 20s linear infinite;
+        }
+        .m2 {
+          animation: spinMeridianB 20s linear infinite;
+        }
+        .m3 {
+          animation: spinMeridianC 20s linear infinite;
+        }
+        .node-glow {
+          animation: pulse 3s ease-in-out infinite;
+        }
+        .data-line {
+          fill: none;
+          stroke: #66d9a5;
+          stroke-width: 0.8;
+          stroke-dasharray: 3 6;
+          animation: dash 2s linear infinite;
+          opacity: 0.4;
+        }
+        .region-node {
+          fill: #66d9a5;
+          opacity: 0.9;
+        }
+        .region-ring {
+          fill: none;
+          stroke: #66d9a5;
+          stroke-width: 0.5;
+          opacity: 0.25;
+        }
+        .lbl {
+          font-family: Inter, system-ui, sans-serif;
+          font-size: 10px;
+          fill: #66d9a5;
+          opacity: 0.7;
+        }
+      </style>
+
+      <g transform="translate(340,250)">
+        <!-- Globe outer ring (static) -->
+        <ellipse class="globe-outer" cx="0" cy="0" rx="180" ry="180" />
+
+        <!-- Equator (static) -->
+        <ellipse class="globe-equator" cx="0" cy="0" rx="180" ry="60" />
+
+        <!-- Latitude bands (static) -->
+        <ellipse
+          class="globe-line"
+          cx="0"
+          cy="0"
+          rx="180"
+          ry="120"
+          transform="rotate(25)"
+        />
+        <ellipse
+          class="globe-line"
+          cx="0"
+          cy="0"
+          rx="180"
+          ry="120"
+          transform="rotate(-25)"
+        />
+
+        <!-- Meridians (spinning) — these simulate vertical longitude lines rotating -->
+        <ellipse class="meridian m1" cx="0" cy="0" rx="60" ry="180" />
+        <ellipse class="meridian m2" cx="0" cy="0" rx="120" ry="180" />
+        <ellipse
+          class="meridian"
+          cx="0"
+          cy="0"
+          rx="180"
+          ry="180"
+          style="opacity: 0.08"
+        />
+
+        <!-- Additional spinning meridians for density -->
+        <ellipse
+          class="meridian"
+          cx="0"
+          cy="0"
+          rx="30"
+          ry="180"
+          style="
+            opacity: 0.1;
+            animation: spinMeridianA 20s linear infinite;
+            animation-delay: -5s;
+          "
+        />
+        <ellipse
+          class="meridian"
+          cx="0"
+          cy="0"
+          rx="90"
+          ry="180"
+          style="
+            opacity: 0.12;
+            animation: spinMeridianB 20s linear infinite;
+            animation-delay: -5s;
+          "
+        />
+        <ellipse
+          class="meridian"
+          cx="0"
+          cy="0"
+          rx="150"
+          ry="180"
+          style="
+            opacity: 0.1;
+            animation: spinMeridianC 20s linear infinite;
+            animation-delay: -5s;
+          "
+        />
+
+        <!-- Vertical axis line (static) -->
+        <line
+          class="globe-line"
+          x1="0"
+          y1="-180"
+          x2="0"
+          y2="180"
+          opacity=".15"
+        />
+        <!-- Horizontal axis line (static) -->
+        <line
+          class="globe-line"
+          x1="-180"
+          y1="0"
+          x2="180"
+          y2="0"
+          opacity=".15"
+        />
+
+        <!-- Data connections (static, on top of globe) -->
+        <line class="data-line" x1="-140" y1="-80" x2="-60" y2="60" />
+        <line class="data-line" x1="-60" y1="60" x2="100" y2="30" />
+        <line class="data-line" x1="100" y1="30" x2="150" y2="-60" />
+        <line class="data-line" x1="-140" y1="-80" x2="100" y2="30" />
+        <line class="data-line" x1="-60" y1="60" x2="60" y2="-120" />
+        <line class="data-line" x1="60" y1="-120" x2="150" y2="-60" />
+        <line class="data-line" x1="-140" y1="-80" x2="60" y2="-120" />
+
+        <!-- Region nodes (static positions, pulsing) -->
+        <g class="node-glow" style="animation-delay: 0s">
+          <circle class="region-ring" cx="-140" cy="-80" r="12" />
+          <circle class="region-node" cx="-140" cy="-80" r="4" />
+        </g>
+        <g class="node-glow" style="animation-delay: 0.6s">
+          <circle class="region-ring" cx="-60" cy="60" r="12" />
+          <circle class="region-node" cx="-60" cy="60" r="4" />
+        </g>
+        <g class="node-glow" style="animation-delay: 1.2s">
+          <circle class="region-ring" cx="100" cy="30" r="12" />
+          <circle class="region-node" cx="100" cy="30" r="4" />
+        </g>
+        <g class="node-glow" style="animation-delay: 1.8s">
+          <circle class="region-ring" cx="150" cy="-60" r="12" />
+          <circle class="region-node" cx="150" cy="-60" r="4" />
+        </g>
+        <g class="node-glow" style="animation-delay: 2.4s">
+          <circle class="region-ring" cx="60" cy="-120" r="12" />
+          <circle class="region-node" cx="60" cy="-120" r="4" />
+        </g>
+
+        <!-- Labels -->
+        <text class="lbl" x="-155" y="-95">us-east</text>
+        <text class="lbl" x="-75" y="80">eu-west</text>
+        <text class="lbl" x="110" y="48">ap-south</text>
+        <text class="lbl" x="158" y="-68">ap-east</text>
+        <text class="lbl" x="68" y="-128">us-west</text>
+      </g>
+    </svg>
+  </body>
+</html>

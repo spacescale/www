@@ -1,3 +1,6 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap");
+@import url("https://fonts.cdnfonts.com/css/articulat-cf");
 @import "tailwindcss";
 /*
     Global design tokens.
@@ -7,40 +10,61 @@
   */
 
 @font-face {
-    font-family: "Articulat CF";
-    src: url("/fonts/articulat-cf/ArticulatCF-Normal.otf") format("opentype");
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
+  font-family: "Articulat CF";
+  src: url("/fonts/articulat-cf/ArticulatCF-Normal.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  --color-background: #040406;
+  --color-card: #0a0c0f;
+  --color-elevated: #0c0e11;
+  --color-terminal: #12141a;
+  --color-border-default: #1a1d24;
+  --color-text-primary: #f0f1f2;
+  --color-text-secondary: #8c94a1;
+  --color-accent-mint: #66d9a5;
+  --color-text-light: #f5f7fa;
+  --color-text-accent: #66d9a5;
+  --color-accent-mint: #66d9a5;
+  --color-border-left: #262b33;
+  --color-text-gray: #8a8f98;
+  --color-border-gray: #262b33;
+
+  --font-family-hero: "Articulat CF", system-ui, sans-serif;
+  --font-family-title: "Articulat CF", system-ui, sans-serif;
+  --font-family-body: "Inter", system-ui, sans-serif;
+  --font-family-terminal: "JetBrains Mono", monospace;
 }
 
 :root {
   color-scheme: dark;
 
-    --color-bg-primary: #040406;
-    --color-bg-card: #0a0c0f;
-    --color-bg-elevated: #0c0e11;
-    --color-bg-terminal: #12141a;
+  --color-bg-primary: #040406;
+  --color-bg-card: #0a0c0f;
+  --color-bg-elevated: #0c0e11;
+  --color-bg-terminal: #12141a;
 
-    --color-border-default: #1a1d24;
-    --color-border-subtle: #1f2229;
-    --color-text-primary: #f0f1f2;
-    --color-text-secondary: #8c94a1;
-    --color-text-tertiary: #5a5d64;
-    --color-text-disabled: #3a3d44;
+  --color-border-default: #1a1d24;
+  --color-border-subtle: #1f2229;
+  --color-text-primary: #f0f1f2;
+  --color-text-secondary: #8c94a1;
+  --color-text-tertiary: #5a5d64;
+  --color-text-disabled: #3a3d44;
 
-    --color-accent-mint: #66d9a5;
-    --color-status-warning: #d9b84d;
-    --color-status-error: #d95a5a;
-    --color-status-info: #668bd9;
+  --color-accent-mint: #66d9a5;
+  --color-status-warning: #d9b84d;
+  --color-status-error: #d95a5a;
+  --color-status-info: #668bd9;
 
-    --site-max-width: 1280px;
-    --site-padding-x: 80px;
+  --site-max-width: 1280px;
+  --site-padding-x: 80px;
 
-    --font-display: "Articulat CF", Inter, ui-sans-serif, system-ui, sans-serif;
-    --font-body: Inter, ui-sans-serif, system-ui, sans-serif;
-    --font-mono: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
-
+  --font-display: "Articulat CF", Inter, ui-sans-serif, system-ui, sans-serif;
+  --font-body: Inter, ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
 }
 
 /*
@@ -50,400 +74,43 @@
     width includes padding and border instead of silently growing.
   */
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 html {
-    background: var(--color-bg-primary);
-    color: var(--color-text-primary);
-    font-family: var(--font-body);
-    text-rendering: optimizeLegibility;
+  background: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  font-family: var(--font-body);
+  text-rendering: optimizeLegibility;
 }
 
 body {
-    margin: 0;
-    background: var(--color-bg-primary);
-    color: var(--color-text-primary);
+  margin: 0;
+  background: var(--color-background);
+  color: var(--color-text-primary);
+  font-family: var(--font-family-body);
 }
 
-a {
-    color: inherit;
-    text-decoration: none;
+/* Typography utility classes */
+.text-hero {
+  font-family: var(--font-family-hero);
+  font-size: 64px;
+  line-height: 72px;
 }
 
-
-button, input, textarea, select {
-    font: inherit;
+.text-title {
+  font-family: var(--font-family-title);
+  font-size: 44px;
+  line-height: 52px;
 }
 
-/*
-    Site header.
-
-    This is the desktop navigation shell from the Figma.
-    The header has two sides:
-    left: SpaceScale brand
-    right: navigation links and CTA
-  */
-
-.site-header {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    height: 100px;
-    padding: 0 var(--site-padding-x);
-
-    background: var(--color-bg-primary);
-    color: #f5f7fa;
+.text-body {
+  font-family: var(--font-family-body);
+  font-size: 16px;
+  line-height: 26px;
 }
 
-.site-header-inner {
-    display: flex;
-    width: 100%;
-    max-width: var(--site-max-width);
-    align-items: center;
-    justify-content: space-between;
-}
-
-.brand-lockup {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-}
-
-
-.brand-name {
-    color: #f5f7fa;
-    font-family: var(--font-body);
-    font-size: 18px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: normal;
-    letter-spacing: 0;
-}
-
-.site-nav {
-    display: flex;
-    align-items: center;
-    gap: 32px;
-
-    color: #8c94a1;
-    font-family: var(--font-body);
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
-}
-
-.site-nav a:not(.nav-cta):hover {
-    color: #f5f7fa;
-}
-
-.nav-cta:hover {
-    background: #dfe3ea;
-    color: #0a0d12;
-}
-
-
-.nav-cta {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    padding: 10px 16px;
-
-    background: #f5f7fa;
-    color: #0a0d12;
-    font-size: 14px;
-    font-weight: 600;
-}
-
-/*
-  SpaceScale logo mark.
-
-  Figma uses 8 small vector squares in a 4-column, 3-row grid.
-  We recreate that with CSS so the mark can inherit the header color.
-*/
-.brand-mark {
-    display: inline-grid;
-    grid-template-columns: repeat(4, 5px);
-    grid-template-rows: repeat(3, 5px);
-    row-gap: 3px;
-    column-gap: 3px;
-
-    width: 29px;
-    height: 20px;
-    align-items: end;
-}
-
-.brand-mark span {
-    width: 5px;
-    height: 5px;
-    background: #f5f7fa;
-}
-
-
-/*
-    Dot positions, copied from the Figma grid:
-    row 1: column 4
-    row 2: columns 2, 3, 4
-    row 3: columns 1, 2, 3, 4
-  */
-
-.brand-mark span:nth-child(1) {
-    grid-column: 4;
-    grid-row: 1;
-}
-
-.brand-mark span:nth-child(2) {
-    grid-column: 2;
-    grid-row: 2;
-}
-
-.brand-mark span:nth-child(3) {
-    grid-column: 3;
-    grid-row: 2;
-}
-
-.brand-mark span:nth-child(4) {
-    grid-column: 4;
-    grid-row: 2;
-}
-
-.brand-mark span:nth-child(5) {
-    grid-column: 1;
-    grid-row: 3;
-}
-
-.brand-mark span:nth-child(6) {
-    grid-column: 2;
-    grid-row: 3;
-}
-
-
-.brand-mark span:nth-child(7) {
-    grid-column: 3;
-    grid-row: 3;
-}
-
-.brand-mark span:nth-child(8) {
-    grid-column: 4;
-    grid-row: 3;
-}
-
-
-
-
-
-/*
-   Site footer.
-
-   This is the shared desktop footer shell.
-   The footer has two rows:
-   first row: brand/status/socials on the left, link groups on the right
-   second row: copyright on the left, legal links on the right
- */
-
-.site-footer {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 32px;
-
-    padding: 56px 80px 40px;
-
-    background: var(--color-bg-primary);
-    color: var(--color-text-primary);
-}
-
-
-.footer-inner,
-.footer-divider,
-.footer-bottom {
-    width: 100%;
-    max-width: var(--site-max-width);
-}
-
-/*
-    The main footer row.
-  */
-.footer-inner {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-
-    margin: 0;
-}
-/*
-    Left side brand block.
-  */
-
-.footer-brand {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 16px;
-
-    width: 332px;
-}
-
-.footer-brand h2 {
-    margin: 0;
-
-    color: #ffffff;
-    font-family: var(--font-display);
-    font-size: 34px;
-    font-weight: 400;
-    line-height: 110%;
-    letter-spacing: 0;
-}
-
-/*
-  Right side footer link columns.
-*/
-.footer-links {
-    display: flex;
-    align-items: flex-start;
-    gap: 64px;
-}
-
-.footer-links section {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
-}
-
-.footer-links h3 {
-    margin: 0;
-
-    color: #8c94a1;
-    font-family: var(--font-mono);
-    font-size: 14px;
-    font-weight: 400;
-    line-height: normal;
-    letter-spacing: 0;
-    text-transform: uppercase;
-}
-
-
-.footer-links ul {
-    display: grid;
-    gap: 12px;
-
-    margin: 0;
-    padding: 0;
-
-    list-style: none;
-}
-
-.footer-links a {
-    color: rgba(255, 255, 255, 0.70);
-    font-family: var(--font-body);
-    font-size: 13px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-}
-
-
-.footer-links a:hover {
-    color: #f5f7fa;
-}
-
-.footer-divider {
-    height: 1px;
-    flex-shrink: 0;
-
-    background: #262b33;
-}
-
-
-.footer-bottom {
-    display: flex;
-    height: 100px;
-    justify-content: space-between;
-    align-items: center;
-
-    margin: 0;
-}
-
-
-.footer-bottom p {
-    margin: 0;
-
-    color: #8c94a1;
-    font-family: var(--font-body);
-    font-size: 12px;
-    font-weight: 400;
-    line-height: normal;
-}
-
-.footer-bottom nav {
-    display: flex;
-    align-items: center;
-    gap: 24px;
-}
-
-.footer-bottom a {
-    color: #8c94a1;
-    font-family: var(--font-body);
-    font-size: 12px;
-    font-weight: 400;
-    line-height: normal;
-}
-
-
-.status-badge {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-
-    padding: 4px 8px;
-
-    border: 1px solid #262b33;
-    color: #8c94a1;
-    font-family: var(--font-body);
-    font-size: 13px;
-    font-weight: 400;
-    line-height: 20px;
-}
-
-.status-badge span {
-    width: 8px;
-    height: 8px;
-    flex-shrink: 0;
-
-    background: var(--color-accent-mint);
-    border-radius: 999px;
-}
-
-
-.social-links {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-}
-
-.social-links a {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    width: 16px;
-    height: 16px;
-
-    color: #8c94a1;
-    font-family: var(--font-body);
-    font-size: 11px;
-    font-weight: 600;
-    line-height: 1;
-}
-
-.social-links svg {
-    display: block;
-    width: 16px;
-    height: 16px;
+.text-terminal {
+  font-family: var(--font-family-terminal);
+  font-size: 13px;
 }

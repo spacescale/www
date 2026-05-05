@@ -1,98 +1,184 @@
 ---
-import SocialIcon from "../icons/SocialIcon.astro";
-
-/*
-  Footer.astro is the shared footer for marketing pages.
-
-  We keep footer link data in arrays so the markup stays clean.
-  Later, if links change, we edit the arrays instead of rewriting HTML.
-*/
-
-const footerGroups = [
-    {
-        title: "Resources",
-        links: ["Documentation", "Tutorials", "API", "Changelog"],
-    },
-    {
-        title: "Engineering",
-        links: ["Blog", "GitHub", "Status", "Docs"],
-    },
-    {
-        title: "Company",
-        links: ["About", "Philosophy", "Contact"],
-    },
-];
-
-const legalLinks = ["Privacy", "Terms", "Security"];
-
-const socialLinks = [
-    {
-        name: "linkedin",
-        label: "SpaceScale on LinkedIn",
-        href: "https://www.linkedin.com/company/spacescale",
-    },
-    {
-        name: "github",
-        label: "SpaceScale on GitHub",
-        href: "https://github.com/spacescale",
-    },
-    {
-        name: "youtube",
-        label: "SpaceScale on YouTube",
-        href: "#",
-    },
-] as const;
+// Footer component with navigation and links
 ---
 
-<footer class="site-footer">
-    <div class="footer-inner">
-        <section class="footer-brand" aria-label="SpaceScale">
-            <h2>The Hyper-PaaS for<br />Serious Workloads</h2>
-            <div class="status-badge" aria-label="System status">
-                <span aria-hidden="true"></span>
-                All systems operational
-            </div>
+<footer class=" border-t border-border-default bg-background">
+  <div class="container mx-auto px-6 py-12">
+    <div class="grid grid-cols-1 md:grid-cols-6 gap-8 pt-20 pb-10">
+      <!-- Logo and Description -->
+      <div class="col-span-1 md:col-span-2">
+        <h1 class="font-hero text-text-white text-[34px] font-400 mb-4 max-w-md">
+          The Hyper-PaaS for Serious Workloads.
+        </h1>
+        <div class="flex space-x-4">
+          <a
+            href="#"
+            class="text-text-white hover:text-text-primary transition-colors"
+          >
+            <img
+              src="/images/site/linkedln.svg"
+              alt="LinkedIn"
+              class="h-5 w-5"
+            />
+          </a>
+          <a
+            href="#"
+            class="text-text-white hover:text-text-primary transition-colors"
+          >
+            <img src="/images/site/github.svg" alt="GitHub" class="h-5 w-5" />
+          </a>
+          <a
+            href="#"
+            class="text-text-white hover:text-text-primary transition-colors"
+          >
+            <img src="/images/blog/youtube.svg" alt="YouTube" class="h-5 w-5" />
+          </a>
+        </div>
+      </div>
 
-            <div class="social-links" aria-label="Social links">
-                {
-                    socialLinks.map((link) => (
-                        <a href={link.href} aria-label={link.label}>
-                            <SocialIcon name={link.name} />
-                        </a>
-                    ))
-                }
-            </div>
-        </section>
+      <!-- Spacer to push Product and Company sections to the right -->
+      <div class="hidden md:block md:col-span-1"></div>
 
-        <nav class="footer-links" aria-label="Footer navigation">
-            {
-                footerGroups.map((group) => (
-                    <section>
-                        <h3>{group.title}</h3>
+      <!-- Product and Company sections moved to extreme end -->
+      <div class="flex flex-row gap-8 col-span-1 md:col-span-4 md:col-start-6">
+        <!-- Product -->
+        <div class="flex flex-col">
+          <h3 class="text-text-secondary font-600 mb-4 text-[13px]">RESOURCES</h3>
+          <ul class="space-y-2">
+            <li>
+              <a
+                href="/features"
+                class="text-text-secondary hover:text-text-primary transition-colors text-[13px]"
+              >
+                Documentation
+              </a>
+            </li>
+            <li>
+              <a
+                href="/pricing"
+                class="text-text-secondary hover:text-text-primary transition-colors text-[13px]"
+              >
+                Tutorials
+              </a>
+            </li>
+            <li>
+              <a
+                href="/docs"
+                class="text-text-secondary hover:text-text-primary transition-colors text-[13px]"
+              >
+                API
+              </a>
+            </li>
+            <li>
+              <a
+                href="/api"
+                class="text-text-secondary hover:text-text-primary transition-colors text-[13px]"
+              >
+                Changelog
+              </a>
+            </li>
+          </ul>
+        </div>
 
-                        <ul>
-                            {group.links.map((link) => (
-                                <li>
-                                    <a href="#">{link}</a>
-                                </li>
-                            ))}
-                        </ul>
-                    </section>
-                ))
-            }
-        </nav>
+        <!-- Engineering -->
+        <div class="flex flex-col">
+          <h3 class="text-text-secondary font-600 text-[13px] mb-4">Engineering</h3>
+          <ul class="space-y-2">
+            <li>
+              <a
+                href="/engineering"
+                class="text-text-secondary hover:text-text-primary transition-colors text-[13px]"
+              >
+                Blog
+              </a>
+            </li>
+            <li>
+              <a
+                href="/blog"
+                class="text-text-secondary hover:text-text-primary transition-colors text-[13px]"
+              >
+                GitHub
+              </a>
+            </li>
+            <li>
+              <a
+                href="/status"
+                class="text-text-secondary hover:text-text-primary transition-colors text-[13px]"
+              >
+                Status
+              </a>
+            </li>
+            <li>
+              <a
+                href="/docs"
+                class="text-text-secondary hover:text-text-primary transition-colors text-[13px]"
+              >
+                Docs
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Company -->
+        <div class="flex flex-col">
+          <h3 class="text-text-secondary font-600 mb-4 text-[13px]">Company</h3>
+          <ul class="space-y-2">
+            <li>
+              <a
+                href="/about"
+                class="text-text-secondary hover:text-text-primary transition-colors text-[13px]"
+              >
+                About
+              </a>
+            </li>
+            <li>
+              <a
+                href="/blog"
+                class="text-text-secondary hover:text-text-primary transition-colors text-[13px]"
+              >
+                Philosophy
+              </a>
+            </li>
+            <li>
+              <a
+                href="/contact"
+                class="text-text-secondary hover:text-text-primary transition-colors text-[13px]"
+              >
+                Contact
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
 
-    <div class="footer-divider" aria-hidden="true"></div>
-
-    <div class="footer-bottom">
-        <p>© 2026 SpaceScale Systems Inc.</p>
-        <nav aria-label="Legal links">
-            {
-                legalLinks.map((link) => (
-                    <a href="#">{link}</a>
-                ))
-            }
-        </nav>
+    <!-- Bottom Section -->
+    <div
+      class="border-t border-border-default mt-8 py-12 flex flex-col md:flex-row justify-between items-center"
+    >
+      <p class="text-text-secondary text-[13px] mb-4 md:mb-0">
+        © {new Date().getFullYear()} SpaceScale. Inc.
+      </p>
+      <div class="flex space-x-6">
+        <a
+          href="/privacy"
+          class="text-text-secondary hover:text-text-primary transition-colors text-[13px]"
+        >
+          Privacy
+        </a>
+        <a
+          href="/terms"
+          class="text-text-secondary hover:text-text-primary transition-colors text-[13px]"
+        >
+          Terms
+        </a>
+        <a
+          href="/security"
+          class="text-text-secondary hover:text-text-primary transition-colors text-[13px]"
+        >
+          Security
+        </a>
+      </div>
     </div>
+  </div>
 </footer>

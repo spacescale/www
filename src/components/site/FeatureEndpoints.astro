@@ -1,0 +1,90 @@
+---
+const endpoints = [
+  { method: "POST",   path: "/v1/workloads",              desc: "Deploy a new workload to one or more regions" },
+  { method: "GET",    path: "/v1/workloads/:id",          desc: "Get workload status, health, and routing info" },
+  { method: "PATCH",  path: "/v1/workloads/:id",          desc: "Update config, scale replicas, or shift regions" },
+  { method: "DELETE", path: "/v1/workloads/:id",          desc: "Terminate a workload and release metal resources" },
+  { method: "POST",   path: "/v1/workloads/:id/restart",  desc: "Cold restart a running workload" },
+  { method: "GET",    path: "/v1/regions",                desc: "List available regions and current capacity" },
+  { method: "GET",    path: "/v1/regions/:id/nodes",      desc: "List active nodes and containers in region" },
+];
+
+const methodColor: Record<string, string> = {
+  POST:   "text-[#66D9A5] border-[#66D9A5]/30 bg-[#66D9A5]/8",
+  GET:    "text-blue-400  border-blue-400/30  bg-blue-400/8",
+  PATCH:  "text-yellow-400 border-yellow-400/30 bg-yellow-400/8",
+  DELETE: "text-red-400   border-red-400/30   bg-red-400/8",
+};
+---
+
+<section class="bg-background">
+  <div class="container mx-auto px-6">
+    <div class="border border-border-default overflow-hidden">
+      <div class="grid grid-cols-1 lg:grid-cols-2 py-20">
+
+        <!-- Left: copy + code block -->
+        <div class="p-10 flex flex-col gap-6 justify-center border-b lg:border-b-0  border-border-default">
+          <div class="flex flex-col gap-4">
+            <h2 class="text-[32px] font-400 text-text-primary leading-tight">
+              We provide the endpoints;<br/>you dictate the scale.
+            </h2>
+            <p class="text-[15px] text-text-secondary leading-relaxed">
+              Bypass the dashboard and control our execution engine via REST API.
+              Ignite and terminate workloads at lightning speed. Designed for
+              high-frequency AI agents and programmatic fleet routing.
+            </p>
+          </div>
+
+          <!-- Curl code block -->
+          <div class="bg-[#0C0E11] border border-border-default rounded-lg overflow-hidden">
+            <div class="flex items-center justify-between px-4 py-2.5 border-b border-border-default">
+              <span class="text-text-secondary font-terminal text-[11px]">Example request</span>
+              <button class="flex items-center gap-1.5 text-accent-mint font-terminal text-[11px] hover:opacity-80 transition-opacity cursor-pointer">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                  <rect x="4" y="0" width="7" height="7" rx="1" stroke="#66D9A5" stroke-width="1"/>
+                  <rect x="0" y="4" width="7" height="7" rx="1" stroke="#66D9A5" stroke-width="1" fill="#0C0E11"/>
+                </svg>
+                Copy
+              </button>
+            </div>
+            <pre class="p-4 font-terminal text-[11px] leading-relaxed overflow-x-auto"><code><span class="text-text-secondary">curl -X POST https://api.spacescale.app/v1/workloads \</span>
+<span class="text-text-secondary">  -H <span class="text-accent-mint">"Authorization: Bearer sk_live_..."</span> \</span>
+<span class="text-text-secondary">  -H <span class="text-accent-mint">"Content-Type: application/json"</span> \</span>
+<span class="text-text-secondary">  -d '</span><span class="text-text-primary">{</span>
+<span class="text-text-secondary">    <span class="text-blue-400">"image"</span>: <span class="text-accent-mint">"my-org/trading-api/latest"</span>,</span>
+<span class="text-text-secondary">    <span class="text-blue-400">"regions"</span>: <span class="text-text-primary">["va", "bhs"]</span>,</span>
+<span class="text-text-secondary">    <span class="text-blue-400">"instance_type"</span>: <span class="text-accent-mint">"bare-metal-32"</span></span>
+<span class="text-text-primary">  }</span><span class="text-text-secondary">'</span></code></pre>
+          </div>
+        </div>
+
+        <!-- Right: API table -->
+        <div class="p-8 overflow-x-auto">
+          <table class="w-full font-terminal text-[12px]">
+            <thead>
+              <tr class="border-b border-border-default">
+                <th class="text-left text-text-secondary text-[10px] uppercase tracking-widest pb-3 pr-4 font-400">Method</th>
+                <th class="text-left text-text-secondary text-[10px] uppercase tracking-widest pb-3 pr-4 font-400">Endpoint</th>
+                <th class="text-left text-text-secondary text-[10px] uppercase tracking-widest pb-3 font-400 hidden xl:table-cell">Description</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-border-default">
+              {endpoints.map((e) => (
+                <tr class="group hover:bg-elevated/40 transition-colors">
+                  <td class="py-3 pr-4">
+                    <span class={`inline-block border rounded px-1.5 py-0.5 text-[10px] font-terminal ${methodColor[e.method]}`}>
+                      {e.method}
+                    </span>
+                  </td>
+                  <td class="py-3 pr-4 text-text-primary whitespace-nowrap">{e.path}</td>
+                  <td class="py-3 text-text-secondary hidden xl:table-cell">{e.desc}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>

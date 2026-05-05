@@ -1,0 +1,118 @@
+---
+const ticks = [-90, -72, -54, -36, -18, 0, 18, 36, 54, 72, 90];
+const regions = [
+  { name: "us-east", pct: 78, label: "8ms" },
+  { name: "eu-west", pct: 58, label: "12ms" },
+  { name: "ap-east", pct: 42, label: "18ms" },
+];
+---
+
+<section class="bg-background">
+  <div class="container mx-auto px-6">
+    <div class="border border-border-default py-20 overflow-hidden">
+      <div class="grid grid-cols-1 lg:grid-cols-2">
+
+        <!-- Left: copy -->
+        <div class="p-10 flex flex-col gap-5 justify-center">
+          <h2 class="text-[32px] font-400 text-text-primary leading-tight">Performance at its peak</h2>
+          <p class="text-[15px] text-text-secondary leading-relaxed max-w-xs">
+            Fast starts. Direct routing. Predictable compute. SpaceScale is built
+            to ignite workloads in milliseconds and keep traffic moving close to
+            the metal.
+          </p>
+        </div>
+
+        <!-- Right: gauge + stats + bars -->
+        <div class="border-t lg:border-t-0  border-border-default p-8 flex flex-col gap-6">
+
+          <!-- Gauge SVG -->
+          <!-- cx=230 cy=185 r=160; fill stops at 75% (math 45°, SVG rotate 45°) -->
+          <div class="flex flex-col items-center">
+            <svg viewBox="0 0 460 195" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full max-w-sm">
+              <!-- Track arc (full semicircle) -->
+              <path d="M 70 185 A 160 160 0 0 1 390 185"
+                    stroke="#1A1D24" stroke-width="14" stroke-linecap="round"/>
+
+              <!-- Fill arc: start=left (70,185) end=75% point (343,72) -->
+              <path d="M 70 185 A 160 160 0 0 1 343 72"
+                    stroke="#66D9A5" stroke-width="14" stroke-linecap="round"/>
+
+              <!-- Tick marks (SVG rotate -90° to 90° in 18° steps around center) -->
+              {ticks.map((a) => (
+                <g transform={`rotate(${a}, 230, 185)`}>
+                  <line x1="230" y1="22" x2="230" y2="36"
+                        stroke="rgba(102,217,165,0.22)" stroke-width="1.5"/>
+                </g>
+              ))}
+
+              <!-- Needle (SVG rotate 45° from 12-o-clock = points at math 45°) -->
+              <g transform="rotate(45, 230, 185)">
+                <line x1="230" y1="50" x2="230" y2="185"
+                      stroke="#F0F1F2" stroke-width="1.5" stroke-linecap="round"/>
+              </g>
+
+              <!-- Center dot -->
+              <circle cx="230" cy="185" r="5" fill="#66D9A5"/>
+
+              <!-- Scale labels -->
+              <text x="54" y="200" fill="#8C94A1" font-size="10" font-family="JetBrains Mono, monospace">0</text>
+              <text x="393" y="200" fill="#8C94A1" font-size="10" font-family="JetBrains Mono, monospace">max</text>
+
+              <!-- THROUGHPUT label -->
+              <text x="230" y="200" text-anchor="middle" fill="#8C94A1"
+                    font-size="10" font-family="JetBrains Mono, monospace" letter-spacing="2">THROUGHPUT</text>
+            </svg>
+          </div>
+
+          <!-- Stats row -->
+          <div class="grid grid-cols-3 divide-x divide-border-default border-t border-border-default pt-5">
+            <!-- Requests/min -->
+            <div class="flex flex-col gap-1 pr-4">
+              <span class="text-text-secondary font-terminal text-[10px] uppercase tracking-widest">Requests/min</span>
+              <div class="flex items-end gap-1">
+                <span class="text-text-primary text-[28px] font-400 leading-none">4,200</span>
+              </div>
+              <span class="text-accent-mint font-terminal text-[10px]">↑ live</span>
+            </div>
+
+            <!-- Cold start -->
+            <div class="flex flex-col gap-1 px-4">
+              <span class="text-text-secondary font-terminal text-[10px] uppercase tracking-widest">Cold Start</span>
+              <div class="flex items-end gap-1">
+                <span class="text-text-primary text-[28px] font-400 leading-none">412</span>
+                <span class="text-text-secondary font-terminal text-[13px] mb-0.5">ms</span>
+              </div>
+              <span class="text-accent-mint font-terminal text-[10px]">↑ fast</span>
+            </div>
+
+            <!-- Edge latency -->
+            <div class="flex flex-col gap-1 pl-4">
+              <span class="text-text-secondary font-terminal text-[10px] uppercase tracking-widest">Edge Latency</span>
+              <div class="flex items-end gap-1">
+                <span class="text-text-primary text-[28px] font-400 leading-none">8</span>
+                <span class="text-text-secondary font-terminal text-[13px] mb-0.5">ms</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Region routing bar chart -->
+          <div class="border border-border-default rounded-lg p-4 flex flex-col gap-3">
+            <span class="text-text-secondary font-terminal text-[10px] uppercase tracking-widest mb-1">
+              Routing Speed by Region
+            </span>
+            {regions.map((r) => (
+              <div class="flex items-center gap-3">
+                <span class="text-text-secondary font-terminal text-[11px] w-14 flex-shrink-0">{r.name}</span>
+                <div class="flex-1 h-1.5 bg-terminal rounded-full overflow-hidden">
+                  <div class="h-full bg-accent-mint rounded-full" style={`width:${r.pct}%`}></div>
+                </div>
+                <span class="text-text-primary font-terminal text-[11px] w-8 text-right">{r.label}</span>
+              </div>
+            ))}
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

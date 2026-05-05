@@ -1,0 +1,83 @@
+---
+// Isometric cube: side L=60 → s=L*cos30°≈52, h=L*sin30°=30
+// Hexagon vertices (center at origin): top(0,-60), ur(52,-30), lr(52,30), bot(0,60), ll(-52,30), ul(-52,-30)
+// 3 center spokes: (0,0)→(0,-60), (0,0)→(52,30), (0,0)→(-52,30)
+---
+
+<section class="bg-background">
+  <div class="container mx-auto px-6">
+    <div class="border border-border-default overflow-hidden">
+      <div class="grid grid-cols-1 lg:grid-cols-2 py-20">
+
+        <!-- Left: copy -->
+        <div class="p-10 flex flex-col gap-5 justify-center">
+          <h2 class="text-[32px] font-400 text-text-primary leading-tight">
+            Absolute Execution Isolation
+          </h2>
+          <p class="text-[15px] text-text-secondary leading-relaxed max-w-xs">
+            No hyper-threading. No shared caches. No noisy neighbors. We combine
+            Zero-SMT physical core pinning with hardware-level MicroVM
+            segmentation. When your workload ignites, it is just your code and
+            your silicon.
+          </p>
+        </div>
+
+        <!-- Right: isometric cube diagrams -->
+        <div class="border-t lg:border-t-0  border-border-default p-8 flex items-center justify-center">
+          <svg viewBox="0 0 420 240" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full max-w-md">
+
+            <!-- ── Cube 1: Your workload (solid mint lines) ── -->
+            <!-- center (105, 100), L=60, s=52, h=30 -->
+            <!-- Hexagon: (105,40),(157,70),(157,130),(105,160),(53,130),(53,70) -->
+            <polygon points="105,40 157,70 157,130 105,160 53,130 53,70"
+                     stroke="#66D9A5" stroke-width="1.5" stroke-opacity="0.7" fill="rgba(102,217,165,0.03)"/>
+            <!-- 3 center spokes -->
+            <line x1="105" y1="100" x2="105" y2="40"   stroke="#66D9A5" stroke-width="1.5" stroke-opacity="0.7"/>
+            <line x1="105" y1="100" x2="157" y2="130"  stroke="#66D9A5" stroke-width="1.5" stroke-opacity="0.7"/>
+            <line x1="105" y1="100" x2="53"  y2="130"  stroke="#66D9A5" stroke-width="1.5" stroke-opacity="0.7"/>
+            <!-- Corner dots -->
+            <circle cx="105" cy="40"  r="3" fill="#66D9A5" opacity="0.8"/>
+            <circle cx="157" cy="70"  r="2" fill="#66D9A5" opacity="0.5"/>
+            <circle cx="157" cy="130" r="2" fill="#66D9A5" opacity="0.5"/>
+            <circle cx="105" cy="160" r="2" fill="#66D9A5" opacity="0.5"/>
+            <circle cx="53"  cy="130" r="2" fill="#66D9A5" opacity="0.5"/>
+            <circle cx="53"  cy="70"  r="2" fill="#66D9A5" opacity="0.5"/>
+
+            <!-- Cube 1 labels -->
+            <text x="105" y="186" text-anchor="middle" fill="#F0F1F2"  font-size="11" font-family="JetBrains Mono, monospace">Your workload</text>
+            <text x="105" y="200" text-anchor="middle" fill="#8C94A1"  font-size="9.5" font-family="JetBrains Mono, monospace">Dedicated microVM · full resources</text>
+
+            <!-- VS label -->
+            <text x="210" y="104" text-anchor="middle" fill="#8C94A1" font-size="11" font-family="JetBrains Mono, monospace">VS</text>
+
+            <!-- ── Cube 2: Standard PaaS (dashed, greyed out) ── -->
+            <!-- center (315, 100), same size -->
+            <!-- Hexagon: (315,40),(367,70),(367,130),(315,160),(263,130),(263,70) -->
+            <polygon points="315,40 367,70 367,130 315,160 263,130 263,70"
+                     stroke="#8C94A1" stroke-width="1.5" stroke-opacity="0.4" stroke-dasharray="4 3" fill="rgba(140,148,161,0.03)"/>
+            <!-- 3 center spokes (dashed) -->
+            <line x1="315" y1="100" x2="315" y2="40"   stroke="#8C94A1" stroke-width="1.5" stroke-opacity="0.4" stroke-dasharray="4 3"/>
+            <line x1="315" y1="100" x2="367" y2="130"  stroke="#8C94A1" stroke-width="1.5" stroke-opacity="0.4" stroke-dasharray="4 3"/>
+            <line x1="315" y1="100" x2="263" y2="130"  stroke="#8C94A1" stroke-width="1.5" stroke-opacity="0.4" stroke-dasharray="4 3"/>
+            <!-- Scattered dots inside to imply noise/shared tenants -->
+            <circle cx="295" cy="80"  r="1.5" fill="#8C94A1" opacity="0.35"/>
+            <circle cx="330" cy="90"  r="1.5" fill="#8C94A1" opacity="0.35"/>
+            <circle cx="310" cy="115" r="1.5" fill="#8C94A1" opacity="0.35"/>
+            <circle cx="340" cy="108" r="1.5" fill="#8C94A1" opacity="0.35"/>
+            <circle cx="285" cy="105" r="1.5" fill="#8C94A1" opacity="0.35"/>
+            <circle cx="320" cy="75"  r="1.5" fill="#8C94A1" opacity="0.35"/>
+            <circle cx="305" cy="130" r="1.5" fill="#8C94A1" opacity="0.35"/>
+            <circle cx="350" cy="90"  r="1.5" fill="#8C94A1" opacity="0.35"/>
+            <circle cx="270" cy="95"  r="1.5" fill="#8C94A1" opacity="0.35"/>
+
+            <!-- Cube 2 labels -->
+            <text x="315" y="186" text-anchor="middle" fill="#8C94A1"  font-size="11" font-family="JetBrains Mono, monospace">Standard PaaS</text>
+            <text x="315" y="200" text-anchor="middle" fill="#8C94A1"  font-size="9.5" font-family="JetBrains Mono, monospace">Shared VM · noisy neighbours</text>
+
+          </svg>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>

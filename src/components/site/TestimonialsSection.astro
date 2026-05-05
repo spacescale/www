@@ -1,0 +1,24 @@
+---
+import CaseTabs from "./CaseTabs.tsx";
+---
+
+<section class="md:py-40 py-20 relative overflow-hidden bg-background">
+  <!-- Diagonal hatch texture -->
+  <div class="absolute inset-0 pointer-events-none hatch-bg opacity-60"></div>
+
+  <div class="container mx-auto px-6 relative z-10">
+    <CaseTabs client:load />
+  </div>
+</section>
+
+<style>
+  .hatch-bg {
+    background-image: repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 5px,
+      rgba(255, 255, 255, 0.018) 5px,
+      rgba(255, 255, 255, 0.018) 6px
+    );
+  }
+</style>

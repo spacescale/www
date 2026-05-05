@@ -1,0 +1,125 @@
+---
+---
+<section class="bg-background">
+  <div class="container mx-auto px-6">
+    <div class="border border-border-default overflow-hidden">
+      <div class="grid grid-cols-1 lg:grid-cols-2 py-20">
+
+        <!-- Left: copy -->
+        <div class="p-10 flex flex-col gap-5 justify-center">
+          <h2 class="text-[32px] font-400 text-text-primary leading-tight">
+            Automatic Network Mapping
+          </h2>
+          <p class="text-[15px] text-text-secondary leading-relaxed max-w-xs">
+            Our intelligent router detects your exposed ports and wires them
+            straight to the internet or securely isolates them on your internal
+            network.
+          </p>
+        </div>
+
+        <!-- Right: network diagram -->
+        <div class="border-t lg:border-t-0  border-border-default p-8 flex items-center justify-center">
+          <div class="w-full max-w-sm flex flex-col items-center gap-0 font-terminal text-[11px]">
+
+            <!-- YOUR APP box -->
+            <div class="w-full border border-border-default rounded-lg p-3 bg-[#0C0E11]">
+              <p class="text-text-secondary text-[10px] uppercase tracking-widest mb-2">Your App</p>
+              <div class="space-y-1.5">
+                <div class="flex items-center gap-2">
+                  <span class="text-accent-mint">:8080</span>
+                  <span class="text-text-secondary">HTTP</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="text-blue-400">:5432</span>
+                  <span class="text-text-secondary">Postgres</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="text-yellow-400">:9090</span>
+                  <span class="text-text-secondary">Metrics</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Arrow down -->
+            <div class="flex flex-col items-center py-2">
+              <div class="w-px h-5 bg-border-default"></div>
+              <svg width="10" height="6" viewBox="0 0 10 6" fill="none">
+                <path d="M1 1L5 5L9 1" stroke="#1A1D24" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+            </div>
+
+            <!-- L4 Router box (accent) -->
+            <div class="w-full border border-accent-mint/30 rounded-lg p-3 bg-accent-mint/5 text-center">
+              <p class="text-accent-mint text-[11px] font-terminal uppercase tracking-widest">L4 Intelligent Router</p>
+              <p class="text-text-secondary text-[10px] mt-0.5">auto-detect · route</p>
+            </div>
+
+            <!-- Split arrows -->
+            <div class="w-full flex items-start justify-between px-12 py-2">
+              <!-- Left arrow -->
+              <div class="flex flex-col items-center gap-0">
+                <div class="w-px h-5 bg-border-default"></div>
+                <svg width="10" height="6" viewBox="0 0 10 6" fill="none">
+                  <path d="M1 1L5 5L9 1" stroke="#1A1D24" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <!-- Right arrow -->
+              <div class="flex flex-col items-center gap-0">
+                <div class="w-px h-5 bg-border-default"></div>
+                <svg width="10" height="6" viewBox="0 0 10 6" fill="none">
+                  <path d="M1 1L5 5L9 1" stroke="#1A1D24" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+              </div>
+            </div>
+
+            <!-- PUBLIC / INTERNAL panels -->
+            <div class="w-full grid grid-cols-2 gap-3">
+
+              <!-- PUBLIC -->
+              <div class="border border-border-default rounded-lg p-3 bg-[#0C0E11]">
+                <p class="text-text-secondary text-[10px] uppercase tracking-widest mb-2">Public</p>
+                <div class="space-y-1.5">
+                  <div class="flex items-center gap-1.5">
+                    <span class="text-accent-mint">:8080</span>
+                    <span class="text-text-secondary">HTTP</span>
+                  </div>
+                  <p class="text-text-secondary text-[10px] leading-relaxed">→ TLS terminated (auto-ACME)</p>
+                  <p class="text-text-secondary text-[10px]">→ DNS: api.spacescale.app</p>
+                  <p class="text-text-secondary text-[10px]">→ Load balanced across replicas</p>
+                  <div class="flex flex-wrap gap-1 mt-2">
+                    <span class="border border-accent-mint/30 text-accent-mint text-[9px] px-1.5 py-0.5 rounded">auto-TLS</span>
+                    <span class="border border-accent-mint/30 text-accent-mint text-[9px] px-1.5 py-0.5 rounded">auto-DNS</span>
+                    <span class="border border-border-default text-text-secondary text-[9px] px-1.5 py-0.5 rounded">public</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- INTERNAL -->
+              <div class="border border-border-default rounded-lg p-3 bg-[#0C0E11]">
+                <p class="text-text-secondary text-[10px] uppercase tracking-widest mb-2">Internal</p>
+                <div class="space-y-1.5">
+                  <div class="flex items-center gap-1.5">
+                    <span class="text-blue-400">:5432</span>
+                    <span class="text-text-secondary text-[10px]">Postgres</span>
+                  </div>
+                  <p class="text-text-secondary text-[10px]">→ Encryption mode only</p>
+                  <div class="flex items-center gap-1.5 mt-1">
+                    <span class="text-yellow-400">:9090</span>
+                    <span class="text-text-secondary text-[10px]">Metrics</span>
+                  </div>
+                  <p class="text-text-secondary text-[10px]">→ Internal-scope endpoint</p>
+                  <div class="flex flex-wrap gap-1 mt-2">
+                    <span class="border border-border-default text-text-secondary text-[9px] px-1.5 py-0.5 rounded">node-only</span>
+                    <span class="border border-border-default text-text-secondary text-[9px] px-1.5 py-0.5 rounded">isolated</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>

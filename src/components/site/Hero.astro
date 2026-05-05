@@ -1,0 +1,459 @@
+---
+// Hero section — The Hyper-PaaS for Serious Workloads.
+---
+
+<section
+  class="relative min-h-screen flex items-center mx-auto justify-center bg-background overflow-hidden pt-20 lg:pt-40"
+>
+  <!-- Dot-grid background -->
+  <div class="absolute inset-0 dot-grid opacity-20 pointer-events-none"></div>
+
+  <!-- Orbital Globe — inlined from 07b-orbital-globe-spinning.html -->
+  <div
+    class="absolute -right-10 top-1/2 -translate-y-1/2 translate-x-[30%] pointer-events-none select-none lg:translate-x-[30%] md:translate-x-[20%] sm:translate-x-[10%] xs:translate-x-[5%]"
+    style="width: min(1500px, 100vw); height: min(1000px, 66vw); max-width: 1500px; max-height: 1000px;"
+  >
+    <svg
+      viewBox="0 0 680 500"
+      xmlns="http://www.w3.org/2000/svg"
+      class="w-full h-full"
+    >
+      <style>
+        @keyframes pulse {
+          0%,
+          100% {
+            opacity: 0.3;
+          }
+          50% {
+            opacity: 0.8;
+          }
+        }
+        @keyframes dash {
+          to {
+            stroke-dashoffset: -20;
+          }
+        }
+        @keyframes spinMeridianA {
+          0% {
+            rx: 60;
+          }
+          25% {
+            rx: 0;
+          }
+          50% {
+            rx: 60;
+          }
+          75% {
+            rx: 180;
+          }
+          100% {
+            rx: 60;
+          }
+        }
+        @keyframes spinMeridianB {
+          0% {
+            rx: 120;
+          }
+          25% {
+            rx: 60;
+          }
+          50% {
+            rx: 0;
+          }
+          75% {
+            rx: 60;
+          }
+          100% {
+            rx: 120;
+          }
+        }
+        @keyframes spinMeridianC {
+          0% {
+            rx: 180;
+          }
+          25% {
+            rx: 120;
+          }
+          50% {
+            rx: 60;
+          }
+          75% {
+            rx: 0;
+          }
+          100% {
+            rx: 180;
+          }
+        }
+        .globe-line {
+          fill: none;
+          stroke: #8b8d94;
+          stroke-width: 0.5;
+          stroke-dasharray: 4 4;
+          opacity: 0.3;
+        }
+        .globe-outer {
+          fill: none;
+          stroke: #8b8d94;
+          stroke-width: 0.5;
+          stroke-dasharray: 6 6;
+          opacity: 0.3;
+        }
+        .globe-equator {
+          fill: none;
+          stroke: #8b8d94;
+          stroke-width: 0.5;
+          stroke-dasharray: 4 4;
+          opacity: 0.3;
+        }
+        .meridian {
+          fill: none;
+          stroke: #8b8d94;
+          stroke-width: 0.5;
+          stroke-dasharray: 4 4;
+          opacity: 0.2;
+          transform-origin: center;
+        }
+        .m1 {
+          animation: spinMeridianA 20s linear infinite;
+        }
+        .m2 {
+          animation: spinMeridianB 20s linear infinite;
+        }
+        .node-glow {
+          animation: pulse 3s ease-in-out infinite;
+        }
+        .data-line {
+          fill: none;
+          stroke: #66d9a5;
+          stroke-width: 0.8;
+          stroke-dasharray: 3 6;
+          animation: dash 2s linear infinite;
+          opacity: 0.4;
+        }
+        .region-node {
+          fill: #66d9a5;
+          opacity: 0.9;
+        }
+        .region-ring {
+          fill: none;
+          stroke: #66d9a5;
+          stroke-width: 0.5;
+          opacity: 0.25;
+        }
+        .lbl {
+          font-family: Inter, system-ui, sans-serif;
+          font-size: 10px;
+          fill: #66d9a5;
+          opacity: 0.7;
+        }
+        
+        @media (max-width: 640px) {
+          .lbl {
+            font-size: 8px;
+          }
+        }
+      </style>
+
+      <g transform="translate(340,250)">
+        <!-- Globe outer ring -->
+        <ellipse class="globe-outer" cx="0" cy="0" rx="180" ry="180"></ellipse>
+        <!-- Equator -->
+        <ellipse class="globe-equator" cx="0" cy="0" rx="180" ry="60"></ellipse>
+        <!-- Latitude bands -->
+        <ellipse
+          class="globe-line"
+          cx="0"
+          cy="0"
+          rx="180"
+          ry="120"
+          transform="rotate(25)"></ellipse>
+        <ellipse
+          class="globe-line"
+          cx="0"
+          cy="0"
+          rx="180"
+          ry="120"
+          transform="rotate(-25)"></ellipse>
+        <!-- Spinning meridians -->
+        <ellipse class="meridian m1" cx="0" cy="0" rx="60" ry="180"></ellipse>
+        <ellipse class="meridian m2" cx="0" cy="0" rx="120" ry="180"></ellipse>
+        <ellipse
+          class="meridian"
+          cx="0"
+          cy="0"
+          rx="180"
+          ry="180"
+          style="opacity:.08"></ellipse>
+        <ellipse
+          class="meridian"
+          cx="0"
+          cy="0"
+          rx="30"
+          ry="180"
+          style="opacity:.1;animation:spinMeridianA 20s linear infinite;animation-delay:-5s"
+        ></ellipse>
+        <ellipse
+          class="meridian"
+          cx="0"
+          cy="0"
+          rx="90"
+          ry="180"
+          style="opacity:.12;animation:spinMeridianB 20s linear infinite;animation-delay:-5s"
+        ></ellipse>
+        <ellipse
+          class="meridian"
+          cx="0"
+          cy="0"
+          rx="150"
+          ry="180"
+          style="opacity:.1;animation:spinMeridianC 20s linear infinite;animation-delay:-5s"
+        ></ellipse>
+        <!-- Axis lines -->
+        <line class="globe-line" x1="0" y1="-180" x2="0" y2="180" opacity=".15"
+        ></line>
+        <line class="globe-line" x1="-180" y1="0" x2="180" y2="0" opacity=".15"
+        ></line>
+        <!-- Data connections -->
+        <line class="data-line" x1="-140" y1="-80" x2="-60" y2="60"></line>
+        <line class="data-line" x1="-60" y1="60" x2="100" y2="30"></line>
+        <line class="data-line" x1="100" y1="30" x2="150" y2="-60"></line>
+        <line class="data-line" x1="-140" y1="-80" x2="100" y2="30"></line>
+        <line class="data-line" x1="-60" y1="60" x2="60" y2="-120"></line>
+        <line class="data-line" x1="60" y1="-120" x2="150" y2="-60"></line>
+        <line class="data-line" x1="-140" y1="-80" x2="60" y2="-120"></line>
+        <!-- Region nodes -->
+        <g class="node-glow" style="animation-delay:0s">
+          <circle class="region-ring" cx="-140" cy="-80" r="12"></circle>
+          <circle class="region-node" cx="-140" cy="-80" r="4"></circle>
+        </g>
+        <g class="node-glow" style="animation-delay:.6s">
+          <circle class="region-ring" cx="-60" cy="60" r="12"></circle>
+          <circle class="region-node" cx="-60" cy="60" r="4"></circle>
+        </g>
+        <g class="node-glow" style="animation-delay:1.2s">
+          <circle class="region-ring" cx="100" cy="30" r="12"></circle>
+          <circle class="region-node" cx="100" cy="30" r="4"></circle>
+        </g>
+        <g class="node-glow" style="animation-delay:1.8s">
+          <circle class="region-ring" cx="150" cy="-60" r="12"></circle>
+          <circle class="region-node" cx="150" cy="-60" r="4"></circle>
+        </g>
+        <g class="node-glow" style="animation-delay:2.4s">
+          <circle class="region-ring" cx="60" cy="-120" r="12"></circle>
+          <circle class="region-node" cx="60" cy="-120" r="4"></circle>
+        </g>
+        <!-- Labels -->
+        <text class="lbl" x="-155" y="-95">us-east</text>
+        <text class="lbl" x="-75" y="80">eu-west</text>
+        <text class="lbl" x="110" y="48">ap-south</text>
+        <text class="lbl" x="158" y="-68">ap-east</text>
+        <text class="lbl" x="68" y="-128">us-west</text>
+      </g>
+    </svg>
+  </div>
+
+  <div class="container mx-auto px-4 sm:px-6 py-12 sm:py-16 lg:py-28 xl:py-36 relative z-10">
+    <div class="max-w-3xl sm:max-w-2xl xs:max-w-full flex flex-col gap-6 sm:gap-8">
+      <!-- Status badge -->
+      <div
+        class="inline-flex w-fit items-center gap-2 border border-border-default rounded-md px-3 py-1.5"
+      >
+        <span class="text-text-secondary text-[13px]"
+          >Currently in active developement — follow our story</span
+        >
+      </div>
+
+      <!-- Headline + subtext -->
+      <div class="flex flex-col gap-5">
+        <h1
+          class="text-hero font-400 text-text-primary leading-tight tracking-tight text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl"
+        >
+          The Hyper-PaaS for<br />Serious Workloads.
+        </h1>
+        <p class="text-body text-text-secondary leading-relaxed max-w-[90%] sm:max-w-[80%] text-sm sm:text-base">
+          A serverless deployment platform built for workloads that break
+          standard PaaS. Deploy containers onto high-performance, isolated
+          compute with zero op
+        </p>
+      </div>
+
+      <!-- CTA — outlined -->
+      <div>
+        <a
+          href="/blog"
+          class="inline-flex items-center cursor-pointer border-2 border-white gap-2 text-text-primary font-500 text-[14px] px-5 py-2.5  hover:bg-card transition-colors"
+        >
+          Read how we're building it
+        </a>
+      </div>
+
+      <!-- Tabbed terminal -->
+      <div
+        class="border border-border-default rounded-xl overflow-hidden max-w-full text-xs sm:text-xs md:text-xs lg:text-xs"
+        id="hero-terminal"
+      >
+        <!-- Tab bar -->
+        <div class="flex border-b border-border-default overflow-x-auto">
+          <button
+            class="tab-btn px-3 sm:px-4 py-2 sm:py-2.5 font-terminal text-[10px] sm:text-[11px] md:text-[12px] text-text-primary border-b border-accent-mint -mb-px transition-colors whitespace-nowrap"
+            data-tab="cli">CLI</button
+          >
+          <button
+            class="tab-btn px-3 sm:px-4 py-2 sm:py-2.5 font-terminal text-[10px] sm:text-[11px] md:text-[12px] text-text-secondary border-b border-transparent -mb-px transition-colors hover:text-text-primary whitespace-nowrap"
+            data-tab="api">API</button
+          >
+          <button
+            class="tab-btn px-3 sm:px-4 py-2 sm:py-2.5 font-terminal text-[10px] sm:text-[11px] md:text-[12px] text-text-secondary border-b border-transparent -mb-px transition-colors hover:text-text-primary whitespace-nowrap"
+            data-tab="console">CONSOLE</button
+          >
+        </div>
+
+        <!-- CLI tab -->
+        <div
+          class="tab-panel bg-card p-3 sm:p-4 md:p-5 font-terminal text-[10px] sm:text-[11px] md:text-[12px] lg:text-[13px] space-y-1 sm:space-y-2"
+          data-panel="cli"
+        >
+          <div class="flex items-center gap-2">
+            <span class="text-text-secondary select-none">$</span>
+            <span class="text-text-primary"
+              >spacescale deploy ./app --region eu-west</span
+            >
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="text-text-secondary">→</span>
+            <span class="text-text-secondary"
+              >pushing image<span class="text-text-secondary">...</span> done</span
+            >
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="text-text-secondary">→</span>
+            <span class="text-text-secondary"
+              >booting microVM in fra1<span class="text-text-secondary"
+                >...</span
+              >
+              <span class="text-accent-mint">412ms</span></span
+            >
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="text-text-secondary">→</span>
+            <span class="text-text-secondary"
+              >live at <span class="text-text-primary"
+                >https://app.spacescale.run</span
+              ></span
+            >
+          </div>
+          <div class="flex items-center gap-2 pt-1">
+            <span class="text-text-secondary select-none">$</span>
+            <span class="text-text-primary cursor-blink">▋</span>
+          </div>
+        </div>
+
+        <!-- API tab -->
+        <div
+          class="tab-panel bg-card p-3 sm:p-4 md:p-5 font-terminal text-[10px] sm:text-[11px] md:text-[12px] lg:text-[13px] space-y-1 sm:space-y-2 hidden"
+          data-panel="api"
+        >
+          <div class="text-text-secondary">
+            POST <span class="text-text-primary">/v1/deployments</span>
+          </div>
+          <div class="text-text-secondary">
+            Authorization: Bearer <span class="text-accent-mint"
+              >sk_live_••••••••</span
+            >
+          </div>
+          <div class="mt-2 text-text-secondary">
+            {}
+            <div class="pl-4 text-text-secondary">
+              "image": <span class="text-accent-mint"
+                >"registry.spacescale.run/app:latest"</span
+              >,
+            </div>
+            <div class="pl-4 text-text-secondary">
+              "region": <span class="text-accent-mint">"eu-west"</span>,
+            </div>
+            <div class="pl-4 text-text-secondary">
+              "replicas": <span class="text-accent-mint">3</span>
+            </div>
+            <div class="text-text-secondary"></div>
+          </div>
+        </div>
+
+        <!-- CONSOLE tab -->
+        <div
+          class="tab-panel bg-card p-3 sm:p-4 md:p-5 font-terminal text-[10px] sm:text-[11px] md:text-[12px] lg:text-[13px] space-y-1 sm:space-y-2 hidden"
+          data-panel="console"
+        >
+          <div class="flex items-center gap-3">
+            <span class="text-text-secondary text-[11px]">12:34:57</span>
+            <span class="text-blue-400">[stdout]</span>
+            <span class="text-text-secondary">Server listening on :3000</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <span class="text-text-secondary text-[11px]">12:34:58</span>
+            <span class="text-blue-400">[event]</span>
+            <span class="text-text-secondary">Health check passed</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <span class="text-text-secondary text-[11px]">12:35:01</span>
+            <span class="text-blue-400">[stdout]</span>
+            <span class="text-text-secondary">GET /api/status 200 — 3ms</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <span class="text-text-secondary text-[11px]">12:35:04</span>
+            <span class="text-accent-mint">[metric]</span>
+            <span class="text-text-secondary">cpu=14% mem=312MB</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .dot-grid {
+    background-image: radial-gradient(circle, #1e2028 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+
+  .cursor-blink {
+    animation: blink 1.1s step-start infinite;
+  }
+
+  @keyframes blink {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
+  }
+</style>
+
+<script>
+  const terminal = document.getElementById("hero-terminal");
+  if (terminal) {
+    terminal.querySelectorAll<HTMLButtonElement>(".tab-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const target = btn.dataset.tab;
+
+        // Update button styles
+        terminal
+          .querySelectorAll<HTMLButtonElement>(".tab-btn")
+          .forEach((b) => {
+            b.classList.remove("text-text-primary", "border-accent-mint");
+            b.classList.add("text-text-secondary", "border-transparent");
+          });
+        btn.classList.remove("text-text-secondary", "border-transparent");
+        btn.classList.add("text-text-primary", "border-accent-mint");
+
+        // Show/hide panels
+        terminal
+          .querySelectorAll<HTMLElement>(".tab-panel")
+          .forEach((panel) => {
+            panel.classList.toggle("hidden", panel.dataset.panel !== target);
+          });
+      });
+    });
+  }
+</script>
