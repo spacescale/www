@@ -12,25 +12,27 @@ const navLinks = [
 ---
 
 <header class="site-header" aria-label="Primary navigation">
-    <a class="brand-lockup" href="/" aria-label="SpaceScale home">
-        <span class="brand-mark" aria-hidden="true">
-            <!-- These empty spans become the SpaceScale square-dot logo in CSS. -->
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-        </span>
+    <div class="site-header-inner">
+        <a class="brand-lockup" href="/" aria-label="SpaceScale home">
+            <span class="brand-mark" aria-hidden="true">
+                <!-- These empty spans become the SpaceScale square-dot logo in CSS. -->
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </span>
 
-        <span class="brand-name">SpaceScale</span>
-    </a>
+            <span class="brand-name">SpaceScale</span>
+        </a>
 
-    <nav class="site-nav" aria-label="Main menu">
-        {navLinks.map((link) => <a href={link.href}>{link.label}</a>)}
+        <nav class="site-nav" aria-label="Main menu">
+            {navLinks.map((link) => <a href={link.href}>{link.label}</a>)}
 
-        <a class="nav-cta" href="/engineering">Read how we are building it</a>
-    </nav>
+            <a class="nav-cta" href="/engineering">Read how we are building it</a>
+        </nav>
+    </div>
 </header>

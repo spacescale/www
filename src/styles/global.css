@@ -88,13 +88,21 @@ button, input, textarea, select {
 .site-header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
 
     height: 100px;
-    padding: 0 80px;
+    padding: 0 var(--site-padding-x);
 
     background: var(--color-bg-primary);
     color: #f5f7fa;
+}
+
+.site-header-inner {
+    display: flex;
+    width: 100%;
+    max-width: var(--site-max-width);
+    align-items: center;
+    justify-content: space-between;
 }
 
 .brand-lockup {
