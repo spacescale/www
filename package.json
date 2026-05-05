@@ -7,7 +7,8 @@
     "dev": "astro dev",
     "build": "astro check && astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "prepare": "husky"
   },
   "dependencies": {
     "@astrojs/check": "0.9.8",
@@ -18,5 +19,8 @@
     "solid-js": "1.9.12",
     "tailwindcss": "^4.2.4",
     "typescript": "6.0.3"
+  },
+  "devDependencies": {
+    "husky": "^9.1.7"
   }
 }

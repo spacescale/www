@@ -1,0 +1,4 @@
+#!/bin/sh
+# Run full build - type check + Astro build - before every push
+echo " Running full build check before push..."
+bun run build

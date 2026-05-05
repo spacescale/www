@@ -1,0 +1,5 @@
+#!/bin/sh
+# Fast TS-only check on .ts/.tsx files 
+# This avoids spinning up Vite during commit
+echo "Type-checking TypeScript files..."
+bun tsc --noEmit
