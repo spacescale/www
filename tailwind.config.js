@@ -12,6 +12,7 @@ export default {
         'text-primary': '#F0F1F2',
         'text-secondary': '#8C94A1',
         'accent-mint': '#66D9A5',
+        'accent-mint-light': '#BFD9C7',
         'text-light': '#F5F7FA',
         'text-accent': '#66D9A5',
         'text-gray': '#8A8F98',

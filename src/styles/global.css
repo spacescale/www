@@ -1,5 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap");
+
+/* @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap'); */
 @import url("https://fonts.cdnfonts.com/css/articulat-cf");
 @import "tailwindcss";
 /*
@@ -55,6 +57,7 @@
   --color-text-disabled: #3a3d44;
 
   --color-accent-mint: #66d9a5;
+  --color-accent-mint-light: #bfd9c7;
   --color-status-warning: #d9b84d;
   --color-status-error: #d95a5a;
   --color-status-info: #668bd9;
@@ -64,7 +67,7 @@
 
   --font-display: "Articulat CF", Inter, ui-sans-serif, system-ui, sans-serif;
   --font-body: Inter, ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+  --font-mono: "JetBrains Mono";
 }
 
 /*
@@ -89,6 +92,11 @@ body {
   background: var(--color-background);
   color: var(--color-text-primary);
   font-family: var(--font-family-body);
+  overflow-x: hidden;
+}
+
+html {
+  overflow-x: hidden !important;
 }
 
 /* Typography utility classes */
@@ -113,4 +121,12 @@ body {
 .text-terminal {
   font-family: var(--font-family-terminal);
   font-size: 13px;
+}
+
+.text-accent-mint-light {
+  color: var(--color-accent-mint-light);
+}
+
+.text-text-accent-mint-light {
+  color: var(--color-accent-mint-light);
 }
