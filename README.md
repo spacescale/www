@@ -1,5 +1,7 @@
 ## www
 
+[![CI](https://github.com/spacescale/www/actions/workflows/ci.yml/badge.svg)](https://github.com/spacescale/www/actions/workflows/ci.yml)
+
 Public website and engineering blog for SpaceScale.
 
 ## Requires
