@@ -1,0 +1,183 @@
+---
+---
+
+<section class="landing-hero" aria-labelledby="landing-hero-title">
+    <div class="landing-hero__visual" aria-hidden="true">
+        <img class="landing-hero__globe" src="/assets/hero/orbital-globe.svg" alt="" />
+    </div>
+
+    <div class="landing-hero__inner">
+        <a class="landing-hero__badge" href="/engineering">
+            Currently in active development — follow our story
+        </a>
+
+        <h1 id="landing-hero-title" class="landing-hero__title">
+            The Hyper-PaaS for Serious Workloads.
+        </h1>
+
+        <p class="landing-hero__copy">
+            A serverless deployment platform built for workloads that break standard PaaS.
+            Deploy containers onto high-performance, isolated compute with zero ops.
+        </p>
+
+        <a class="landing-hero__cta" href="/engineering">Read how we're building it</a>
+
+        <div class="landing-hero__terminal" aria-label="SpaceScale CLI deployment preview">
+            <div class="landing-hero__tabs" aria-hidden="true">
+                <span>CLI</span>
+                <span>API</span>
+                <span>CONSOLE</span>
+            </div>
+
+            <pre class="landing-hero__console"><code>$ spacescale deploy ./app --region eu-west
+  → pushing image... done
+  → booting microVM in fra1... 412ms
+  → live at https://app.spacescale.run</code></pre>
+        </div>
+    </div>
+</section>
+
+<style>
+    .landing-hero {
+        position: relative;
+        min-height: 900px;
+        overflow: clip;
+        padding: 172px var(--site-padding-x) 96px;
+        background: #040406;
+    }
+
+    .landing-hero__inner {
+        position: relative;
+        z-index: 1;
+        width: 100%;
+        max-width: var(--site-max-width);
+        margin: 0 auto;
+    }
+
+    .landing-hero__badge {
+        display: inline-flex;
+        align-items: center;
+        height: 32px;
+        margin: 0;
+        padding: 8px 14px;
+        border: 1px solid #262b33;
+        background: transparent;
+        color: #8c94a1;
+        font-family: var(--font-body);
+        font-size: 13px;
+        line-height: normal;
+        text-decoration: none;
+        transition:
+                background-color 160ms ease,
+                border-color 160ms ease,
+                color 160ms ease;
+    }
+
+    .landing-hero__badge:hover {
+        border-color: #343a45;
+        background: rgba(255, 255, 255, 0.04);
+        color: #9ca4b0;
+    }
+
+    .landing-hero__title {
+        width: 575px;
+        margin: 32px 0 0;
+        color: #f5f7fa;
+        font-family: var(--font-display);
+        font-size: 64px;
+        font-weight: 400;
+        line-height: 72px;
+        letter-spacing: 0;
+    }
+
+    .landing-hero__copy {
+        width: 609px;
+        margin: 32px 0 0;
+        color: #8c94a1;
+        font-family: var(--font-body);
+        font-size: 16px;
+        line-height: 24px;
+    }
+
+    .landing-hero__cta {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        height: 51px;
+        margin-top: 32px;
+        padding: 16px 24px;
+        border: 1px solid #ffffff;
+        color: #f5f7fa;
+        font-family: var(--font-body);
+        font-size: 16px;
+        font-weight: 600;
+    }
+
+    .landing-hero__cta:hover {
+        border-color: rgba(255, 255, 255, 0.78);
+        color: rgba(245, 247, 250, 0.86);
+    }
+
+    .landing-hero__terminal {
+        width: 720px;
+        margin-top: 81px;
+    }
+
+    .landing-hero__tabs {
+        display: inline-flex;
+        align-items: center;
+        gap: 32px;
+        width: 207px;
+        height: 38px;
+        padding: 8px 16px;
+        border: 1px solid #262b33;
+        border-bottom: 0;
+        color: rgba(255, 255, 255, 0.4);
+        font-family: var(--font-mono);
+        font-size: 14px;
+        line-height: 22px;
+    }
+
+    .landing-hero__tabs span:first-child {
+        color: #66d9a5;
+    }
+
+    .landing-hero__console {
+        width: 720px;
+        height: 140px;
+        margin: 0;
+        padding: 20px 24px;
+        overflow: hidden;
+        border: 1px solid #262b33;
+        background: #12141a;
+        color: #bfd9c7;
+        font-family: var(--font-mono);
+        font-size: 14px;
+        line-height: 22px;
+    }
+
+    .landing-hero__console code {
+        font: inherit;
+    }
+    .landing-hero__visual {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        width: min(100%, 1440px);
+        margin-inline: auto;
+        overflow: clip;
+        pointer-events: none;
+    }
+
+    .landing-hero__globe {
+        position: absolute;
+        top: -18px;
+        left: 450px;
+
+        width: min(1180px, 90vw);
+        height: auto;
+
+        user-select: none;
+    }
+
+</style>
