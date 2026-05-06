@@ -1,4 +1,4 @@
 #!/bin/sh
-# Run full build - type check + Astro build - before every push
-echo " Running full build check before push..."
-bun run build
+# Type check only on push — full build runs in CI
+echo "Type-checking before push..."
+bun tsc --noEmit
