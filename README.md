@@ -1,8 +1,8 @@
-## www
+## SpaceScale Public Website
 
 [![CI](https://github.com/spacescale/www/actions/workflows/ci.yml/badge.svg)](https://github.com/spacescale/www/actions/workflows/ci.yml)
 
-Public website and engineering blog for SpaceScale.
+Public website for SpaceScale.
 
 ## Requires
 
@@ -14,7 +14,7 @@ Public website and engineering blog for SpaceScale.
 bun install
 ```
 
-##  development 
+## Development
 
 ```sh
 bun dev

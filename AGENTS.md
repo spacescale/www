@@ -1,0 +1,49 @@
+# Agent Rules
+
+- Preserve the SpaceScale visual language: dark surfaces, sharp edges, restrained mint accents, technical diagrams, and calm typography.
+- Prefer useful technical visuals over decorative graphics.
+- Avoid rounded-card-heavy SaaS layouts unless the approved design requires them.
+- Avoid gradients, blobs, decorative orbs, stock-like hero art, and generic startup hero patterns.
+- Use Astro components with modern native CSS as the long-term styling direction.
+- Use modern CSS features only when they improve maintainability, readability, or design fidelity.
+- Prioritize maintainable and readable code over shortcuts that only make the current task faster.
+- Do not implement UI with Tailwind utility classes.
+- Do not reintroduce Tailwind setup, Tailwind config, or Tailwind-oriented patterns.
+- Do not add styling libraries, icon libraries, animation libraries, or build plugins without explicit approval.
+- Use CSS custom properties from `src/styles/global.css` for shared SpaceScale tokens.
+- Use direct CSS values when a visual spec requires exact spacing, size, border, or placement.
+- Keep section-specific styles under a namespaced owner class.
+- Use ownership-based class names like `.site-header`, `.site-footer`, `.engineering-index__item`, and `.telemetry-panel__row`.
+- Avoid generic class names like `.box`, `.card`, `.title`, `.text`, `.content`, `.section`, and `.wrapper`.
+- Keep selectors shallow enough that the owning component is obvious.
+- Do not use `!important`.
+- Do not change global tokens to solve a one-section problem.
+- Stop before creating a file that does not clearly fit the existing folder ownership.
+- Keep one visual section in one section component unless there is a real reuse boundary.
+- Do not create abstractions for a single call site.
+- Do not add wrapper components just to make code look generic.
+- Keep component props minimal and concrete.
+- Keep data arrays close to the component that owns them.
+- Extract only when it improves readability or real reuse.
+- Prefer semantic HTML before adding extra divs.
+- Decorative visuals should use `aria-hidden="true"`.
+- Links and buttons should have clear accessible labels.
+- Match approved visual direction for spacing, typography, colors, borders, asset placement, content width, and component boundaries.
+- Do not submit visually approximate implementations when the issue asks for a specific design.
+- Do not mix implementation work with cleanup work.
+- Do not move files or reshape folders unless the issue is specifically about structure.
+- Do not delete existing files unless the issue explicitly requires it.
+- Do not change package files, lockfiles, build config, or framework config unless the issue explicitly requires it.
+- Use `public/assets` for larger static visuals.
+- Use `src/components/icons` for small UI icons.
+- Do not add unused assets.
+- Do not delete assets unless the issue explicitly says to.
+- Do not commit temporary external asset URLs.
+- Do not use placeholders for missing required assets.
+- Keep asset names descriptive and stable.
+- Use asset paths like `public/assets/<area>/<asset-name>.svg`.
+- Fix obvious spelling issues when touching nearby copy.
+- Do not rewrite large copy blocks unless the issue asks for copy work.
+- Update nearby docs when a change alters structure, commands, assets, styling direction, or contribution expectations.
+- Add comments only when implementation intent is unclear, a visual choice is non-obvious, or a boundary decision needs to be preserved.
+- Do not add comments that simply repeat what the code already says.
