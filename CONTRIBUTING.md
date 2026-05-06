@@ -1,6 +1,6 @@
 # Contributing
 
-This repository contains the public SpaceScale website and engineering blog.
+This repository contains the public SpaceScale website.
 
 Contributions should be focused, easy to review, and aligned with the existing direction of the site.
 
