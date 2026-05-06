@@ -57,12 +57,12 @@ const events = [
       </p>
     </div>
 
-    <!-- Single outer card, 3 columns with dividers -->
+    
     <div class="bg-card border border-border-default rounded-xl overflow-hidden grid grid-cols-1 lg:grid-cols-3">
 
-      <!-- ── Column 1: LOG STREAM ── -->
+      
       <div class="border-b lg:border-b-0 lg:border-r border-border-default p-6 flex flex-col">
-        <!-- Header -->
+
         <div class="flex items-center justify-between mb-5">
           <span class="font-terminal text-[10px] uppercase tracking-[0.18em] text-text-secondary">Log Stream</span>
           <span class="flex items-center gap-1.5 font-terminal text-[10px] text-accent-mint">
@@ -71,7 +71,7 @@ const events = [
           </span>
         </div>
 
-        <!-- Log rows -->
+
         <div class="space-y-2.5 font-terminal text-[11px]">
           {logs.map((l) => (
             <div class="flex items-center gap-2 min-w-0">
@@ -87,9 +87,9 @@ const events = [
         </div>
       </div>
 
-      <!-- ── Column 2: VM TELEMETRY ── -->
+     
       <div class="border-b lg:border-b-0 lg:border-r border-border-default p-6 flex flex-col">
-        <!-- Header -->
+     
         <span class="font-terminal text-[10px] uppercase tracking-[0.18em] text-text-secondary mb-6">
           VM Telemetry
         </span>
@@ -107,7 +107,7 @@ const events = [
             </div>
           ))}
 
-          <!-- Uptime (no bar) -->
+         
           <div class="flex items-center justify-between pt-2 mt-auto border-t border-border-default">
             <span class="font-terminal text-[10px] uppercase tracking-widest text-text-secondary">Uptime</span>
             <span class="font-terminal text-[11px] text-text-primary">14d 6h 32m</span>
@@ -115,9 +115,9 @@ const events = [
         </div>
       </div>
 
-      <!-- ── Column 3: LIFECYCLE EVENTS ── -->
+     
       <div class="p-6 flex flex-col">
-        <!-- Header -->
+       
         <span class="font-terminal text-[10px] uppercase tracking-[0.18em] text-text-secondary mb-5">
           Lifecycle Events
         </span>
@@ -126,14 +126,14 @@ const events = [
           {events.map((e) => (
             <div class="flex items-center justify-between gap-3 min-w-0">
               <div class="flex items-center gap-2.5 min-w-0">
-                <!-- Dot -->
+               
                 <span class={`w-2 h-2 rounded-full flex-shrink-0 ${e.done ? "bg-accent-mint" : "bg-[#3a3f48]"}`}></span>
-                <!-- Label -->
+               
                 <span class={`text-[12px] truncate ${e.done ? "text-text-primary" : "text-text-secondary"}`}>
                   {e.label}
                 </span>
               </div>
-              <!-- Timestamp -->
+             
               <span class={`font-terminal text-[11px] flex-shrink-0 ${e.done ? "text-accent-mint" : "text-text-secondary"}`}>
                 {e.time}
               </span>

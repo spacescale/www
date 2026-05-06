@@ -17,6 +17,13 @@ export default {
         'text-accent': '#66D9A5',
         'text-gray': '#8A8F98',
         'border-gray': '#262B33',
+        'accent-purple': '#E0E3E5',
+        'accent-yellow': '#E5CC66',
+        'accent-green': '#66D9A6',
+        'accent-purple': '#E0E3E5',
+        'accent-yellow': '#E5CC66',
+        'accent-green': '#66D9A6',
+        'accent-orange': '#737880',
       },
       fontFamily: {
         hero: ['"Articulat CF"', 'system-ui', 'sans-serif'],

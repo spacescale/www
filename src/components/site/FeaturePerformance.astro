@@ -12,7 +12,7 @@ const regions = [
     <div class="border border-border-default py-20 overflow-hidden">
       <div class="grid grid-cols-1 lg:grid-cols-2">
 
-        <!-- Left: copy -->
+        
         <div class="p-10 flex flex-col gap-5 justify-center">
           <h2 class="text-[32px] font-400 text-text-primary leading-tight">Performance at its peak</h2>
           <p class="text-[15px] text-text-secondary leading-relaxed max-w-xs">
@@ -22,11 +22,10 @@ const regions = [
           </p>
         </div>
 
-        <!-- Right: gauge + stats + bars -->
+       
         <div class="border-t lg:border-t-0  border-border-default p-8 flex flex-col gap-6">
 
-          <!-- Gauge SVG -->
-          <!-- cx=230 cy=185 r=160; fill stops at 75% (math 45°, SVG rotate 45°) -->
+         
           <div class="flex flex-col items-center">
             <svg viewBox="0 0 460 195" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full max-w-sm">
               <!-- Track arc (full semicircle) -->
@@ -64,7 +63,7 @@ const regions = [
             </svg>
           </div>
 
-          <!-- Stats row -->
+       
           <div class="grid grid-cols-3 divide-x divide-border-default border-t border-border-default pt-5">
             <!-- Requests/min -->
             <div class="flex flex-col gap-1 pr-4">
@@ -95,7 +94,7 @@ const regions = [
             </div>
           </div>
 
-          <!-- Region routing bar chart -->
+          
           <div class="border border-border-default rounded-lg p-4 flex flex-col gap-3">
             <span class="text-text-secondary font-terminal text-[10px] uppercase tracking-widest mb-1">
               Routing Speed by Region
