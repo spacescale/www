@@ -85,6 +85,7 @@ button, input, textarea, select {
   */
 
 .site-header {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -96,7 +97,20 @@ button, input, textarea, select {
     color: #f5f7fa;
 }
 
+.site-header::after {
+    content: "";
+    position: absolute;
+    bottom: 16px;
+    left: 50%;
+    width: min(calc(100% - (var(--site-padding-x) * 2)), var(--site-max-width));
+    height: 1px;
+    background: #1a1d24;
+    transform: translateX(-50%);
+}
+
 .site-header-inner {
+    position: relative;
+    z-index: 1;
     display: flex;
     width: 100%;
     max-width: var(--site-max-width);
