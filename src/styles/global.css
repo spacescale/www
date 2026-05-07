@@ -107,7 +107,7 @@ button, input, textarea, select {
     bottom: 16px;
     left: 0;
     height: 1px;
-    background: #1a1d24;
+    background: var(--color-border-default);
 }
 
 .site-header-inner {
@@ -132,7 +132,7 @@ button, input, textarea, select {
     font-family: var(--font-body);
     font-size: 18px;
     font-style: normal;
-    font-weight: 600;
+    font-weight: 500;
     line-height: normal;
     letter-spacing: 0;
 }
@@ -388,7 +388,7 @@ button, input, textarea, select {
     height: 1px;
     flex-shrink: 0;
 
-    background: #262b33;
+    background: var(--color-border-default);
 }
 
 
