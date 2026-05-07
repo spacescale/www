@@ -1,57 +1,18 @@
 <svg viewBox="0 0 680 500" xmlns="http://www.w3.org/2000/svg" style="max-width:680px;width:100%">
 <style>
-@keyframes pulse{0%,100%{opacity:.3}50%{opacity:.8}}
-@keyframes dash{to{stroke-dashoffset:-20}}
-@keyframes spinGlobe{
-  0%{rx:60}
-  25%{rx:180}
-  50%{rx:60}
-  75%{rx:180}
-  100%{rx:60}
-}
-@keyframes spinMeridian1{
-  0%{rx:60;transform:rotate(0deg)}
-  50%{rx:140;transform:rotate(180deg)}
-  100%{rx:60;transform:rotate(360deg)}
-}
-@keyframes spinMeridian2{
-  0%{rx:120;transform:rotate(0deg)}
-  50%{rx:40;transform:rotate(180deg)}
-  100%{rx:120;transform:rotate(360deg)}
-}
-@keyframes spinMeridianA{
-  0%{rx:60}
-  25%{rx:0}
-  50%{rx:60}
-  75%{rx:180}
-  100%{rx:60}
-}
-@keyframes spinMeridianB{
-  0%{rx:120}
-  25%{rx:60}
-  50%{rx:0}
-  75%{rx:60}
-  100%{rx:120}
-}
-@keyframes spinMeridianC{
-  0%{rx:180}
-  25%{rx:120}
-  50%{rx:60}
-  75%{rx:0}
-  100%{rx:180}
-}
 .globe-line{fill:none;stroke:#8B8D94;stroke-width:.5;stroke-dasharray:4 4;opacity:.3}
 .globe-outer{fill:none;stroke:#8B8D94;stroke-width:.5;stroke-dasharray:6 6;opacity:.3}
 .globe-equator{fill:none;stroke:#8B8D94;stroke-width:.5;stroke-dasharray:4 4;opacity:.3}
-.meridian{fill:none;stroke:#8B8D94;stroke-width:.5;stroke-dasharray:4 4;opacity:.2;transform-origin:center}
-.m1{animation:spinMeridianA 20s linear infinite}
-.m2{animation:spinMeridianB 20s linear infinite}
-.m3{animation:spinMeridianC 20s linear infinite}
-.node-glow{animation:pulse 3s ease-in-out infinite}
-.data-line{fill:none;stroke:#66D9A5;stroke-width:.8;stroke-dasharray:3 6;animation:dash 2s linear infinite;opacity:.4}
+.meridian{fill:none;stroke:#8B8D94;stroke-width:.5;stroke-dasharray:4 4;opacity:.2}
+.data-line{fill:none;stroke:#66D9A5;stroke-width:.8;stroke-dasharray:3 6;opacity:.4}
 .region-node{fill:#66D9A5;opacity:.9}
 .region-ring{fill:none;stroke:#66D9A5;stroke-width:.5;opacity:.25}
 .lbl{font-family:Inter,system-ui,sans-serif;font-size:10px;fill:#66D9A5;opacity:.7}
+.motion-static{display:none}
+@media (prefers-reduced-motion: reduce){
+  .motion-active{display:none}
+  .motion-static{display:inline}
+}
 </style>
 
 <g transform="translate(340,250)">
@@ -67,56 +28,76 @@
 <ellipse class="globe-line" cx="0" cy="0" rx="180" ry="120" transform="rotate(-25)"/>
 
 <!-- Meridians (spinning) — these simulate vertical longitude lines rotating -->
-<ellipse class="meridian m1" cx="0" cy="0" rx="60" ry="180"/>
-<ellipse class="meridian m2" cx="0" cy="0" rx="120" ry="180"/>
+<ellipse class="meridian motion-active" cx="0" cy="0" rx="60" ry="180">
+<animate attributeName="rx" values="60;0;60;180;60" dur="20s" repeatCount="indefinite"/>
+</ellipse>
+<ellipse class="meridian motion-active" cx="0" cy="0" rx="120" ry="180">
+<animate attributeName="rx" values="120;60;0;60;120" dur="20s" repeatCount="indefinite"/>
+</ellipse>
 <ellipse class="meridian" cx="0" cy="0" rx="180" ry="180" style="opacity:.08"/>
 
 <!-- Additional spinning meridians for density -->
-<ellipse class="meridian" cx="0" cy="0" rx="30" ry="180" style="opacity:.1;animation:spinMeridianA 20s linear infinite;animation-delay:-5s"/>
-<ellipse class="meridian" cx="0" cy="0" rx="90" ry="180" style="opacity:.12;animation:spinMeridianB 20s linear infinite;animation-delay:-5s"/>
-<ellipse class="meridian" cx="0" cy="0" rx="150" ry="180" style="opacity:.1;animation:spinMeridianC 20s linear infinite;animation-delay:-5s"/>
+<ellipse class="meridian motion-active" cx="0" cy="0" rx="30" ry="180" style="opacity:.1">
+<animate attributeName="rx" values="0;30;180;60;0" dur="20s" repeatCount="indefinite"/>
+</ellipse>
+<ellipse class="meridian motion-active" cx="0" cy="0" rx="90" ry="180" style="opacity:.12">
+<animate attributeName="rx" values="60;90;60;0;60" dur="20s" repeatCount="indefinite"/>
+</ellipse>
+<ellipse class="meridian motion-active" cx="0" cy="0" rx="150" ry="180" style="opacity:.1">
+<animate attributeName="rx" values="120;150;60;0;120" dur="20s" repeatCount="indefinite"/>
+</ellipse>
+<ellipse class="meridian motion-static" cx="0" cy="0" rx="60" ry="180"/>
+<ellipse class="meridian motion-static" cx="0" cy="0" rx="120" ry="180"/>
+<ellipse class="meridian motion-static" cx="0" cy="0" rx="30" ry="180" style="opacity:.1"/>
+<ellipse class="meridian motion-static" cx="0" cy="0" rx="90" ry="180" style="opacity:.12"/>
+<ellipse class="meridian motion-static" cx="0" cy="0" rx="150" ry="180" style="opacity:.1"/>
 
 <!-- Vertical axis line (static) -->
 <line class="globe-line" x1="0" y1="-180" x2="0" y2="180" opacity=".15"/>
 <!-- Horizontal axis line (static) -->
 <line class="globe-line" x1="-180" y1="0" x2="180" y2="0" opacity=".15"/>
 
-<!-- Data connections (static, on top of globe) -->
-<line class="data-line" x1="-140" y1="-80" x2="-60" y2="60"/>
-<line class="data-line" x1="-60" y1="60" x2="100" y2="30"/>
-<line class="data-line" x1="100" y1="30" x2="150" y2="-60"/>
-<line class="data-line" x1="-140" y1="-80" x2="100" y2="30"/>
-<line class="data-line" x1="-60" y1="60" x2="60" y2="-120"/>
-<line class="data-line" x1="60" y1="-120" x2="150" y2="-60"/>
-<line class="data-line" x1="-140" y1="-80" x2="60" y2="-120"/>
+<!-- Data connections, spread across the abstract globe while preserving regional intent. -->
+<line class="data-line" x1="-150" y1="-90" x2="-135" y2="45"><animate attributeName="stroke-dashoffset" values="0;-20" dur="2s" repeatCount="indefinite"/></line>
+<line class="data-line" x1="-150" y1="-90" x2="10" y2="-110"><animate attributeName="stroke-dashoffset" values="0;-20" dur="2s" repeatCount="indefinite"/></line>
+<line class="data-line" x1="-135" y1="45" x2="135" y2="-40"><animate attributeName="stroke-dashoffset" values="0;-20" dur="2s" repeatCount="indefinite"/></line>
+<line class="data-line" x1="135" y1="-40" x2="105" y2="95"><animate attributeName="stroke-dashoffset" values="0;-20" dur="2s" repeatCount="indefinite"/></line>
+<line class="data-line" x1="-150" y1="-90" x2="135" y2="-40"><animate attributeName="stroke-dashoffset" values="0;-20" dur="2s" repeatCount="indefinite"/></line>
+<line class="data-line" x1="-135" y1="45" x2="105" y2="95"><animate attributeName="stroke-dashoffset" values="0;-20" dur="2s" repeatCount="indefinite"/></line>
+<line class="data-line" x1="10" y1="-110" x2="105" y2="95"><animate attributeName="stroke-dashoffset" values="0;-20" dur="2s" repeatCount="indefinite"/></line>
 
 <!-- Region nodes (static positions, pulsing) -->
-<g class="node-glow" style="animation-delay:0s">
-<circle class="region-ring" cx="-140" cy="-80" r="12"/>
-<circle class="region-node" cx="-140" cy="-80" r="4"/>
+<g class="node-glow">
+<animate attributeName="opacity" values=".35;.85;.35" dur="3s" begin="0s" repeatCount="indefinite"/>
+<circle class="region-ring" cx="-150" cy="-90" r="8"/>
+<circle class="region-node" cx="-150" cy="-90" r="3"/>
 </g>
-<g class="node-glow" style="animation-delay:.6s">
-<circle class="region-ring" cx="-60" cy="60" r="12"/>
-<circle class="region-node" cx="-60" cy="60" r="4"/>
+<g class="node-glow">
+<animate attributeName="opacity" values=".35;.85;.35" dur="3s" begin=".6s" repeatCount="indefinite"/>
+<circle class="region-ring" cx="-135" cy="45" r="8"/>
+<circle class="region-node" cx="-135" cy="45" r="3"/>
 </g>
-<g class="node-glow" style="animation-delay:1.2s">
-<circle class="region-ring" cx="100" cy="30" r="12"/>
-<circle class="region-node" cx="100" cy="30" r="4"/>
+<g class="node-glow">
+<animate attributeName="opacity" values=".35;.85;.35" dur="3s" begin="1.2s" repeatCount="indefinite"/>
+<circle class="region-ring" cx="10" cy="-110" r="8"/>
+<circle class="region-node" cx="10" cy="-110" r="3"/>
 </g>
-<g class="node-glow" style="animation-delay:1.8s">
-<circle class="region-ring" cx="150" cy="-60" r="12"/>
-<circle class="region-node" cx="150" cy="-60" r="4"/>
+<g class="node-glow">
+<animate attributeName="opacity" values=".35;.85;.35" dur="3s" begin="1.8s" repeatCount="indefinite"/>
+<circle class="region-ring" cx="135" cy="-40" r="8"/>
+<circle class="region-node" cx="135" cy="-40" r="3"/>
 </g>
-<g class="node-glow" style="animation-delay:2.4s">
-<circle class="region-ring" cx="60" cy="-120" r="12"/>
-<circle class="region-node" cx="60" cy="-120" r="4"/>
+<g class="node-glow">
+<animate attributeName="opacity" values=".35;.85;.35" dur="3s" begin="2.4s" repeatCount="indefinite"/>
+<circle class="region-ring" cx="105" cy="95" r="8"/>
+<circle class="region-node" cx="105" cy="95" r="3"/>
 </g>
 
 <!-- Labels -->
-<text class="lbl" x="-155" y="-95">us-east</text>
-<text class="lbl" x="-75" y="80">eu-west</text>
-<text class="lbl" x="110" y="48">ap-south</text>
-<text class="lbl" x="158" y="-68">ap-east</text>
-<text class="lbl" x="68" y="-128">us-west</text>
+<text class="lbl" x="-166" y="-105">ca-east</text>
+<text class="lbl" x="-152" y="66">us-east</text>
+<text class="lbl" x="-8" y="-124">eu-west</text>
+<text class="lbl" x="145" y="-34">ap-south</text>
+<text class="lbl" x="118" y="104">au-east</text>
 </g>
 </svg>
