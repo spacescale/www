@@ -1,4 +1,5 @@
 ---
+import HeroWorkloadRotator from "./HeroWorkloadRotator";
 ---
 
 <section class="landing-hero" aria-labelledby="landing-hero-title">
@@ -16,8 +17,7 @@
         </h1>
 
         <p class="landing-hero__copy">
-            A serverless deployment platform built for workloads that break standard PaaS.
-            Deploy containers onto high-performance, isolated compute with zero ops.
+            <HeroWorkloadRotator client:load />
         </p>
 
         <a class="landing-hero__cta" href="/engineering">Read how we're building it</a>
@@ -92,7 +92,7 @@
 
     .landing-hero__copy {
         width: 609px;
-        margin: 32px 0 0;
+        margin: 20px 0 0;
         color: #8c94a1;
         font-family: var(--font-body);
         font-size: 16px;
