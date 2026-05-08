@@ -1,0 +1,61 @@
+<div class="execution-isolation-copy">
+    <h2>Absolute Execution Isolation</h2>
+    <p>
+        Hyper-threading is disabled on all our compute. Every workload runs
+        inside a hardened microVM. Dedicated reservations add physical core
+        assignment and CPU pinning for workloads that need more predictable
+        execution.
+    </p>
+</div>
+
+<div class="execution-isolation-visual" aria-hidden="true">
+    <img
+        class="execution-isolation-visual__asset"
+        src="/assets/product/execution-isolation.svg"
+        alt=""
+    />
+</div>
+
+<style>
+    .execution-isolation-copy {
+        position: absolute;
+        top: 81px;
+        left: 96px;
+        width: 389px;
+    }
+
+    .execution-isolation-copy h2 {
+        margin: 0;
+        color: #f5f7fa;
+        font-family: var(--font-body);
+        font-size: 28px;
+        font-weight: 400;
+        line-height: 36px;
+        letter-spacing: -0.28px;
+    }
+
+    .execution-isolation-copy p {
+        margin: 16px 0 0;
+        color: #8c94a1;
+        font-family: var(--font-body);
+        font-size: 15px;
+        font-weight: 400;
+        line-height: 24px;
+    }
+
+    .execution-isolation-visual {
+        position: absolute;
+        top: 63px;
+        left: 495px;
+        width: 770px;
+        height: 475.588px;
+        overflow: clip;
+        user-select: none;
+    }
+
+    .execution-isolation-visual__asset {
+        display: block;
+        width: 770px;
+        height: auto;
+    }
+</style>
