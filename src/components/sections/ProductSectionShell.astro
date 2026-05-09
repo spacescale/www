@@ -1,6 +1,7 @@
 ---
 import PerformanceRow from "./product/PerformanceRow.astro";
 import ExecutionIsolationRow from "./product/ExecutionIsolationRow.astro";
+import EndpointsRow from "./product/EndpointsRow.astro";
 ---
 <section class="product-section" aria-label="SpaceScale product capabilities">
     <div class="product-section__inner">
@@ -11,8 +12,10 @@ import ExecutionIsolationRow from "./product/ExecutionIsolationRow.astro";
             <div class="product-section__row product-section__row--isolation">
                 <ExecutionIsolationRow />
             </div>
+            <div class="product-section__row product-section__row--endpoints">
+                <EndpointsRow />
+            </div>
             <div class="product-section__row product-section__row--container"></div>
-            <div class="product-section__row product-section__row--endpoints"></div>
             <div class="product-section__row product-section__row--network"></div>
         </div>
     </div>
@@ -48,7 +51,7 @@ import ExecutionIsolationRow from "./product/ExecutionIsolationRow.astro";
     .product-section__card {
         position: relative;
         display: grid;
-        grid-template-rows: 592px 591px 549px 690px 570px;
+        grid-template-rows: 592px 591px 760px 479px 570px;
         width: 100%;
         height: 2992px;
         overflow: clip;
@@ -60,6 +63,10 @@ import ExecutionIsolationRow from "./product/ExecutionIsolationRow.astro";
     .product-section__row {
         position: relative;
         min-width: 0;
+    }
+
+    .product-section__row--endpoints {
+        z-index: 1;
     }
 
     .product-section__row + .product-section__row {
