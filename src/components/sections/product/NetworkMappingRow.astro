@@ -1,0 +1,55 @@
+---
+import NetworkMappingDiagram from "./NetworkMappingDiagram.astro";
+---
+
+<div class="network-mapping-copy">
+    <h2>Automatic Network Mapping</h2>
+    <p>
+        Our intelligent router detects exposed ports and maps each service to the
+        right network path. Public services get TLS, DNS, and load balancing.
+        Private services stay isolated on the internal mesh.
+    </p>
+</div>
+
+<div class="network-mapping-visual" aria-hidden="true">
+    <NetworkMappingDiagram />
+</div>
+
+<style>
+    .network-mapping-copy {
+        position: absolute;
+        top: 54px;
+        left: 97px;
+        width: 389px;
+    }
+
+    .network-mapping-copy h2 {
+        margin: 0;
+        color: #f5f7fa;
+        font-family: var(--font-body);
+        font-size: 28px;
+        font-weight: 400;
+        line-height: 36px;
+        letter-spacing: -0.28px;
+    }
+
+    .network-mapping-copy p {
+        margin: 16px 0 0;
+        color: #8c94a1;
+        font-family: var(--font-body);
+        font-size: 15px;
+        font-weight: 400;
+        line-height: 24px;
+    }
+
+    .network-mapping-visual {
+        position: absolute;
+        top: 26px;
+        right: 48px;
+        width: 620px;
+        height: 500px;
+        overflow: clip;
+        user-select: none;
+    }
+
+</style>

@@ -2,6 +2,7 @@
 import PerformanceRow from "./product/PerformanceRow.astro";
 import ExecutionIsolationRow from "./product/ExecutionIsolationRow.astro";
 import EndpointsRow from "./product/EndpointsRow.astro";
+import NetworkMappingRow from "./product/NetworkMappingRow.astro";
 ---
 <section class="product-section" aria-label="SpaceScale product capabilities">
     <div class="product-section__inner">
@@ -16,7 +17,9 @@ import EndpointsRow from "./product/EndpointsRow.astro";
                 <EndpointsRow />
             </div>
             <div class="product-section__row product-section__row--container"></div>
-            <div class="product-section__row product-section__row--network"></div>
+            <div class="product-section__row product-section__row--network">
+                <NetworkMappingRow />
+            </div>
         </div>
     </div>
 </section>
