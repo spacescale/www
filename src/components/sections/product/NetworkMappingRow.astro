@@ -1,3 +1,7 @@
+---
+import NetworkMappingDiagram from "./NetworkMappingDiagram.astro";
+---
+
 <div class="network-mapping-copy">
     <h2>Automatic Network Mapping</h2>
     <p>
@@ -7,11 +11,15 @@
     </p>
 </div>
 
+<div class="network-mapping-visual" aria-hidden="true">
+    <NetworkMappingDiagram />
+</div>
+
 <style>
     .network-mapping-copy {
         position: absolute;
-        top: 81px;
-        left: 96px;
+        top: 54px;
+        left: 97px;
         width: 389px;
     }
 
@@ -33,4 +41,15 @@
         font-weight: 400;
         line-height: 24px;
     }
+
+    .network-mapping-visual {
+        position: absolute;
+        top: 26px;
+        right: 48px;
+        width: 620px;
+        height: 500px;
+        overflow: clip;
+        user-select: none;
+    }
+
 </style>

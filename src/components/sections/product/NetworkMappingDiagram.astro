@@ -1,0 +1,506 @@
+<div class="network-diagram" aria-hidden="true">
+    <svg class="network-diagram__routes" viewBox="0 0 620 500">
+        <line class="route route--input" x1="310.5" y1="144" x2="310.5" y2="194" />
+        <line class="route route--public" x1="260.5" y1="256" x2="260.5" y2="295" />
+        <line class="route route--public" x1="260" y1="295.5" x2="155" y2="295.5" />
+        <line class="route route--public" x1="155.5" y1="295" x2="155.5" y2="310" />
+        <line class="route route--internal" x1="360.5" y1="256" x2="360.5" y2="295" />
+        <line class="route route--internal" x1="360" y1="294.5" x2="460" y2="294.5" />
+        <line class="route route--internal" x1="460.5" y1="295" x2="460.5" y2="310" />
+
+        <line class="route-active route-active--input" x1="310.5" y1="144" x2="310.5" y2="194" />
+        <line class="route-active route-active--public-down" x1="260.5" y1="256" x2="260.5" y2="295" />
+        <line class="route-active route-active--public-across" x1="260" y1="295.5" x2="155" y2="295.5" />
+        <line class="route-active route-active--public-final" x1="155.5" y1="295" x2="155.5" y2="310" />
+
+        <path class="route-arrow" d="M306.497 188.727H315.588L311.043 196.455L306.497 188.727Z" />
+    </svg>
+
+    <div class="network-diagram__app">
+        <p class="network-diagram__app-label">Exposed Ports</p>
+        <span class="network-diagram__short-rule"></span>
+        <p class="network-diagram__port network-diagram__port--active"><span>:8080</span> HTTP</p>
+        <p class="network-diagram__port"><span>:5432</span> Postgres</p>
+        <p class="network-diagram__port"><span>:6379</span> Redis</p>
+    </div>
+
+    <div class="network-diagram__router">
+        <p>INTELLIGENT ROUTER</p>
+        <span>auto-detect + route</span>
+    </div>
+
+    <p class="network-diagram__path-label network-diagram__path-label--public">PUBLIC</p>
+    <p class="network-diagram__path-label network-diagram__path-label--internal">INTERNAL</p>
+
+    <div class="network-diagram__card network-diagram__card--public">
+        <div class="network-diagram__card-header">
+            <strong>:8080</strong>
+            <span>HTTP</span>
+        </div>
+        <span class="network-diagram__short-rule network-diagram__short-rule--card"></span>
+        <p>→ TLS terminated (auto-ACME)</p>
+        <p>→ DNS: api.spacescale.run</p>
+        <p>→ Load balanced across replicas</p>
+        <div class="network-diagram__pill">auto-TLS&nbsp;&nbsp;·&nbsp;&nbsp;auto-DNS&nbsp;&nbsp;·&nbsp;&nbsp;public</div>
+    </div>
+
+    <div class="network-diagram__card network-diagram__card--internal">
+        <div class="network-diagram__card-header">
+            <strong>:5432</strong>
+            <span>Postgres</span>
+        </div>
+        <p>→ Encrypted mesh only</p>
+        <span class="network-diagram__short-rule network-diagram__short-rule--card"></span>
+        <div class="network-diagram__card-header">
+            <strong>:6379</strong>
+            <span>Redis</span>
+        </div>
+        <p>→ Internal cache endpoint</p>
+        <div class="network-diagram__pill">mesh-only&nbsp;&nbsp;·&nbsp;&nbsp;isolated</div>
+    </div>
+</div>
+
+<style>
+    .network-diagram {
+        position: relative;
+        width: 620px;
+        height: 500px;
+        overflow: clip;
+        border-radius: 6px;
+        --network-cycle: 10s;
+        --network-signal: #4f9b77;
+        --network-signal-soft: #264033;
+        color: #8a8f99;
+        user-select: none;
+    }
+
+    .network-diagram *,
+    .network-diagram *::before,
+    .network-diagram *::after {
+        box-sizing: border-box;
+    }
+
+    .network-diagram__routes {
+        position: absolute;
+        inset: 0;
+        z-index: 3;
+        width: 620px;
+        height: 500px;
+        overflow: visible;
+        pointer-events: none;
+    }
+
+    .network-diagram__app,
+    .network-diagram__router,
+    .network-diagram__card {
+        position: absolute;
+        z-index: 2;
+        overflow: clip;
+        background: #0c0e11;
+        border: 1px solid #1a1c24;
+    }
+
+    .network-diagram__app {
+        top: 30px;
+        left: 220px;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        width: 180px;
+        height: 115px;
+        padding: 14px 16px;
+    }
+
+    .network-diagram__app-label {
+        margin: 0;
+        color: #595e66;
+        font-family: var(--font-body);
+        font-size: 9px;
+        font-weight: 500;
+        line-height: normal;
+        letter-spacing: 0.27px;
+        white-space: nowrap;
+    }
+
+    .network-diagram__short-rule {
+        display: block;
+        width: 10px;
+        height: 4px;
+        flex: 0 0 auto;
+    }
+
+    .network-diagram__port {
+        margin: 0;
+        color: #8a8f99;
+        font-family: var(--font-body);
+        font-size: 12px;
+        font-weight: 500;
+        line-height: normal;
+        white-space: pre;
+    }
+
+    .network-diagram__port span {
+        font-family: var(--font-mono);
+        font-weight: 500;
+    }
+
+    .network-diagram__port--active {
+        color: var(--network-signal);
+    }
+
+    .network-diagram__router {
+        top: 200px;
+        left: 210px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 200px;
+        height: 44px;
+        padding: 10px 0;
+        border-color: #1a1c24;
+        background: #0c0e11;
+        line-height: normal;
+        white-space: nowrap;
+    }
+
+    .network-diagram__router p,
+    .network-diagram__router span {
+        margin: 0;
+        font-family: var(--font-body);
+        font-size: 10px;
+        line-height: normal;
+    }
+
+    .network-diagram__router p {
+        color: #8a8f99;
+        font-weight: 500;
+        letter-spacing: 0.2px;
+    }
+
+    .network-diagram__router span {
+        color: #8a8f99;
+        font-weight: 400;
+    }
+
+    .network-diagram__path-label {
+        position: absolute;
+        z-index: 2;
+        margin: 0;
+        font-family: var(--font-body);
+        font-size: 10px;
+        font-weight: 400;
+        line-height: normal;
+        letter-spacing: 0.3px;
+        white-space: nowrap;
+    }
+
+    .network-diagram__path-label--public {
+        top: 275px;
+        left: 115px;
+        color: var(--network-signal);
+    }
+
+    .network-diagram__path-label--internal {
+        top: 275px;
+        left: 395px;
+        color: #595e66;
+    }
+
+    .network-diagram__card {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 16px;
+    }
+
+    .network-diagram__card--public {
+        top: 310px;
+        left: 45px;
+        width: 220px;
+        height: 162px;
+        border-color: #1a1c24;
+    }
+
+    .network-diagram__card--internal {
+        top: 310px;
+        left: 350px;
+        width: 220px;
+        height: 172px;
+    }
+
+    .network-diagram__card-header {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        height: 21px;
+        overflow: clip;
+        flex: 0 0 auto;
+    }
+
+    .network-diagram__card-header strong {
+        color: #8a8f99;
+        font-family: var(--font-mono);
+        font-size: 16px;
+        font-weight: 700;
+        line-height: normal;
+        white-space: nowrap;
+    }
+
+    .network-diagram__card-header span,
+    .network-diagram__pill {
+        display: inline-flex;
+        align-items: flex-start;
+        overflow: clip;
+        border-radius: 3px;
+        padding: 3px 7px;
+        background: rgba(89, 94, 102, 0.12);
+        color: #595e66;
+        font-family: var(--font-body);
+        font-size: 10px;
+        font-weight: 500;
+        line-height: normal;
+        white-space: nowrap;
+    }
+
+    .network-diagram__card p {
+        margin: 0;
+        color: #595e66;
+        font-family: var(--font-body);
+        font-size: 11px;
+        font-weight: 400;
+        line-height: normal;
+        white-space: nowrap;
+    }
+
+    .network-diagram__card--public .network-diagram__card-header strong {
+        color: var(--network-signal);
+    }
+
+    .network-diagram__card--public .network-diagram__card-header span {
+        background: rgba(79, 155, 119, 0.12);
+        color: var(--network-signal);
+    }
+
+    .network-diagram__card--public .network-diagram__pill {
+        background: rgba(79, 155, 119, 0.12);
+        color: var(--network-signal);
+    }
+
+    .network-diagram__card--public p {
+        color: #595e66;
+    }
+
+    .network-diagram__short-rule--card {
+        height: 2px;
+    }
+
+    .network-diagram__card--internal .network-diagram__short-rule--card {
+        height: 4px;
+    }
+
+    .route {
+        stroke-width: 1;
+        vector-effect: non-scaling-stroke;
+    }
+
+    .route--input {
+        stroke: #8a8f99;
+    }
+
+    .route--public {
+        stroke: #2b3138;
+    }
+
+    .route--internal {
+        stroke: #595e66;
+        stroke-dasharray: 4 4;
+    }
+
+    .route-arrow {
+        fill: #8a8f99;
+        animation: network-arrow-wake var(--network-cycle) ease-in-out infinite;
+    }
+
+    .route-active {
+        opacity: 0;
+        stroke: var(--network-signal);
+        stroke-width: 1;
+        stroke-linecap: square;
+        vector-effect: non-scaling-stroke;
+    }
+
+    .route-active--input {
+        stroke-dasharray: 50;
+        stroke-dashoffset: 50;
+        animation: network-input-wake var(--network-cycle) linear infinite;
+    }
+
+    .route-active--public-down {
+        stroke-dasharray: 39;
+        stroke-dashoffset: 39;
+        animation: network-public-down-wake var(--network-cycle) linear infinite;
+    }
+
+    .route-active--public-across {
+        stroke-dasharray: 105;
+        stroke-dashoffset: 105;
+        animation: network-public-across-wake var(--network-cycle) linear infinite;
+    }
+
+    .route-active--public-final {
+        stroke-dasharray: 15;
+        stroke-dashoffset: 15;
+        animation: network-public-final-wake var(--network-cycle) linear infinite;
+    }
+
+    @keyframes network-input-wake {
+        0%,
+        2.2%,
+        100% {
+            opacity: 0;
+            stroke-dashoffset: 50;
+        }
+
+        2.35% {
+            opacity: 1;
+            stroke-dashoffset: 50;
+        }
+
+        3.5%,
+        3.85% {
+            opacity: 1;
+            stroke-dashoffset: 0;
+        }
+
+        4.1%,
+        9.2% {
+            opacity: 0;
+            stroke-dashoffset: 0;
+        }
+
+        9.35% {
+            opacity: 0;
+            stroke-dashoffset: 50;
+        }
+    }
+
+    @keyframes network-public-down-wake {
+        0%,
+        3.7%,
+        100% {
+            opacity: 0;
+            stroke-dashoffset: 39;
+        }
+
+        3.85% {
+            opacity: 1;
+            stroke-dashoffset: 39;
+        }
+
+        5%,
+        5.25% {
+            opacity: 1;
+            stroke-dashoffset: 0;
+        }
+
+        5.5%,
+        9.2% {
+            opacity: 0;
+            stroke-dashoffset: 0;
+        }
+
+        9.35% {
+            opacity: 0;
+            stroke-dashoffset: 39;
+        }
+    }
+
+    @keyframes network-public-across-wake {
+        0%,
+        4.8%,
+        100% {
+            opacity: 0;
+            stroke-dashoffset: 105;
+        }
+
+        4.95% {
+            opacity: 1;
+            stroke-dashoffset: 105;
+        }
+
+        6.2%,
+        6.45% {
+            opacity: 1;
+            stroke-dashoffset: 0;
+        }
+
+        6.7%,
+        9.2% {
+            opacity: 0;
+            stroke-dashoffset: 0;
+        }
+
+        9.35% {
+            opacity: 0;
+            stroke-dashoffset: 105;
+        }
+    }
+
+    @keyframes network-public-final-wake {
+        0%,
+        6.1%,
+        100% {
+            opacity: 0;
+            stroke-dashoffset: 15;
+        }
+
+        6.25% {
+            opacity: 1;
+            stroke-dashoffset: 15;
+        }
+
+        7%,
+        7.25% {
+            opacity: 1;
+            stroke-dashoffset: 0;
+        }
+
+        7.5%,
+        9.2% {
+            opacity: 0;
+            stroke-dashoffset: 0;
+        }
+
+        9.35% {
+            opacity: 0;
+            stroke-dashoffset: 15;
+        }
+    }
+
+    @keyframes network-arrow-wake {
+        0%,
+        2%,
+        4%,
+        100% {
+            fill: #8a8f99;
+        }
+
+        2.35%,
+        3.5% {
+            fill: var(--network-signal);
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .route-arrow,
+        .route-active {
+            animation: none;
+        }
+
+        .route-active {
+            opacity: 0;
+        }
+    }
+</style>
