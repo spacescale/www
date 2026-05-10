@@ -1,0 +1,23 @@
+---
+import DesignPartnerQuoteTabs from "./DesignPartnerQuoteTabs";
+
+const cases = [
+    {
+        label: "CASE 1",
+        quote: "We are building SpaceScale around real workloads, not demo apps. Every design partner gives us sharper constraints around boot time, routing, isolation, and operational visibility.",
+        author: "TOBILOBA OGUNDIYAN",
+    },
+    {
+        label: "CASE 2",
+        quote: "SpaceScale gives us the isolation profile we need without turning every deployment into infrastructure work. The runtime feels close to bare metal, while the operational surface stays small.",
+        author: "EARLY DESIGN PARTNER",
+    },
+    {
+        label: "CASE 3",
+        quote: "The API-first workflow lets us spin workloads up for short-lived jobs and tear them down just as quickly. That speed changes how we think about agent infrastructure.",
+        author: "INFRASTRUCTURE LEAD",
+    },
+];
+---
+
+<DesignPartnerQuoteTabs cases={cases} client:load />
