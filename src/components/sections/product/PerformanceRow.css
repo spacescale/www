@@ -1,4 +1,7 @@
 .performance-copy {
+    --performance-copy-tablet-top: 104px;
+    --performance-copy-mobile-max-width: 430px;
+
     position: absolute;
     top: 127px;
     left: 95px;
@@ -25,6 +28,10 @@
 }
 
 .performance-visual {
+    --performance-visual-tablet-top: 28px;
+    --performance-visual-tablet-left: 410px;
+    --performance-visual-tablet-max-width: 620px;
+
     position: absolute;
     top: -1px;
     left: 535px;
@@ -42,22 +49,22 @@
 
 @media (max-width: 1199px) {
     .performance-copy {
-        top: 104px;
-        left: 64px;
-        width: 330px;
+        top: var(--performance-copy-tablet-top);
+        left: var(--product-row-tablet-copy-left);
+        width: var(--product-row-tablet-copy-width);
     }
 
     .performance-visual {
-        top: 28px;
+        top: var(--performance-visual-tablet-top);
         right: 0;
-        left: 410px;
+        left: var(--performance-visual-tablet-left);
         width: auto;
         height: auto;
     }
 
     .performance-visual__asset {
         width: 100%;
-        max-width: 620px;
+        max-width: var(--performance-visual-tablet-max-width);
         height: auto;
     }
 }
@@ -68,7 +75,7 @@
         top: auto;
         left: auto;
         width: 100%;
-        max-width: 430px;
+        max-width: var(--performance-copy-mobile-max-width);
     }
 
     .performance-visual {
@@ -78,7 +85,7 @@
         left: auto;
         width: 100%;
         height: auto;
-        margin-top: 36px;
+        margin-top: var(--product-row-mobile-visual-gap);
         overflow: visible;
     }
 
@@ -90,17 +97,17 @@
 
 @media (max-width: 639px) {
     .performance-copy h2 {
-        font-size: 24px;
-        line-height: 32px;
+        font-size: var(--product-row-mobile-heading-size);
+        line-height: var(--product-row-mobile-heading-line-height);
         letter-spacing: 0;
     }
 
     .performance-copy p {
-        font-size: 14px;
-        line-height: 22px;
+        font-size: var(--product-row-mobile-body-size);
+        line-height: var(--product-row-mobile-body-line-height);
     }
 
     .performance-visual {
-        margin-top: 28px;
+        margin-top: var(--product-row-mobile-visual-gap-tight);
     }
 }
