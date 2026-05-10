@@ -1,0 +1,23 @@
+---
+import StoriesTabs from "./StoriesTabs";
+
+const stories = [
+    {
+        label: "NOTE 1",
+        quote: "We are building SpaceScale around real workloads, not demo apps. Every iteration gives us sharper constraints around boot time, routing, isolation, and operational visibility.",
+        author: "SPACESCALE TEAM",
+    },
+    {
+        label: "NOTE 2",
+        quote: "Teams should not have to choose between security, isolation, and performance. That is why SpaceScale is built from the isolation layer up.",
+        author: "SPACESCALE TEAM",
+    },
+    {
+        label: "NOTE 3",
+        quote: "If your workloads stretch beyond simple deploys, we want the feedback that shows where SpaceScale needs to get sharper around deployment, networking, logs, and lifecycle.",
+        author: "SPACESCALE TEAM",
+    },
+];
+---
+
+<StoriesTabs stories={stories} client:load />

@@ -1,5 +1,5 @@
 import { For, Show, createSignal, onCleanup, onMount } from "solid-js";
-import "./DesignPartnerQuoteTabs.css";
+import "./StoriesTabs.css";
 
 const EXIT_DURATION_MS = 620;
 const EXIT_PAUSE_MS = 220;
@@ -9,14 +9,14 @@ const AUTO_ADVANCE_PER_WORD_MS = 220;
 const MIN_AUTO_ADVANCE_MS = 6500;
 const MAX_AUTO_ADVANCE_MS = 10000;
 
-type DesignPartnerCase = {
+type Story = {
     label: string;
     quote: string;
     author: string;
 };
 
-type DesignPartnerQuoteTabsProps = {
-    cases: DesignPartnerCase[];
+type StoriesTabsProps = {
+    stories: Story[];
 };
 
 function autoAdvanceDelayMs(quote: string) {
@@ -28,11 +28,11 @@ function autoAdvanceDelayMs(quote: string) {
     );
 }
 
-export default function DesignPartnerQuoteTabs(props: DesignPartnerQuoteTabsProps) {
+export default function StoriesTabs(props: StoriesTabsProps) {
     const [activeIndex, setActiveIndex] = createSignal(0);
     const [visibleIndex, setVisibleIndex] = createSignal(0);
     const [phase, setPhase] = createSignal<"idle" | "exit" | "enter">("idle");
-    const visibleCase = () => props.cases[visibleIndex()] ?? props.cases[0];
+    const visibleStory = () => props.stories[visibleIndex()] ?? props.stories[0];
 
     let exitTimer: number | undefined;
     let enterTimer: number | undefined;
@@ -68,20 +68,20 @@ export default function DesignPartnerQuoteTabs(props: DesignPartnerQuoteTabsProp
     const scheduleAutoAdvance = (index: number) => {
         clearAutoAdvanceTimer();
 
-        if (props.cases.length < 2 || prefersReducedMotion()) {
+        if (props.stories.length < 2 || prefersReducedMotion()) {
             return;
         }
 
-        const caseItem = props.cases[index];
+        const story = props.stories[index];
 
-        if (!caseItem) {
+        if (!story) {
             return;
         }
 
         autoAdvanceTimer = window.setTimeout(() => {
             autoAdvanceTimer = undefined;
-            selectCase((activeIndex() + 1) % props.cases.length);
-        }, autoAdvanceDelayMs(caseItem.quote));
+            selectStory((activeIndex() + 1) % props.stories.length);
+        }, autoAdvanceDelayMs(story.quote));
     };
 
     const finishEnter = (index: number) => {
@@ -94,7 +94,7 @@ export default function DesignPartnerQuoteTabs(props: DesignPartnerQuoteTabsProp
         }, ENTER_DURATION_MS);
     };
 
-    const selectCase = (index: number) => {
+    const selectStory = (index: number) => {
         if (index === activeIndex()) {
             if (phase() === "idle") {
                 scheduleAutoAdvance(index);
@@ -135,58 +135,58 @@ export default function DesignPartnerQuoteTabs(props: DesignPartnerQuoteTabsProp
     });
 
     return (
-        <section class="design-partner-quote" aria-labelledby="design-partner-quote-title">
-            <div class="design-partner-quote__bar" aria-hidden="true" />
+        <section class="stories" aria-labelledby="stories-title">
+            <div class="stories__bar" aria-hidden="true" />
 
-            <div class="design-partner-quote__card">
+            <div class="stories__card">
                 <div
-                    class="design-partner-quote__tabs"
+                    class="stories__tabs"
                     role="tablist"
-                    aria-label="Design partner cases"
+                    aria-label="SpaceScale stories"
                     style={{ "--active-tab": activeIndex() }}
                 >
-                    <For each={props.cases}>
-                        {(caseItem, index) => (
+                    <For each={props.stories}>
+                        {(story, index) => (
                             <button
-                                id={`design-partner-quote-tab-${index() + 1}`}
+                                id={`stories-tab-${index() + 1}`}
                                 type="button"
                                 role="tab"
                                 aria-selected={activeIndex() === index() ? "true" : "false"}
-                                aria-controls="design-partner-quote-panel"
+                                aria-controls="stories-panel"
                                 classList={{
-                                    "design-partner-quote__tab": true,
+                                    "stories__tab": true,
                                     "is-active": activeIndex() === index(),
                                 }}
-                                onClick={() => selectCase(index())}
+                                onClick={() => selectStory(index())}
                             >
-                                {caseItem.label}
+                                {story.label}
                             </button>
                         )}
                     </For>
-                    <span class="design-partner-quote__indicator" aria-hidden="true" />
+                    <span class="stories__indicator" aria-hidden="true" />
                 </div>
 
                 <div
-                    id="design-partner-quote-panel"
-                    class="design-partner-quote__content"
+                    id="stories-panel"
+                    class="stories__content"
                     role="tabpanel"
-                    aria-labelledby={`design-partner-quote-tab-${activeIndex() + 1}`}
+                    aria-labelledby={`stories-tab-${activeIndex() + 1}`}
                     aria-live="polite"
                 >
-                    <div class="design-partner-quote__stage">
-                        <Show when={visibleCase()} keyed>
-                            {(caseItem) => (
+                    <div class="stories__stage">
+                        <Show when={visibleStory()} keyed>
+                            {(story) => (
                                 <div
                                     classList={{
-                                        "design-partner-quote__copy": true,
+                                        "stories__copy": true,
                                         "is-exiting": phase() === "exit",
                                         "is-entering": phase() === "enter",
                                     }}
                                 >
-                                    <p id="design-partner-quote-title" class="design-partner-quote__text">
-                                        {`“${caseItem.quote}”`}
+                                    <p id="stories-title" class="stories__text">
+                                        {`“${story.quote}”`}
                                     </p>
-                                    <p class="design-partner-quote__author">{caseItem.author}</p>
+                                    <p class="stories__author">{story.author}</p>
                                 </div>
                             )}
                         </Show>
