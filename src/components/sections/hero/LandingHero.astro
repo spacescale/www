@@ -3,13 +3,17 @@ import HeroWorkloadRotator from "./HeroWorkloadRotator";
 ---
 
 <section class="landing-hero" aria-labelledby="landing-hero-title">
+    <div class="landing-hero__visual" aria-hidden="true">
+        <img class="landing-hero__globe" src="/assets/hero/orbital-globe.svg" alt="" />
+    </div>
+
     <div class="landing-hero__inner">
         <a class="landing-hero__badge" href="/engineering">
             Currently in active development — follow our story
         </a>
 
         <h1 id="landing-hero-title" class="landing-hero__title">
-            The Hyper-PaaS for Serious Workloads
+            Infrastructure for serious workloads
         </h1>
 
         <p class="landing-hero__copy">
@@ -18,64 +22,37 @@ import HeroWorkloadRotator from "./HeroWorkloadRotator";
 
         <a class="landing-hero__cta" href="/engineering">Read how we're building it</a>
 
-        <div class="landing-hero__visual" aria-hidden="true">
-            <img class="landing-hero__globe" src="/assets/hero/orbital-globe.svg" alt="" />
-        </div>
-
-        <div class="landing-hero__terminal" aria-label="SpaceScale CLI deployment preview">
+        <div class="landing-hero__terminal" aria-label="SpaceScale CLI workload preview">
             <div class="landing-hero__tabs" aria-hidden="true">
-                <span>CLI</span>
-                <span>API</span>
-                <span>CONSOLE</span>
+                <span>IGNITE</span>
+                <span>MACHINES</span>
             </div>
 
-            <pre class="landing-hero__console"><code>$ spacescale deploy ./app --region eu-west
-  → pushing image... done
-  → booting microVM in fra1... 412ms
-  → live at https://app.spacescale.run</code></pre>
+            <pre class="landing-hero__console"><code>$ spacescale ignite my-org/trading-api:latest --region ca-east
+[+] Placement auction complete
+[+] MicroVM ignition complete: 118ms
+[+] Router detected Port
+
+Live at: https://trading-api.spacescale.run</code></pre>
         </div>
     </div>
 </section>
 
 <style>
     .landing-hero {
-        --landing-hero-min-height: 900px;
-        --landing-hero-padding-top: 172px;
-        --landing-hero-padding-bottom: 96px;
-        --landing-hero-title-width: 575px;
-        --landing-hero-title-size: 64px;
-        --landing-hero-title-line-height: 72px;
-        --landing-hero-copy-width: 609px;
-        --landing-hero-terminal-width: 720px;
-        --landing-hero-terminal-gap: 81px;
-        --landing-hero-globe-top: -18px;
-        --landing-hero-globe-left: 400px;
-        --landing-hero-globe-width: clamp(860px, 82vw, 1180px);
-        --landing-hero-globe-opacity: 1;
-        --landing-hero-globe-transform: none;
-
         position: relative;
-        min-height: var(--landing-hero-min-height);
+        min-height: 900px;
         overflow: clip;
-        padding:
-            var(--landing-hero-padding-top)
-            var(--site-padding-x)
-            var(--landing-hero-padding-bottom);
+        padding: 172px var(--site-padding-x) 96px;
         background: #040406;
     }
 
     .landing-hero__inner {
+        position: relative;
+        z-index: 1;
         width: 100%;
         max-width: var(--site-max-width);
         margin: 0 auto;
-    }
-
-    .landing-hero__badge,
-    .landing-hero__title,
-    .landing-hero__copy,
-    .landing-hero__cta {
-        position: relative;
-        z-index: 1;
     }
 
     .landing-hero__badge {
@@ -104,20 +81,18 @@ import HeroWorkloadRotator from "./HeroWorkloadRotator";
     }
 
     .landing-hero__title {
-        width: var(--landing-hero-title-width);
-        max-width: 100%;
+        width: 575px;
         margin: 32px 0 0;
         color: #f5f7fa;
         font-family: var(--font-display);
-        font-size: var(--landing-hero-title-size);
+        font-size: 64px;
         font-weight: 400;
-        line-height: var(--landing-hero-title-line-height);
+        line-height: 72px;
         letter-spacing: 0;
     }
 
     .landing-hero__copy {
-        width: var(--landing-hero-copy-width);
-        max-width: 100%;
+        width: 609px;
         margin: 20px 0 0;
         color: #8c94a1;
         font-family: var(--font-body);
@@ -145,17 +120,13 @@ import HeroWorkloadRotator from "./HeroWorkloadRotator";
     }
 
     .landing-hero__terminal {
-        position: relative;
-        z-index: 1;
-        width: var(--landing-hero-terminal-width);
-        max-width: 100%;
-        margin-top: var(--landing-hero-terminal-gap);
+        width: 720px;
+        margin-top: 81px;
     }
 
     .landing-hero__tabs {
         display: inline-flex;
         align-items: center;
-        gap: 32px;
         width: 207px;
         height: 38px;
         padding: 8px 16px;
@@ -167,13 +138,18 @@ import HeroWorkloadRotator from "./HeroWorkloadRotator";
         line-height: 22px;
     }
 
+    .landing-hero__tabs span {
+        flex: 1;
+        text-align: center;
+    }
+
     .landing-hero__tabs span:first-child {
         color: #66d9a5;
     }
 
     .landing-hero__console {
-        width: 100%;
-        height: 140px;
+        width: 720px;
+        height: 168px;
         margin: 0;
         padding: 20px 24px;
         overflow: hidden;
@@ -188,7 +164,6 @@ import HeroWorkloadRotator from "./HeroWorkloadRotator";
     .landing-hero__console code {
         font: inherit;
     }
-
     .landing-hero__visual {
         position: absolute;
         inset: 0;
@@ -201,133 +176,13 @@ import HeroWorkloadRotator from "./HeroWorkloadRotator";
 
     .landing-hero__globe {
         position: absolute;
-        top: var(--landing-hero-globe-top);
-        left: var(--landing-hero-globe-left);
-        width: var(--landing-hero-globe-width);
+        top: -18px;
+        left: 450px;
+
+        width: min(1180px, 90vw);
         height: auto;
-        opacity: var(--landing-hero-globe-opacity);
-        transform: var(--landing-hero-globe-transform);
+
         user-select: none;
     }
 
-    @media (max-width: 1180px) {
-        .landing-hero {
-            --landing-hero-min-height: 820px;
-            --landing-hero-padding-top: 136px;
-            --landing-hero-padding-bottom: 80px;
-            --landing-hero-title-width: 540px;
-            --landing-hero-title-size: 56px;
-            --landing-hero-title-line-height: 64px;
-            --landing-hero-copy-width: 560px;
-            --landing-hero-terminal-width: 640px;
-            --landing-hero-terminal-gap: 68px;
-            --landing-hero-globe-top: -8px;
-            --landing-hero-globe-width: clamp(760px, 82vw, 940px);
-            --landing-hero-globe-left: calc(80vw - (var(--landing-hero-globe-width) / 2));
-            --landing-hero-globe-opacity: 0.62;
-        }
-    }
-
-    @media (max-width: 900px) {
-        .landing-hero {
-            --landing-hero-min-height: 0;
-            --landing-hero-padding-top: 104px;
-            --landing-hero-padding-bottom: 72px;
-            --landing-hero-title-size: 48px;
-            --landing-hero-title-line-height: 54px;
-            --landing-hero-terminal-width: 100%;
-            --landing-hero-terminal-gap: 56px;
-            --landing-hero-globe-top: 24px;
-            --landing-hero-globe-width: clamp(720px, 100vw, 860px);
-            --landing-hero-globe-left: calc(80vw - (var(--landing-hero-globe-width) / 2));
-            --landing-hero-globe-opacity: 0.5;
-        }
-
-        .landing-hero__badge {
-            height: auto;
-            min-height: 32px;
-        }
-
-        .landing-hero__console {
-            height: auto;
-            min-height: 140px;
-            overflow-x: auto;
-        }
-    }
-
-    @media (max-width: 640px) {
-        .landing-hero {
-            --landing-hero-padding-top: 84px;
-            --landing-hero-padding-bottom: 56px;
-            --landing-hero-title-width: 100%;
-            --landing-hero-title-size: 40px;
-            --landing-hero-title-line-height: 46px;
-            --landing-hero-copy-width: 100%;
-            --landing-hero-terminal-gap: 28px;
-            --landing-hero-globe-top: 50%;
-            --landing-hero-globe-left: 50%;
-            --landing-hero-globe-width: min(720px, 162vw);
-            --landing-hero-globe-opacity: 0.72;
-            --landing-hero-globe-transform: translate(-50%, -50%);
-        }
-
-        .landing-hero__badge {
-            padding: 7px 10px;
-            font-size: 12px;
-            line-height: 18px;
-        }
-
-        .landing-hero__title {
-            margin-top: 28px;
-        }
-
-        .landing-hero__copy {
-            font-size: 15px;
-            line-height: 23px;
-        }
-
-        .landing-hero__cta {
-            position: relative;
-            z-index: 1;
-            width: 100%;
-            height: auto;
-            min-height: 48px;
-            padding: 14px 18px;
-            text-align: center;
-        }
-
-        .landing-hero__visual {
-            position: relative;
-            inset: auto;
-            width: calc(100% + (var(--site-padding-x) * 2));
-            height: 460px;
-            margin: 36px calc(var(--site-padding-x) * -1) 0;
-        }
-
-        .landing-hero__tabs {
-            width: 100%;
-            max-width: 207px;
-            gap: 24px;
-            font-size: 12px;
-        }
-
-        .landing-hero__console {
-            min-height: 132px;
-            padding: 16px;
-            font-size: 12px;
-            line-height: 20px;
-        }
-    }
-
-    @media (max-width: 430px) {
-        .landing-hero {
-            --landing-hero-globe-width: min(650px, 168vw);
-            --landing-hero-globe-opacity: 0.76;
-        }
-
-        .landing-hero__visual {
-            height: 460px;
-            margin-top: 34px;
-        }
-    }
 </style>
