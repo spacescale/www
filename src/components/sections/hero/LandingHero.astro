@@ -200,10 +200,12 @@ import HeroWorkloadRotator from "./HeroWorkloadRotator";
     }
 
     .landing-hero__globe {
+        display: block;
         position: absolute;
         top: var(--landing-hero-globe-top);
         left: var(--landing-hero-globe-left);
         width: var(--landing-hero-globe-width);
+        max-width: none;
         height: auto;
         opacity: var(--landing-hero-globe-opacity);
         transform: var(--landing-hero-globe-transform);
@@ -299,6 +301,7 @@ import HeroWorkloadRotator from "./HeroWorkloadRotator";
         .landing-hero__visual {
             position: relative;
             inset: auto;
+            display: block;
             width: calc(100% + (var(--site-padding-x) * 2));
             height: 460px;
             margin: 36px calc(var(--site-padding-x) * -1) 0;
