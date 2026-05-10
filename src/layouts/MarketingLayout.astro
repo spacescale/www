@@ -4,11 +4,14 @@ import Footer from "../components/site/Footer.astro";
 import "../styles/global.css";
 
 interface Props {
-    title: string;
+    title?: string;
     description?: string;
 }
 
-const { title, description = "SpaceScale public website." } = Astro.props;
+const {
+    title = "SpaceScale: The Hyper-PaaS for Serious Workloads",
+    description = "Deploy containers on isolated, high-performance compute built for AI agents, low-latency APIs, long-running services, and serious production workloads.",
+} = Astro.props;
 ---
 
 <!doctype html>
