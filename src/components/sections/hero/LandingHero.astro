@@ -13,7 +13,7 @@ import HeroWorkloadRotator from "./HeroWorkloadRotator";
         </a>
 
         <h1 id="landing-hero-title" class="landing-hero__title">
-            The Hyper-PaaS for Serious Workloads
+            Infrastructure for serious workloads
         </h1>
 
         <p class="landing-hero__copy">
@@ -22,17 +22,18 @@ import HeroWorkloadRotator from "./HeroWorkloadRotator";
 
         <a class="landing-hero__cta" href="/engineering">Read how we're building it</a>
 
-        <div class="landing-hero__terminal" aria-label="SpaceScale CLI deployment preview">
+        <div class="landing-hero__terminal" aria-label="SpaceScale CLI workload preview">
             <div class="landing-hero__tabs" aria-hidden="true">
-                <span>CLI</span>
-                <span>API</span>
-                <span>CONSOLE</span>
+                <span>IGNITE</span>
+                <span>MACHINES</span>
             </div>
 
-            <pre class="landing-hero__console"><code>$ spacescale deploy ./app --region eu-west
-  → pushing image... done
-  → booting microVM in fra1... 412ms
-  → live at https://app.spacescale.run</code></pre>
+            <pre class="landing-hero__console"><code>$ spacescale ignite my-org/trading-api:latest --region ca-east
+[+] Placement auction complete
+[+] MicroVM ignition complete: 118ms
+[+] Router detected Port
+
+Live at: https://trading-api.spacescale.run</code></pre>
         </div>
     </div>
 </section>
@@ -126,7 +127,6 @@ import HeroWorkloadRotator from "./HeroWorkloadRotator";
     .landing-hero__tabs {
         display: inline-flex;
         align-items: center;
-        gap: 32px;
         width: 207px;
         height: 38px;
         padding: 8px 16px;
@@ -138,13 +138,18 @@ import HeroWorkloadRotator from "./HeroWorkloadRotator";
         line-height: 22px;
     }
 
+    .landing-hero__tabs span {
+        flex: 1;
+        text-align: center;
+    }
+
     .landing-hero__tabs span:first-child {
         color: #66d9a5;
     }
 
     .landing-hero__console {
         width: 720px;
-        height: 140px;
+        height: 168px;
         margin: 0;
         padding: 20px 24px;
         overflow: hidden;
