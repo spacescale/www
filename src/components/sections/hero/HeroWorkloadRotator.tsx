@@ -3,7 +3,7 @@ import "./HeroWorkloadRotator.css";
 
 // These complete sentences become the animated hero subcopy.
 const phrases = [
-    "Deploy containers onto high-performance infrastructure.",
+    "Run isolated containers on high-performance infrastructure.",
     "Run latency-sensitive services close to the metal.",
     "Launch long-running AI agents without babysitting servers.",
     "Ship realtime APIs with predictable compute.",
