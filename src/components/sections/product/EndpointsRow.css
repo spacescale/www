@@ -1,4 +1,6 @@
 .endpoints-copy {
+    --endpoints-copy-tablet-top: 72px;
+
     position: absolute;
     top: 82px;
     left: 96px;
@@ -25,6 +27,12 @@
 }
 
 .endpoints-curl {
+    --endpoints-curl-tablet-top: 306px;
+    --endpoints-curl-tablet-width: 380px;
+    --endpoints-curl-mobile-gap: 32px;
+    --endpoints-curl-mobile-gap-tight: 28px;
+    --endpoints-curl-mobile-padding: 18px 16px;
+
     position: absolute;
     top: 328px;
     left: 97px;
@@ -106,6 +114,10 @@
 }
 
 .endpoints-visual {
+    --endpoints-visual-tablet-top: 112px;
+    --endpoints-visual-tablet-left: 500px;
+    --endpoints-visual-tablet-max-width: 560px;
+
     position: absolute;
     top: 90px;
     left: 630px;
@@ -123,28 +135,28 @@
 
 @media (max-width: 1199px) {
     .endpoints-copy {
-        top: 72px;
-        left: 64px;
-        width: 330px;
+        top: var(--endpoints-copy-tablet-top);
+        left: var(--product-row-tablet-copy-left);
+        width: var(--product-row-tablet-copy-width);
     }
 
     .endpoints-curl {
-        top: 306px;
-        left: 64px;
-        width: 380px;
+        top: var(--endpoints-curl-tablet-top);
+        left: var(--product-row-tablet-copy-left);
+        width: var(--endpoints-curl-tablet-width);
     }
 
     .endpoints-visual {
-        top: 112px;
+        top: var(--endpoints-visual-tablet-top);
         right: 0;
-        left: 500px;
+        left: var(--endpoints-visual-tablet-left);
         width: auto;
         height: auto;
     }
 
     .endpoints-visual__asset {
         width: 100%;
-        max-width: 560px;
+        max-width: var(--endpoints-visual-tablet-max-width);
         height: auto;
     }
 }
@@ -155,7 +167,7 @@
         top: auto;
         left: auto;
         width: 100%;
-        max-width: 460px;
+        max-width: var(--product-row-mobile-copy-max-width);
     }
 
     .endpoints-curl {
@@ -164,7 +176,7 @@
         left: auto;
         width: 100%;
         height: auto;
-        margin-top: 32px;
+        margin-top: var(--endpoints-curl-mobile-gap);
         overflow: hidden;
     }
 
@@ -181,7 +193,7 @@
         left: auto;
         width: 100%;
         height: auto;
-        margin-top: 36px;
+        margin-top: var(--product-row-mobile-visual-gap);
         overflow: visible;
     }
 
@@ -194,19 +206,19 @@
 
 @media (max-width: 639px) {
     .endpoints-copy h2 {
-        font-size: 24px;
-        line-height: 32px;
+        font-size: var(--product-row-mobile-heading-size);
+        line-height: var(--product-row-mobile-heading-line-height);
         letter-spacing: 0;
     }
 
     .endpoints-copy p {
-        font-size: 14px;
-        line-height: 22px;
+        font-size: var(--product-row-mobile-body-size);
+        line-height: var(--product-row-mobile-body-line-height);
     }
 
     .endpoints-curl {
-        margin-top: 28px;
-        padding: 18px 16px;
+        margin-top: var(--endpoints-curl-mobile-gap-tight);
+        padding: var(--endpoints-curl-mobile-padding);
     }
 
     .endpoints-curl pre {
@@ -215,6 +227,6 @@
     }
 
     .endpoints-visual {
-        margin-top: 28px;
+        margin-top: var(--product-row-mobile-visual-gap-tight);
     }
 }

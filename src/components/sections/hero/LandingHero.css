@@ -1,13 +1,25 @@
 .landing-hero {
+    --landing-hero-min-height: 900px;
+    --landing-hero-padding-top: 172px;
+    --landing-hero-padding-bottom: 96px;
+    --landing-hero-title-width: 575px;
+    --landing-hero-title-size: 64px;
+    --landing-hero-title-line-height: 72px;
+    --landing-hero-copy-width: 609px;
+    --landing-hero-terminal-width: 720px;
+    --landing-hero-terminal-gap: 81px;
     --landing-hero-globe-top: -18px;
     --landing-hero-globe-left: 450px;
     --landing-hero-globe-width: clamp(860px, 82vw, 1180px);
     --landing-hero-globe-opacity: 1;
 
     position: relative;
-    min-height: 900px;
+    min-height: var(--landing-hero-min-height);
     overflow: clip;
-    padding: 172px var(--site-padding-x) 96px;
+    padding:
+        var(--landing-hero-padding-top)
+        var(--site-padding-x)
+        var(--landing-hero-padding-bottom);
     background: #040406;
 }
 
@@ -45,19 +57,19 @@
 }
 
 .landing-hero__title {
-    width: 575px;
+    width: var(--landing-hero-title-width);
     max-width: 100%;
     margin: 32px 0 0;
     color: #f5f7fa;
     font-family: var(--font-display);
-    font-size: 64px;
+    font-size: var(--landing-hero-title-size);
     font-weight: 400;
-    line-height: 72px;
+    line-height: var(--landing-hero-title-line-height);
     letter-spacing: 0;
 }
 
 .landing-hero__copy {
-    width: 609px;
+    width: var(--landing-hero-copy-width);
     max-width: 100%;
     margin: 20px 0 0;
     color: #8c94a1;
@@ -86,9 +98,9 @@
 }
 
 .landing-hero__terminal {
-    width: 720px;
+    width: var(--landing-hero-terminal-width);
     max-width: 100%;
-    margin-top: 81px;
+    margin-top: var(--landing-hero-terminal-gap);
 }
 
 .landing-hero__tabs {
@@ -150,58 +162,39 @@
 
 @media (max-width: 1199px) {
     .landing-hero {
+        --landing-hero-min-height: 820px;
+        --landing-hero-padding-top: 136px;
+        --landing-hero-padding-bottom: 80px;
+        --landing-hero-title-width: 540px;
+        --landing-hero-title-size: 56px;
+        --landing-hero-title-line-height: 64px;
+        --landing-hero-copy-width: 560px;
+        --landing-hero-terminal-width: 640px;
+        --landing-hero-terminal-gap: 68px;
         --landing-hero-globe-top: -8px;
         --landing-hero-globe-left: clamp(560px, 62vw, 700px);
         --landing-hero-globe-width: clamp(640px, 70vw, 840px);
         --landing-hero-globe-opacity: 0.78;
-
-        min-height: 820px;
-        padding-top: 136px;
-        padding-bottom: 80px;
-    }
-
-    .landing-hero__title {
-        width: 540px;
-        font-size: 56px;
-        line-height: 64px;
-    }
-
-    .landing-hero__copy {
-        width: 560px;
-    }
-
-    .landing-hero__terminal {
-        width: 640px;
-        margin-top: 68px;
     }
 
 }
 
 @media (max-width: 899px) {
     .landing-hero {
-        min-height: 0;
-        padding-top: 96px;
-        padding-bottom: 72px;
+        --landing-hero-min-height: 0;
+        --landing-hero-padding-top: 96px;
+        --landing-hero-padding-bottom: 72px;
+        --landing-hero-title-width: 100%;
+        --landing-hero-title-size: 48px;
+        --landing-hero-title-line-height: 54px;
+        --landing-hero-copy-width: 100%;
+        --landing-hero-terminal-width: 100%;
+        --landing-hero-terminal-gap: 56px;
     }
 
     .landing-hero__badge {
         height: auto;
         min-height: 32px;
-    }
-
-    .landing-hero__title {
-        width: 100%;
-        font-size: 48px;
-        line-height: 54px;
-    }
-
-    .landing-hero__copy {
-        width: 100%;
-    }
-
-    .landing-hero__terminal {
-        width: 100%;
-        margin-top: 56px;
     }
 
     .landing-hero__console {
@@ -217,8 +210,11 @@
 
 @media (max-width: 639px) {
     .landing-hero {
-        padding-top: 72px;
-        padding-bottom: 56px;
+        --landing-hero-padding-top: 72px;
+        --landing-hero-padding-bottom: 56px;
+        --landing-hero-title-size: 40px;
+        --landing-hero-title-line-height: 46px;
+        --landing-hero-terminal-gap: 44px;
     }
 
     .landing-hero__badge {
@@ -229,8 +225,6 @@
 
     .landing-hero__title {
         margin-top: 28px;
-        font-size: 40px;
-        line-height: 46px;
     }
 
     .landing-hero__copy {
@@ -244,10 +238,6 @@
         min-height: 48px;
         padding: 14px 18px;
         text-align: center;
-    }
-
-    .landing-hero__terminal {
-        margin-top: 44px;
     }
 
     .landing-hero__tabs {
