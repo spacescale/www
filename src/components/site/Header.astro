@@ -11,7 +11,7 @@ const navLinks = [
 ];
 ---
 
-<header class="site-header" aria-label="Primary navigation">
+<header class="site-header" aria-label="Primary navigation" data-site-header>
     <div class="site-header-inner">
         <a class="brand-lockup" href="/" aria-label="SpaceScale home">
             <span class="brand-mark" aria-hidden="true">
@@ -29,10 +29,69 @@ const navLinks = [
             <span class="brand-name">SpaceScale</span>
         </a>
 
-        <nav class="site-nav" aria-label="Main menu">
+        <button
+            class="site-menu-toggle"
+            type="button"
+            aria-controls="site-nav"
+            aria-expanded="false"
+            aria-label="Open main menu"
+            data-site-menu-toggle
+        >
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </button>
+
+        <nav id="site-nav" class="site-nav" aria-label="Main menu" data-site-nav>
             {navLinks.map((link) => <a href={link.href}>{link.label}</a>)}
 
             <a class="nav-cta" href="/engineering">Read how we are building it</a>
         </nav>
     </div>
 </header>
+
+<script>
+    document.querySelectorAll("[data-site-header]").forEach((header) => {
+        const toggle = header.querySelector("[data-site-menu-toggle]");
+        const nav = header.querySelector("[data-site-nav]");
+
+        if (!(toggle instanceof HTMLButtonElement) || !(nav instanceof HTMLElement)) {
+            return;
+        }
+
+        if (toggle.dataset.menuReady === "true") {
+            return;
+        }
+
+        toggle.dataset.menuReady = "true";
+
+        const closeMenu = () => {
+            header.removeAttribute("data-menu-open");
+            toggle.setAttribute("aria-expanded", "false");
+            toggle.setAttribute("aria-label", "Open main menu");
+        };
+
+        toggle.addEventListener("click", () => {
+            const isOpen = header.getAttribute("data-menu-open") === "true";
+
+            if (isOpen) {
+                closeMenu();
+                return;
+            }
+
+            header.setAttribute("data-menu-open", "true");
+            toggle.setAttribute("aria-expanded", "true");
+            toggle.setAttribute("aria-label", "Close main menu");
+        });
+
+        nav.querySelectorAll("a").forEach((link) => {
+            link.addEventListener("click", closeMenu);
+        });
+
+        window.matchMedia("(min-width: 641px)").addEventListener("change", (event) => {
+            if (event.matches) {
+                closeMenu();
+            }
+        });
+    });
+</script>

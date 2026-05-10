@@ -85,19 +85,21 @@ import NetworkMappingDiagram from "./NetworkMappingDiagram.astro";
         }
 
         .network-mapping-visual {
+            --network-diagram-fit-scale: min(1, calc((100vw - 112px) / 620px));
+
             position: relative;
             top: auto;
             right: auto;
             display: flex;
             width: 100%;
-            height: 500px;
+            height: calc(500px * var(--network-diagram-fit-scale));
             justify-content: center;
             margin-top: var(--product-row-mobile-visual-gap);
             overflow: clip;
         }
 
         .network-mapping-visual :global(.network-diagram) {
-            transform: scale(1);
+            transform: scale(var(--network-diagram-fit-scale));
             transform-origin: top center;
         }
     }
@@ -115,22 +117,23 @@ import NetworkMappingDiagram from "./NetworkMappingDiagram.astro";
         }
 
         .network-mapping-visual {
-            height: 320px;
+            height: auto;
             margin-top: var(--product-row-mobile-visual-gap-tight);
+            overflow: visible;
         }
 
         .network-mapping-visual :global(.network-diagram) {
-            transform: scale(0.64);
+            transform: none;
         }
     }
 
     @media (max-width: 430px) {
         .network-mapping-visual {
-            height: 280px;
+            height: auto;
         }
 
         .network-mapping-visual :global(.network-diagram) {
-            transform: scale(0.56);
+            transform: none;
         }
     }
 

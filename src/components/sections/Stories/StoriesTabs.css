@@ -162,6 +162,60 @@
     }
 }
 
+@media (max-width: 900px) {
+    .stories {
+        min-height: 0;
+        padding-block: 64px;
+    }
+
+    .stories__card {
+        height: auto;
+        min-height: 360px;
+    }
+
+    .stories__content {
+        padding: 48px 40px 56px;
+    }
+
+    .stories__stage {
+        min-height: 0;
+    }
+
+    .stories__copy {
+        position: static;
+    }
+}
+
+@media (max-width: 640px) {
+    .stories {
+        padding-block: 56px;
+    }
+
+    .stories__tabs {
+        height: 64px;
+    }
+
+    .stories__tab {
+        font-size: 12px;
+    }
+
+    .stories__content {
+        padding: 34px 20px 40px;
+    }
+
+    .stories__text {
+        font-size: 19px;
+        line-height: 1.35;
+    }
+
+    .stories__author {
+        margin-top: 22px;
+        font-size: 12px;
+        line-height: 1.45;
+        overflow-wrap: anywhere;
+    }
+}
+
 @media (prefers-reduced-motion: reduce) {
     .stories__indicator,
     .stories__tab,

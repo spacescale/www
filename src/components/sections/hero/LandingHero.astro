@@ -3,10 +3,6 @@ import HeroWorkloadRotator from "./HeroWorkloadRotator";
 ---
 
 <section class="landing-hero" aria-labelledby="landing-hero-title">
-    <div class="landing-hero__visual" aria-hidden="true">
-        <img class="landing-hero__globe" src="/assets/hero/orbital-globe.svg" alt="" />
-    </div>
-
     <div class="landing-hero__inner">
         <a class="landing-hero__badge" href="/engineering">
             Currently in active development — follow our story
@@ -21,6 +17,10 @@ import HeroWorkloadRotator from "./HeroWorkloadRotator";
         </p>
 
         <a class="landing-hero__cta" href="/engineering">Read how we're building it</a>
+
+        <div class="landing-hero__visual" aria-hidden="true">
+            <img class="landing-hero__globe" src="/assets/hero/orbital-globe.svg" alt="" />
+        </div>
 
         <div class="landing-hero__terminal" aria-label="SpaceScale CLI deployment preview">
             <div class="landing-hero__tabs" aria-hidden="true">
@@ -49,7 +49,7 @@ import HeroWorkloadRotator from "./HeroWorkloadRotator";
         --landing-hero-terminal-width: 720px;
         --landing-hero-terminal-gap: 81px;
         --landing-hero-globe-top: -18px;
-        --landing-hero-globe-left: 450px;
+        --landing-hero-globe-left: 400px;
         --landing-hero-globe-width: clamp(860px, 82vw, 1180px);
         --landing-hero-globe-opacity: 1;
         --landing-hero-globe-transform: none;
@@ -65,11 +65,17 @@ import HeroWorkloadRotator from "./HeroWorkloadRotator";
     }
 
     .landing-hero__inner {
-        position: relative;
-        z-index: 1;
         width: 100%;
         max-width: var(--site-max-width);
         margin: 0 auto;
+    }
+
+    .landing-hero__badge,
+    .landing-hero__title,
+    .landing-hero__copy,
+    .landing-hero__cta {
+        position: relative;
+        z-index: 1;
     }
 
     .landing-hero__badge {
@@ -139,6 +145,8 @@ import HeroWorkloadRotator from "./HeroWorkloadRotator";
     }
 
     .landing-hero__terminal {
+        position: relative;
+        z-index: 1;
         width: var(--landing-hero-terminal-width);
         max-width: 100%;
         margin-top: var(--landing-hero-terminal-gap);
@@ -214,9 +222,9 @@ import HeroWorkloadRotator from "./HeroWorkloadRotator";
             --landing-hero-terminal-width: 640px;
             --landing-hero-terminal-gap: 68px;
             --landing-hero-globe-top: -8px;
-            --landing-hero-globe-left: clamp(480px, 52vw, 620px);
-            --landing-hero-globe-width: clamp(560px, 62vw, 760px);
-            --landing-hero-globe-opacity: 0.72;
+            --landing-hero-globe-width: clamp(760px, 82vw, 940px);
+            --landing-hero-globe-left: calc(80vw - (var(--landing-hero-globe-width) / 2));
+            --landing-hero-globe-opacity: 0.62;
         }
     }
 
@@ -225,17 +233,14 @@ import HeroWorkloadRotator from "./HeroWorkloadRotator";
             --landing-hero-min-height: 0;
             --landing-hero-padding-top: 104px;
             --landing-hero-padding-bottom: 72px;
-            --landing-hero-title-width: 100%;
             --landing-hero-title-size: 48px;
             --landing-hero-title-line-height: 54px;
-            --landing-hero-copy-width: 100%;
             --landing-hero-terminal-width: 100%;
             --landing-hero-terminal-gap: 56px;
-            --landing-hero-globe-top: 18px;
-            --landing-hero-globe-left: 50%;
-            --landing-hero-globe-width: min(520px, 86vw);
-            --landing-hero-globe-opacity: 0.26;
-            --landing-hero-globe-transform: translateX(-50%);
+            --landing-hero-globe-top: 24px;
+            --landing-hero-globe-width: clamp(720px, 100vw, 860px);
+            --landing-hero-globe-left: calc(80vw - (var(--landing-hero-globe-width) / 2));
+            --landing-hero-globe-opacity: 0.5;
         }
 
         .landing-hero__badge {
@@ -254,12 +259,16 @@ import HeroWorkloadRotator from "./HeroWorkloadRotator";
         .landing-hero {
             --landing-hero-padding-top: 84px;
             --landing-hero-padding-bottom: 56px;
+            --landing-hero-title-width: 100%;
             --landing-hero-title-size: 40px;
             --landing-hero-title-line-height: 46px;
-            --landing-hero-terminal-gap: 44px;
-            --landing-hero-globe-top: 22px;
-            --landing-hero-globe-width: min(430px, 92vw);
-            --landing-hero-globe-opacity: 0.22;
+            --landing-hero-copy-width: 100%;
+            --landing-hero-terminal-gap: 28px;
+            --landing-hero-globe-top: 50%;
+            --landing-hero-globe-left: 50%;
+            --landing-hero-globe-width: min(720px, 162vw);
+            --landing-hero-globe-opacity: 0.72;
+            --landing-hero-globe-transform: translate(-50%, -50%);
         }
 
         .landing-hero__badge {
@@ -278,11 +287,21 @@ import HeroWorkloadRotator from "./HeroWorkloadRotator";
         }
 
         .landing-hero__cta {
+            position: relative;
+            z-index: 1;
             width: 100%;
             height: auto;
             min-height: 48px;
             padding: 14px 18px;
             text-align: center;
+        }
+
+        .landing-hero__visual {
+            position: relative;
+            inset: auto;
+            width: calc(100% + (var(--site-padding-x) * 2));
+            height: 460px;
+            margin: 36px calc(var(--site-padding-x) * -1) 0;
         }
 
         .landing-hero__tabs {
@@ -302,9 +321,13 @@ import HeroWorkloadRotator from "./HeroWorkloadRotator";
 
     @media (max-width: 430px) {
         .landing-hero {
-            --landing-hero-globe-top: 30px;
-            --landing-hero-globe-width: min(350px, 88vw);
-            --landing-hero-globe-opacity: 0.2;
+            --landing-hero-globe-width: min(650px, 168vw);
+            --landing-hero-globe-opacity: 0.76;
+        }
+
+        .landing-hero__visual {
+            height: 460px;
+            margin-top: 34px;
         }
     }
 </style>
