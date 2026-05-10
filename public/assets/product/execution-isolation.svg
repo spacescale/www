@@ -239,7 +239,7 @@
       </g>
     </g>
 
-    <text class="label label-muted" x="0" y="130" text-anchor="middle">Shared platforms</text>
+    <text class="label label-muted" x="0" y="130" text-anchor="middle">Standard PaaS</text>
     <text class="label label-muted" x="0" y="145" text-anchor="middle">Shared VM · noisy neighbours</text>
   </g>
 
