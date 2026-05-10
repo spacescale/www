@@ -53,19 +53,19 @@
 
 }
 
-@media (max-width: 1199px) {
+@media (max-width: 1180px) {
     :root {
         --site-padding-x: 48px;
     }
 }
 
-@media (max-width: 899px) {
+@media (max-width: 900px) {
     :root {
         --site-padding-x: 24px;
     }
 }
 
-@media (max-width: 639px) {
+@media (max-width: 640px) {
     :root {
         --site-padding-x: 20px;
     }
@@ -506,7 +506,7 @@ button, input, textarea, select {
     height: 16px;
 }
 
-@media (max-width: 1199px) {
+@media (max-width: 1180px) {
     .site-header {
         padding-inline: var(--site-padding-x);
     }
@@ -529,7 +529,7 @@ button, input, textarea, select {
     }
 }
 
-@media (max-width: 899px) {
+@media (max-width: 900px) {
     .site-header {
         height: auto;
         min-height: 100px;
@@ -596,7 +596,7 @@ button, input, textarea, select {
     }
 }
 
-@media (max-width: 639px) {
+@media (max-width: 640px) {
     .site-header {
         min-height: 0;
         padding-block: 20px;
