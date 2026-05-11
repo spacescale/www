@@ -79,6 +79,8 @@
 
 <style>
     .endpoints-copy {
+        --endpoints-copy-tablet-top: 72px;
+
         position: absolute;
         top: 82px;
         left: 96px;
@@ -105,6 +107,12 @@
     }
 
     .endpoints-curl {
+        --endpoints-curl-tablet-top: 306px;
+        --endpoints-curl-tablet-width: 380px;
+        --endpoints-curl-mobile-gap: 32px;
+        --endpoints-curl-mobile-gap-tight: 28px;
+        --endpoints-curl-mobile-padding: 18px 16px;
+
         position: absolute;
         top: 328px;
         left: 97px;
@@ -186,6 +194,10 @@
     }
 
     .endpoints-visual {
+        --endpoints-visual-tablet-top: 112px;
+        --endpoints-visual-tablet-left: 500px;
+        --endpoints-visual-tablet-max-width: 560px;
+
         position: absolute;
         top: 90px;
         left: 630px;
@@ -199,5 +211,103 @@
         display: block;
         width: 650px;
         height: 547px;
+    }
+
+    @media (max-width: 1180px) {
+        .endpoints-copy {
+            top: var(--endpoints-copy-tablet-top);
+            left: var(--product-row-tablet-copy-left);
+            width: var(--product-row-tablet-copy-width);
+        }
+
+        .endpoints-curl {
+            top: var(--endpoints-curl-tablet-top);
+            left: var(--product-row-tablet-copy-left);
+            width: var(--endpoints-curl-tablet-width);
+        }
+
+        .endpoints-visual {
+            top: var(--endpoints-visual-tablet-top);
+            right: 0;
+            left: var(--endpoints-visual-tablet-left);
+            width: auto;
+            height: auto;
+        }
+
+        .endpoints-visual__asset {
+            width: 100%;
+            max-width: var(--endpoints-visual-tablet-max-width);
+            height: auto;
+        }
+    }
+
+    @media (max-width: 900px) {
+        .endpoints-copy {
+            position: relative;
+            top: auto;
+            left: auto;
+            width: 100%;
+            max-width: var(--product-row-mobile-copy-max-width);
+        }
+
+        .endpoints-curl {
+            position: relative;
+            top: auto;
+            left: auto;
+            width: 100%;
+            height: auto;
+            margin-top: var(--endpoints-curl-mobile-gap);
+            overflow: hidden;
+        }
+
+        .endpoints-curl pre {
+            overflow-x: auto;
+            max-width: 100%;
+            padding-bottom: 4px;
+        }
+
+        .endpoints-visual {
+            position: relative;
+            top: auto;
+            right: auto;
+            left: auto;
+            width: 100%;
+            height: auto;
+            margin-top: var(--product-row-mobile-visual-gap);
+            overflow: visible;
+        }
+
+        .endpoints-visual__asset {
+            width: 100%;
+            max-width: 650px;
+            height: auto;
+        }
+    }
+
+    @media (max-width: 640px) {
+        .endpoints-copy h2 {
+            font-size: var(--product-row-mobile-heading-size);
+            line-height: var(--product-row-mobile-heading-line-height);
+            letter-spacing: 0;
+        }
+
+        .endpoints-copy p {
+            font-size: var(--product-row-mobile-body-size);
+            line-height: var(--product-row-mobile-body-line-height);
+        }
+
+        .endpoints-curl {
+            margin-top: var(--endpoints-curl-mobile-gap-tight);
+            padding: var(--endpoints-curl-mobile-padding);
+        }
+
+        .endpoints-curl pre {
+            font-size: 12px;
+            line-height: 20px;
+        }
+
+        .endpoints-visual {
+            margin-top: var(--product-row-mobile-visual-gap-tight);
+        }
     }
 </style>

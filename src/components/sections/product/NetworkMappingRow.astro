@@ -17,6 +17,8 @@ import NetworkMappingDiagram from "./NetworkMappingDiagram.astro";
 
 <style>
     .network-mapping-copy {
+        --network-mapping-copy-tablet-top: 54px;
+
         position: absolute;
         top: 54px;
         left: 97px;
@@ -43,6 +45,9 @@ import NetworkMappingDiagram from "./NetworkMappingDiagram.astro";
     }
 
     .network-mapping-visual {
+        --network-mapping-visual-tablet-right: 32px;
+        --network-mapping-diagram-scale: 1;
+
         position: absolute;
         top: 26px;
         right: 48px;
@@ -50,6 +55,86 @@ import NetworkMappingDiagram from "./NetworkMappingDiagram.astro";
         height: 500px;
         overflow: clip;
         user-select: none;
+    }
+
+    @media (max-width: 1180px) {
+        .network-mapping-copy {
+            top: var(--network-mapping-copy-tablet-top);
+            left: var(--product-row-tablet-copy-left);
+            width: var(--product-row-tablet-copy-width);
+        }
+
+        .network-mapping-visual {
+            right: var(--network-mapping-visual-tablet-right);
+            width: 560px;
+        }
+
+        .network-mapping-visual :global(.network-diagram) {
+            transform: scale(0.9);
+            transform-origin: top right;
+        }
+    }
+
+    @media (max-width: 900px) {
+        .network-mapping-copy {
+            position: relative;
+            top: auto;
+            left: auto;
+            width: 100%;
+            max-width: var(--product-row-mobile-copy-max-width);
+        }
+
+        .network-mapping-visual {
+            --network-diagram-fit-scale: min(1, calc((100vw - 112px) / 620px));
+
+            position: relative;
+            top: auto;
+            right: auto;
+            display: flex;
+            width: 100%;
+            height: calc(500px * var(--network-diagram-fit-scale));
+            justify-content: center;
+            margin-top: var(--product-row-mobile-visual-gap);
+            overflow: clip;
+        }
+
+        .network-mapping-visual :global(.network-diagram) {
+            transform: scale(var(--network-diagram-fit-scale));
+            transform-origin: top center;
+        }
+    }
+
+    @media (max-width: 640px) {
+        .network-mapping-copy h2 {
+            font-size: var(--product-row-mobile-heading-size);
+            line-height: var(--product-row-mobile-heading-line-height);
+            letter-spacing: 0;
+        }
+
+        .network-mapping-copy p {
+            font-size: var(--product-row-mobile-body-size);
+            line-height: var(--product-row-mobile-body-line-height);
+        }
+
+        .network-mapping-visual {
+            height: auto;
+            margin-top: var(--product-row-mobile-visual-gap-tight);
+            overflow: visible;
+        }
+
+        .network-mapping-visual :global(.network-diagram) {
+            transform: none;
+        }
+    }
+
+    @media (max-width: 430px) {
+        .network-mapping-visual {
+            height: auto;
+        }
+
+        .network-mapping-visual :global(.network-diagram) {
+            transform: none;
+        }
     }
 
 </style>
