@@ -1,49 +1,6 @@
 ---
-const logTones = {
-    info: {
-        label: "INFO",
-        badgeBackground: "rgba(102, 153, 229, 0.12)",
-        badgeColor: "#6699e5",
-        messageColor: "#8a8f99",
-    },
-    warn: {
-        label: "WARN",
-        badgeBackground: "rgba(217, 178, 77, 0.12)",
-        badgeColor: "#d9b24d",
-        messageColor: "#d9b24d",
-    },
-    event: {
-        label: "EVENT",
-        badgeBackground: "rgba(102, 217, 166, 0.12)",
-        badgeColor: "#66d9a6",
-        messageColor: "#8a8f99",
-    },
-} as const;
-
-const logRows = [
-    { time: "12:04:31.882", tone: "info", message: "Request processed in 2ms" },
-    { time: "12:04:31.901", tone: "info", message: "Cache hit: user_session_4a2f" },
-    { time: "12:04:32.004", tone: "warn", message: "connection pool at 80%" },
-    { time: "12:04:32.118", tone: "info", message: "Request processed in 3ms" },
-    { time: "12:04:32.340", tone: "event", message: "Health check passed (ca-east-04)" },
-    { time: "12:04:32.558", tone: "info", message: "Request processed in 1ms" },
-    { time: "12:04:33.002", tone: "event", message: "TLS cert renewed (auto)" },
-    { time: "12:04:33.214", tone: "info", message: "Request processed in 2ms" },
-    { time: "12:04:33.440", tone: "info", message: "WebSocket connection opened" },
-    { time: "12:04:33.802", tone: "warn", message: "slow query 48ms" },
-    { time: "12:04:34.001", tone: "info", message: "Request processed in 1ms" },
-    { time: "12:04:34.220", tone: "event", message: "Replica ca-east-09 synced" },
-    { time: "12:04:34.558", tone: "info", message: "Request processed in 2ms" },
-    { time: "12:04:34.890", tone: "info", message: "Cache hit: pricing_feed_v3" },
-] as const;
-
-const telemetryRows = [
-    { label: "CPU", value: "23%", width: 72, emphasis: "normal" },
-    { label: "MEMORY", value: "4.2 / 16 GB", width: 82, emphasis: "normal" },
-    { label: "DISK I/O", value: "120 MB/s read", width: 140, emphasis: "normal" },
-    { label: "NETWORK IN", value: "840 Mbps", width: 260, emphasis: "strong" },
-    { label: "NETWORK OUT", value: "320 Mbps", width: 100, emphasis: "normal" },
-];
+import TelemetryLogStream from "./TelemetryLogStream.tsx";
+import TelemetryMetrics from "./TelemetryMetrics.tsx";
 
 const lifecycleRows = [
     { label: "VM booted (ca-east-04)", time: "118ms", status: "active" },
@@ -70,77 +27,13 @@ const lifecycleRows = [
     </div>
 
     <div class="telemetry-logs__dashboard" aria-label="Live telemetry dashboard preview">
-        <section class="telemetry-logs__log-stream" aria-labelledby="telemetry-log-stream-title">
-            <header class="telemetry-logs__panel-header telemetry-logs__panel-header--split">
-                <h3 id="telemetry-log-stream-title">LOG STREAM</h3>
-                <span class="telemetry-logs__live" aria-label="live">
-                    <span class="telemetry-logs__live-dot" aria-hidden="true"></span>
-                    live
-                </span>
-            </header>
-            <div class="telemetry-logs__panel-rule" aria-hidden="true"></div>
+        <TelemetryLogStream client:visible />
 
-            <ol class="telemetry-logs__log-rows" aria-label="Log stream entries">
-                {
-                    logRows.map((row) => {
-                        const tone = logTones[row.tone];
+        <div class="telemetry-logs__dashboard-rule telemetry-logs__dashboard-rule--after-logs" aria-hidden="true"></div>
 
-                        return (
-                            <li class="telemetry-logs__log-row">
-                                <time>{row.time}</time>
-                                <span
-                                    class="telemetry-logs__log-badge"
-                                    style={`--telemetry-log-badge-bg: ${tone.badgeBackground}; --telemetry-log-badge-color: ${tone.badgeColor};`}
-                                >
-                                    {tone.label}
-                                </span>
-                                <span
-                                    class="telemetry-logs__log-message"
-                                    style={`--telemetry-log-message-color: ${tone.messageColor};`}
-                                >
-                                    {row.message}
-                                </span>
-                            </li>
-                        );
-                    })
-                }
-            </ol>
-        </section>
+        <TelemetryMetrics client:visible />
 
-        <div class="telemetry-logs__dashboard-rule" aria-hidden="true"></div>
-
-        <section class="telemetry-logs__metrics-panel" aria-labelledby="telemetry-metrics-title">
-            <header class="telemetry-logs__panel-header">
-                <h3 id="telemetry-metrics-title">VM TELEMETRY</h3>
-            </header>
-            <div class="telemetry-logs__panel-rule" aria-hidden="true"></div>
-
-            <dl class="telemetry-logs__metrics">
-                {telemetryRows.map((metric) => (
-                    <div class="telemetry-logs__metric">
-                        <div class="telemetry-logs__metric-label-row">
-                            <dt>{metric.label}</dt>
-                            <dd>{metric.value}</dd>
-                        </div>
-                        <div class="telemetry-logs__meter" aria-hidden="true">
-                            <span
-                                class={`telemetry-logs__meter-fill telemetry-logs__meter-fill--${metric.emphasis}`}
-                                style={`width: ${metric.width}px`}
-                            ></span>
-                        </div>
-                    </div>
-                ))}
-
-                <div class="telemetry-logs__metric telemetry-logs__metric--uptime">
-                    <div class="telemetry-logs__metric-label-row">
-                        <dt>UPTIME</dt>
-                        <dd>14d 6h 32m</dd>
-                    </div>
-                </div>
-            </dl>
-        </section>
-
-        <div class="telemetry-logs__dashboard-rule" aria-hidden="true"></div>
+        <div class="telemetry-logs__dashboard-rule telemetry-logs__dashboard-rule--between-panels" aria-hidden="true"></div>
 
         <section class="telemetry-logs__lifecycle-panel" aria-labelledby="telemetry-lifecycle-title">
             <header class="telemetry-logs__panel-header">
@@ -168,12 +61,12 @@ const lifecycleRows = [
         position: relative;
         display: flex;
         width: 100%;
-        min-width: 1440px;
+        min-width: 0;
         height: 948px;
         flex-direction: column;
         align-items: center;
         gap: 64px;
-        padding: 120px 80px;
+        padding: 120px clamp(40px, 5.55vw, 80px);
         overflow: clip;
         background: #040406;
     }
@@ -205,7 +98,7 @@ const lifecycleRows = [
 
     .telemetry-logs__header {
         display: flex;
-        width: 1280px;
+        width: min(1280px, 100%);
         height: 124px;
         flex-direction: column;
         align-items: center;
@@ -218,12 +111,6 @@ const lifecycleRows = [
     .telemetry-logs__title,
     .telemetry-logs__lede,
     .telemetry-logs__panel-header h3,
-    .telemetry-logs__live,
-    .telemetry-logs__log-row time,
-    .telemetry-logs__log-badge,
-    .telemetry-logs__log-message,
-    .telemetry-logs__metric dt,
-    .telemetry-logs__metric dd,
     .telemetry-logs__lifecycle-label,
     .telemetry-logs__lifecycle time {
         margin: 0;
@@ -241,7 +128,7 @@ const lifecycleRows = [
     }
 
     .telemetry-logs__title {
-        width: 900px;
+        width: min(900px, 100%);
         color: #f5f7fa;
         font-family: var(--font-display);
         font-size: 44px;
@@ -251,8 +138,8 @@ const lifecycleRows = [
     }
 
     .telemetry-logs__lede {
-        width: 1280px;
-        min-width: 100%;
+        width: min(1280px, 100%);
+        min-width: 0;
         color: #8c94a1;
         font-family: var(--font-body);
         font-size: 15px;
@@ -262,7 +149,7 @@ const lifecycleRows = [
 
     .telemetry-logs__dashboard {
         display: flex;
-        width: 1200px;
+        width: min(1200px, 100%);
         height: 520px;
         align-items: flex-start;
         overflow: clip;
@@ -270,10 +157,10 @@ const lifecycleRows = [
         background: #0a0c0f;
     }
 
-    .telemetry-logs__log-stream,
-    .telemetry-logs__metrics-panel,
     .telemetry-logs__lifecycle-panel {
         display: flex;
+        flex: 348 1 0;
+        min-width: 240px;
         height: 520px;
         flex-direction: column;
         align-items: flex-start;
@@ -281,17 +168,8 @@ const lifecycleRows = [
         padding-bottom: 16px;
     }
 
-    .telemetry-logs__log-stream {
-        width: 500px;
-    }
-
-    .telemetry-logs__metrics-panel {
-        width: 350px;
-        padding-bottom: 20px;
-    }
-
     .telemetry-logs__lifecycle-panel {
-        width: 348px;
+        width: auto;
         padding-bottom: 20px;
     }
 
@@ -313,11 +191,6 @@ const lifecycleRows = [
         background: #0c0e11;
     }
 
-    .telemetry-logs__panel-header--split {
-        align-items: center;
-        justify-content: space-between;
-    }
-
     .telemetry-logs__panel-header h3 {
         color: #595e66;
         font-family: var(--font-body);
@@ -333,155 +206,15 @@ const lifecycleRows = [
         background: #1a1c24;
     }
 
-    .telemetry-logs__live {
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        color: #66d9a6;
-        font-family: var(--font-body);
-        font-size: 10px;
-        font-weight: 500;
-    }
-
-    .telemetry-logs__live-dot {
-        width: 6px;
-        height: 6px;
-        flex: 0 0 auto;
-        border-radius: 50%;
-        background: #66d9a6;
-    }
-
-    .telemetry-logs__log-rows,
     .telemetry-logs__lifecycle {
         margin: 0;
         padding: 0;
         list-style: none;
     }
 
-    .telemetry-logs__log-row {
-        display: flex;
-        width: 500px;
-        height: 28px;
-        flex: 0 0 auto;
-        align-items: center;
-        gap: 12px;
-        overflow: clip;
-        padding: 6px 20px;
-    }
-
-    .telemetry-logs__log-row:nth-child(even) {
-        background: rgba(12, 14, 17, 0.3);
-    }
-
-    .telemetry-logs__log-row time {
-        color: #595e66;
-        font-family: var(--font-body);
-        font-size: 11px;
-        font-weight: 400;
-    }
-
-    .telemetry-logs__log-badge {
-        display: flex;
-        align-items: flex-start;
-        overflow: clip;
-        padding: 2px 6px;
-        border-radius: 3px;
-        background: var(--telemetry-log-badge-bg);
-        color: var(--telemetry-log-badge-color);
-        font-family: var(--font-body);
-        font-size: 10px;
-        font-weight: 500;
-    }
-
-    .telemetry-logs__log-message {
-        color: var(--telemetry-log-message-color);
-        font-family: var(--font-body);
-        font-size: 11px;
-        font-weight: 400;
-    }
-
-    .telemetry-logs__metrics {
-        margin: 0;
-        padding: 0;
-    }
-
-    .telemetry-logs__metric {
-        display: flex;
-        width: 350px;
-        height: 57px;
-        flex: 0 0 auto;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 8px;
-        overflow: clip;
-        padding: 14px 20px;
-        border-bottom: 1px solid rgba(26, 28, 36, 0.5);
-    }
-
-    .telemetry-logs__metric:first-child {
-        border-bottom-color: #1a1c24;
-    }
-
-    .telemetry-logs__metric--uptime {
-        height: 43px;
-        gap: 0;
-    }
-
-    .telemetry-logs__metric-label-row {
-        display: flex;
-        width: 310px;
-        align-items: flex-start;
-        justify-content: space-between;
-        overflow: clip;
-    }
-
-    .telemetry-logs__metric dt,
-    .telemetry-logs__metric dd {
-        font-family: var(--font-body);
-        font-weight: 500;
-    }
-
-    .telemetry-logs__metric dt {
-        color: #595e66;
-        font-size: 10px;
-        letter-spacing: 0.2px;
-    }
-
-    .telemetry-logs__metric dd {
-        color: #66d9a6;
-        font-size: 12px;
-    }
-
-    .telemetry-logs__metric--uptime dd {
-        color: #8a8f99;
-    }
-
-    .telemetry-logs__meter {
-        position: relative;
-        width: 310px;
-        height: 6px;
-        flex: 0 0 auto;
-        overflow: clip;
-        border-radius: 1px;
-        background: #1a1c24;
-    }
-
-    .telemetry-logs__meter-fill {
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: 6px;
-        border-radius: 1px;
-        background: rgba(102, 217, 166, 0.5);
-    }
-
-    .telemetry-logs__meter-fill--strong {
-        background: rgba(102, 217, 166, 0.7);
-    }
-
     .telemetry-logs__lifecycle-row {
         display: flex;
-        width: 348px;
+        width: 100%;
         height: 35px;
         flex: 0 0 auto;
         align-items: center;
@@ -510,10 +243,12 @@ const lifecycleRows = [
     .telemetry-logs__lifecycle-label {
         min-width: 1px;
         flex: 1 0 0;
+        overflow: hidden;
         color: #8a8f99;
         font-family: var(--font-body);
         font-size: 12px;
         font-weight: 400;
+        text-overflow: ellipsis;
     }
 
     .telemetry-logs__lifecycle time {
@@ -533,5 +268,42 @@ const lifecycleRows = [
     .telemetry-logs__lifecycle-row--muted .telemetry-logs__lifecycle-label,
     .telemetry-logs__lifecycle-row--muted time {
         background: transparent;
+    }
+
+    @media (max-width: 1024px) {
+        .telemetry-logs {
+            height: auto;
+            gap: 48px;
+            padding: 96px clamp(32px, 5vw, 48px);
+        }
+
+        .telemetry-logs__header {
+            height: auto;
+        }
+
+        .telemetry-logs__title {
+            font-size: 40px;
+            line-height: 48px;
+        }
+
+        .telemetry-logs__lede {
+            max-width: 720px;
+            white-space: normal;
+        }
+
+        .telemetry-logs__dashboard {
+            height: 520px;
+            flex-wrap: nowrap;
+            align-items: flex-start;
+        }
+
+        .telemetry-logs__dashboard-rule--after-logs,
+        .telemetry-logs__dashboard-rule--between-panels {
+            display: none;
+        }
+
+        .telemetry-logs__lifecycle-panel {
+            display: none;
+        }
     }
 </style>
