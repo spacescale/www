@@ -503,4 +503,161 @@
             opacity: 0;
         }
     }
+
+    @media (max-width: 640px) {
+        .network-diagram {
+            --y-fork-width: 180px;
+            --y-fork-height: 48px;
+
+            position: relative;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-content: flex-start;
+            width: min(100%, 360px);
+            height: auto;
+            margin-inline: auto;
+            overflow: visible;
+            border-radius: 0;
+        }
+
+        .network-diagram__routes {
+            display: none;
+        }
+
+        .network-diagram__app,
+        .network-diagram__router,
+        .network-diagram__card {
+            position: relative;
+            top: auto;
+            left: auto;
+            right: auto;
+            transform: none;
+            overflow: visible;
+        }
+
+        .network-diagram__app {
+            flex: 0 0 100%;
+            width: 100%;
+            max-width: 240px;
+            height: auto;
+            min-height: 115px;
+            margin: 0 auto 38px;
+        }
+
+        .network-diagram__app::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            width: 1px;
+            height: 38px;
+            background: var(--network-signal);
+            transform: translateX(-50%);
+            pointer-events: none;
+        }
+
+        .network-diagram__router {
+            flex: 0 0 100%;
+            width: 100%;
+            max-width: 260px;
+            height: 52px;
+            margin: 0 auto calc(var(--y-fork-height) + 14px);
+        }
+
+        .network-diagram__router::before {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            width: var(--y-fork-width);
+            height: var(--y-fork-height);
+            transform: translateX(-50%);
+            background:
+                linear-gradient(
+                    to bottom left,
+                    transparent calc(50% - 0.5px),
+                    var(--network-signal) calc(50% - 0.5px),
+                    var(--network-signal) calc(50% + 0.5px),
+                    transparent calc(50% + 0.5px)
+                )
+                    left / 50% 100% no-repeat,
+                linear-gradient(
+                    to bottom right,
+                    transparent calc(50% - 0.5px),
+                    #595e66 calc(50% - 0.5px),
+                    #595e66 calc(50% + 0.5px),
+                    transparent calc(50% + 0.5px)
+                )
+                    right / 50% 100% no-repeat;
+            pointer-events: none;
+        }
+
+        .network-diagram__router::after {
+            content: none;
+        }
+
+        .network-diagram__path-label {
+            position: relative;
+            flex: 0 0 50%;
+            top: auto;
+            left: auto;
+            margin: 0;
+            padding-bottom: 4px;
+            font-size: 9px;
+            text-align: center;
+        }
+
+        .network-diagram__path-label--public,
+        .network-diagram__path-label--internal {
+            top: auto;
+            left: auto;
+        }
+
+        .network-diagram__card {
+            flex: 0 0 100%;
+            width: 100%;
+            height: auto;
+            gap: 9px;
+            padding: 14px;
+        }
+
+        .network-diagram__card--public {
+            min-height: 138px;
+            margin: 12px 0 18px;
+        }
+
+        .network-diagram__card--internal {
+            min-height: 154px;
+        }
+
+        .network-diagram__card--internal::before {
+            content: "";
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            width: 1px;
+            height: 18px;
+            background: #2b3138;
+            transform: translateX(-50%);
+            pointer-events: none;
+        }
+
+        .network-diagram__card-header {
+            width: 100%;
+            min-width: 0;
+        }
+
+        .network-diagram__card p {
+            white-space: normal;
+            line-height: 1.35;
+        }
+
+        .network-diagram__pill {
+            max-width: 100%;
+            white-space: normal;
+            line-height: 1.2;
+        }
+    }
 </style>
