@@ -24,6 +24,7 @@ const footerGroups = [
 ];
 
 const legalLinks = ["Privacy", "Terms", "Security"];
+const currentYear = new Date().getFullYear();
 
 const socialLinks = [
     {
@@ -86,7 +87,7 @@ const socialLinks = [
     <div class="footer-divider" aria-hidden="true"></div>
 
     <div class="footer-bottom">
-        <p>© 2026 SpaceScale Systems Inc.</p>
+        <p>© <span data-footer-year>{currentYear}</span> SpaceScale Systems Inc.</p>
         <nav aria-label="Legal links">
             {
                 legalLinks.map((link) => (
@@ -96,3 +97,11 @@ const socialLinks = [
         </nav>
     </div>
 </footer>
+
+<script>
+    const footerYear = document.querySelector("[data-footer-year]");
+
+    if (footerYear) {
+        footerYear.textContent = String(new Date().getFullYear());
+    }
+</script>

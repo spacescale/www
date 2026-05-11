@@ -1,0 +1,309 @@
+---
+import TelemetryLogStream from "./TelemetryLogStream.tsx";
+import TelemetryMetrics from "./TelemetryMetrics.tsx";
+
+const lifecycleRows = [
+    { label: "VM booted (ca-east-04)", time: "118ms", status: "active" },
+    { label: "VM booted (ca-east-09)", time: "134ms", status: "active" },
+    { label: "Health checks registered", time: "12:04:28", status: "active" },
+    { label: "TLS provisioned (ACME)", time: "12:04:29", status: "active" },
+    { label: "L4 Router configured", time: "12:04:29", status: "active" },
+    { label: "DNS A records live", time: "12:04:30", status: "active" },
+    { label: "First request received", time: "12:04:31", status: "active" },
+    { label: "Auto-scaled replica 2", time: "12:04:32", status: "active" },
+    { label: "Cert renewed (auto)", time: "12:04:33", status: "muted" },
+    { label: "Config hot-reload", time: "pending", status: "muted" },
+];
+---
+
+<section class="telemetry-logs" aria-labelledby="telemetry-logs-title">
+    <div class="telemetry-logs__header">
+        <p class="telemetry-logs__eyebrow">OBSERVABILITY</p>
+        <h2 id="telemetry-logs-title" class="telemetry-logs__title">Live Telemetry &amp; Logs</h2>
+        <p class="telemetry-logs__lede">
+            Zero ops does not mean zero visibility. Stream workload logs,
+            lifecycle events, and VM telemetry in real time.
+        </p>
+    </div>
+
+    <div class="telemetry-logs__dashboard" aria-label="Live telemetry dashboard preview">
+        <TelemetryLogStream client:visible />
+
+        <div class="telemetry-logs__dashboard-rule telemetry-logs__dashboard-rule--after-logs" aria-hidden="true"></div>
+
+        <TelemetryMetrics client:visible />
+
+        <div class="telemetry-logs__dashboard-rule telemetry-logs__dashboard-rule--between-panels" aria-hidden="true"></div>
+
+        <section class="telemetry-logs__lifecycle-panel" aria-labelledby="telemetry-lifecycle-title">
+            <header class="telemetry-logs__panel-header">
+                <h3 id="telemetry-lifecycle-title">LIFECYCLE EVENTS</h3>
+            </header>
+            <div class="telemetry-logs__panel-rule" aria-hidden="true"></div>
+
+            <ol class="telemetry-logs__lifecycle" aria-label="Lifecycle events">
+                {lifecycleRows.map((row) => (
+                    <li class={`telemetry-logs__lifecycle-row telemetry-logs__lifecycle-row--${row.status}`}>
+                        <span class="telemetry-logs__lifecycle-icon" aria-hidden="true">
+                            <span></span>
+                        </span>
+                        <span class="telemetry-logs__lifecycle-label">{row.label}</span>
+                        <time>{row.time}</time>
+                    </li>
+                ))}
+            </ol>
+        </section>
+    </div>
+</section>
+
+<style>
+    .telemetry-logs {
+        position: relative;
+        display: flex;
+        width: 100%;
+        min-width: 0;
+        height: 948px;
+        flex-direction: column;
+        align-items: center;
+        gap: 64px;
+        padding: 120px clamp(40px, 5.55vw, 80px);
+        overflow: clip;
+        background: #040406;
+    }
+
+    .telemetry-logs::before,
+    .telemetry-logs::after {
+        content: "";
+        position: absolute;
+        right: 0;
+        left: 0;
+        height: 1px;
+        background: repeating-linear-gradient(
+            to right,
+            #262b33 0,
+            #262b33 6px,
+            transparent 6px,
+            transparent 12px
+        );
+        pointer-events: none;
+    }
+
+    .telemetry-logs::before {
+        top: 0;
+    }
+
+    .telemetry-logs::after {
+        bottom: 0;
+    }
+
+    .telemetry-logs__header {
+        display: flex;
+        width: min(1280px, 100%);
+        height: 124px;
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+        overflow: clip;
+        text-align: center;
+    }
+
+    .telemetry-logs__eyebrow,
+    .telemetry-logs__title,
+    .telemetry-logs__lede,
+    .telemetry-logs__panel-header h3,
+    .telemetry-logs__lifecycle-label,
+    .telemetry-logs__lifecycle time {
+        margin: 0;
+        font-style: normal;
+        line-height: normal;
+        white-space: nowrap;
+    }
+
+    .telemetry-logs__eyebrow {
+        color: #66d9b2;
+        font-family: var(--font-mono);
+        font-size: 13px;
+        font-weight: 500;
+        letter-spacing: 1.04px;
+    }
+
+    .telemetry-logs__title {
+        width: min(900px, 100%);
+        color: #f5f7fa;
+        font-family: var(--font-display);
+        font-size: 44px;
+        font-weight: 400;
+        line-height: 52px;
+        letter-spacing: -0.66px;
+    }
+
+    .telemetry-logs__lede {
+        width: min(1280px, 100%);
+        min-width: 0;
+        color: #8c94a1;
+        font-family: var(--font-body);
+        font-size: 15px;
+        font-weight: 400;
+        line-height: 24px;
+    }
+
+    .telemetry-logs__dashboard {
+        display: flex;
+        width: min(1200px, 100%);
+        height: 520px;
+        align-items: flex-start;
+        overflow: clip;
+        border: 1px solid #1a1c24;
+        background: #0a0c0f;
+    }
+
+    .telemetry-logs__lifecycle-panel {
+        display: flex;
+        flex: 348 1 0;
+        min-width: 240px;
+        height: 520px;
+        flex-direction: column;
+        align-items: flex-start;
+        overflow: clip;
+        padding-bottom: 16px;
+    }
+
+    .telemetry-logs__lifecycle-panel {
+        width: auto;
+        padding-bottom: 20px;
+    }
+
+    .telemetry-logs__dashboard-rule {
+        width: 1px;
+        height: 520px;
+        flex: 0 0 auto;
+        background: #1a1c24;
+    }
+
+    .telemetry-logs__panel-header {
+        display: flex;
+        width: 100%;
+        height: 44px;
+        flex: 0 0 auto;
+        align-items: flex-start;
+        padding: 16px 20px;
+        overflow: clip;
+        background: #0c0e11;
+    }
+
+    .telemetry-logs__panel-header h3 {
+        color: #595e66;
+        font-family: var(--font-body);
+        font-size: 10px;
+        font-weight: 500;
+        letter-spacing: 0.3px;
+    }
+
+    .telemetry-logs__panel-rule {
+        width: 100%;
+        height: 1px;
+        flex: 0 0 auto;
+        background: #1a1c24;
+    }
+
+    .telemetry-logs__lifecycle {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .telemetry-logs__lifecycle-row {
+        display: flex;
+        width: 100%;
+        height: 35px;
+        flex: 0 0 auto;
+        align-items: center;
+        gap: 12px;
+        overflow: clip;
+        padding: 10px 20px;
+    }
+
+    .telemetry-logs__lifecycle-icon {
+        position: relative;
+        width: 12px;
+        height: 8px;
+        flex: 0 0 auto;
+    }
+
+    .telemetry-logs__lifecycle-icon span {
+        position: absolute;
+        top: 0;
+        left: 2px;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #66d9a6;
+    }
+
+    .telemetry-logs__lifecycle-label {
+        min-width: 1px;
+        flex: 1 0 0;
+        overflow: hidden;
+        color: #8a8f99;
+        font-family: var(--font-body);
+        font-size: 12px;
+        font-weight: 400;
+        text-overflow: ellipsis;
+    }
+
+    .telemetry-logs__lifecycle time {
+        color: #66d9a6;
+        font-family: var(--font-body);
+        font-size: 11px;
+        font-weight: 500;
+    }
+
+    .telemetry-logs__lifecycle-row--muted .telemetry-logs__lifecycle-icon span,
+    .telemetry-logs__lifecycle-row--muted .telemetry-logs__lifecycle-label,
+    .telemetry-logs__lifecycle-row--muted time {
+        color: #595e66;
+        background: #595e66;
+    }
+
+    .telemetry-logs__lifecycle-row--muted .telemetry-logs__lifecycle-label,
+    .telemetry-logs__lifecycle-row--muted time {
+        background: transparent;
+    }
+
+    @media (max-width: 1024px) {
+        .telemetry-logs {
+            height: auto;
+            gap: 48px;
+            padding: 96px clamp(32px, 5vw, 48px);
+        }
+
+        .telemetry-logs__header {
+            height: auto;
+        }
+
+        .telemetry-logs__title {
+            font-size: 40px;
+            line-height: 48px;
+        }
+
+        .telemetry-logs__lede {
+            max-width: 720px;
+            white-space: normal;
+        }
+
+        .telemetry-logs__dashboard {
+            height: 520px;
+            flex-wrap: nowrap;
+            align-items: flex-start;
+        }
+
+        .telemetry-logs__dashboard-rule--after-logs,
+        .telemetry-logs__dashboard-rule--between-panels {
+            display: none;
+        }
+
+        .telemetry-logs__lifecycle-panel {
+            display: none;
+        }
+    }
+</style>
