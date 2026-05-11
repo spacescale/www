@@ -1,0 +1,537 @@
+---
+const logTones = {
+    info: {
+        label: "INFO",
+        badgeBackground: "rgba(102, 153, 229, 0.12)",
+        badgeColor: "#6699e5",
+        messageColor: "#8a8f99",
+    },
+    warn: {
+        label: "WARN",
+        badgeBackground: "rgba(217, 178, 77, 0.12)",
+        badgeColor: "#d9b24d",
+        messageColor: "#d9b24d",
+    },
+    event: {
+        label: "EVENT",
+        badgeBackground: "rgba(102, 217, 166, 0.12)",
+        badgeColor: "#66d9a6",
+        messageColor: "#8a8f99",
+    },
+} as const;
+
+const logRows = [
+    { time: "12:04:31.882", tone: "info", message: "Request processed in 2ms" },
+    { time: "12:04:31.901", tone: "info", message: "Cache hit: user_session_4a2f" },
+    { time: "12:04:32.004", tone: "warn", message: "connection pool at 80%" },
+    { time: "12:04:32.118", tone: "info", message: "Request processed in 3ms" },
+    { time: "12:04:32.340", tone: "event", message: "Health check passed (ca-east-04)" },
+    { time: "12:04:32.558", tone: "info", message: "Request processed in 1ms" },
+    { time: "12:04:33.002", tone: "event", message: "TLS cert renewed (auto)" },
+    { time: "12:04:33.214", tone: "info", message: "Request processed in 2ms" },
+    { time: "12:04:33.440", tone: "info", message: "WebSocket connection opened" },
+    { time: "12:04:33.802", tone: "warn", message: "slow query 48ms" },
+    { time: "12:04:34.001", tone: "info", message: "Request processed in 1ms" },
+    { time: "12:04:34.220", tone: "event", message: "Replica ca-east-09 synced" },
+    { time: "12:04:34.558", tone: "info", message: "Request processed in 2ms" },
+    { time: "12:04:34.890", tone: "info", message: "Cache hit: pricing_feed_v3" },
+] as const;
+
+const telemetryRows = [
+    { label: "CPU", value: "23%", width: 72, emphasis: "normal" },
+    { label: "MEMORY", value: "4.2 / 16 GB", width: 82, emphasis: "normal" },
+    { label: "DISK I/O", value: "120 MB/s read", width: 140, emphasis: "normal" },
+    { label: "NETWORK IN", value: "840 Mbps", width: 260, emphasis: "strong" },
+    { label: "NETWORK OUT", value: "320 Mbps", width: 100, emphasis: "normal" },
+];
+
+const lifecycleRows = [
+    { label: "VM booted (ca-east-04)", time: "118ms", status: "active" },
+    { label: "VM booted (ca-east-09)", time: "134ms", status: "active" },
+    { label: "Health checks registered", time: "12:04:28", status: "active" },
+    { label: "TLS provisioned (ACME)", time: "12:04:29", status: "active" },
+    { label: "L4 Router configured", time: "12:04:29", status: "active" },
+    { label: "DNS A records live", time: "12:04:30", status: "active" },
+    { label: "First request received", time: "12:04:31", status: "active" },
+    { label: "Auto-scaled replica 2", time: "12:04:32", status: "active" },
+    { label: "Cert renewed (auto)", time: "12:04:33", status: "muted" },
+    { label: "Config hot-reload", time: "pending", status: "muted" },
+];
+---
+
+<section class="telemetry-logs" aria-labelledby="telemetry-logs-title">
+    <div class="telemetry-logs__header">
+        <p class="telemetry-logs__eyebrow">OBSERVABILITY</p>
+        <h2 id="telemetry-logs-title" class="telemetry-logs__title">Live Telemetry &amp; Logs</h2>
+        <p class="telemetry-logs__lede">
+            Zero ops does not mean zero visibility. Stream workload logs,
+            lifecycle events, and VM telemetry in real time.
+        </p>
+    </div>
+
+    <div class="telemetry-logs__dashboard" aria-label="Live telemetry dashboard preview">
+        <section class="telemetry-logs__log-stream" aria-labelledby="telemetry-log-stream-title">
+            <header class="telemetry-logs__panel-header telemetry-logs__panel-header--split">
+                <h3 id="telemetry-log-stream-title">LOG STREAM</h3>
+                <span class="telemetry-logs__live" aria-label="live">
+                    <span class="telemetry-logs__live-dot" aria-hidden="true"></span>
+                    live
+                </span>
+            </header>
+            <div class="telemetry-logs__panel-rule" aria-hidden="true"></div>
+
+            <ol class="telemetry-logs__log-rows" aria-label="Log stream entries">
+                {
+                    logRows.map((row) => {
+                        const tone = logTones[row.tone];
+
+                        return (
+                            <li class="telemetry-logs__log-row">
+                                <time>{row.time}</time>
+                                <span
+                                    class="telemetry-logs__log-badge"
+                                    style={`--telemetry-log-badge-bg: ${tone.badgeBackground}; --telemetry-log-badge-color: ${tone.badgeColor};`}
+                                >
+                                    {tone.label}
+                                </span>
+                                <span
+                                    class="telemetry-logs__log-message"
+                                    style={`--telemetry-log-message-color: ${tone.messageColor};`}
+                                >
+                                    {row.message}
+                                </span>
+                            </li>
+                        );
+                    })
+                }
+            </ol>
+        </section>
+
+        <div class="telemetry-logs__dashboard-rule" aria-hidden="true"></div>
+
+        <section class="telemetry-logs__metrics-panel" aria-labelledby="telemetry-metrics-title">
+            <header class="telemetry-logs__panel-header">
+                <h3 id="telemetry-metrics-title">VM TELEMETRY</h3>
+            </header>
+            <div class="telemetry-logs__panel-rule" aria-hidden="true"></div>
+
+            <dl class="telemetry-logs__metrics">
+                {telemetryRows.map((metric) => (
+                    <div class="telemetry-logs__metric">
+                        <div class="telemetry-logs__metric-label-row">
+                            <dt>{metric.label}</dt>
+                            <dd>{metric.value}</dd>
+                        </div>
+                        <div class="telemetry-logs__meter" aria-hidden="true">
+                            <span
+                                class={`telemetry-logs__meter-fill telemetry-logs__meter-fill--${metric.emphasis}`}
+                                style={`width: ${metric.width}px`}
+                            ></span>
+                        </div>
+                    </div>
+                ))}
+
+                <div class="telemetry-logs__metric telemetry-logs__metric--uptime">
+                    <div class="telemetry-logs__metric-label-row">
+                        <dt>UPTIME</dt>
+                        <dd>14d 6h 32m</dd>
+                    </div>
+                </div>
+            </dl>
+        </section>
+
+        <div class="telemetry-logs__dashboard-rule" aria-hidden="true"></div>
+
+        <section class="telemetry-logs__lifecycle-panel" aria-labelledby="telemetry-lifecycle-title">
+            <header class="telemetry-logs__panel-header">
+                <h3 id="telemetry-lifecycle-title">LIFECYCLE EVENTS</h3>
+            </header>
+            <div class="telemetry-logs__panel-rule" aria-hidden="true"></div>
+
+            <ol class="telemetry-logs__lifecycle" aria-label="Lifecycle events">
+                {lifecycleRows.map((row) => (
+                    <li class={`telemetry-logs__lifecycle-row telemetry-logs__lifecycle-row--${row.status}`}>
+                        <span class="telemetry-logs__lifecycle-icon" aria-hidden="true">
+                            <span></span>
+                        </span>
+                        <span class="telemetry-logs__lifecycle-label">{row.label}</span>
+                        <time>{row.time}</time>
+                    </li>
+                ))}
+            </ol>
+        </section>
+    </div>
+</section>
+
+<style>
+    .telemetry-logs {
+        position: relative;
+        display: flex;
+        width: 100%;
+        min-width: 1440px;
+        height: 948px;
+        flex-direction: column;
+        align-items: center;
+        gap: 64px;
+        padding: 120px 80px;
+        overflow: clip;
+        background: #040406;
+    }
+
+    .telemetry-logs::before,
+    .telemetry-logs::after {
+        content: "";
+        position: absolute;
+        right: 0;
+        left: 0;
+        height: 1px;
+        background: repeating-linear-gradient(
+            to right,
+            #262b33 0,
+            #262b33 6px,
+            transparent 6px,
+            transparent 12px
+        );
+        pointer-events: none;
+    }
+
+    .telemetry-logs::before {
+        top: 0;
+    }
+
+    .telemetry-logs::after {
+        bottom: 0;
+    }
+
+    .telemetry-logs__header {
+        display: flex;
+        width: 1280px;
+        height: 124px;
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+        overflow: clip;
+        text-align: center;
+    }
+
+    .telemetry-logs__eyebrow,
+    .telemetry-logs__title,
+    .telemetry-logs__lede,
+    .telemetry-logs__panel-header h3,
+    .telemetry-logs__live,
+    .telemetry-logs__log-row time,
+    .telemetry-logs__log-badge,
+    .telemetry-logs__log-message,
+    .telemetry-logs__metric dt,
+    .telemetry-logs__metric dd,
+    .telemetry-logs__lifecycle-label,
+    .telemetry-logs__lifecycle time {
+        margin: 0;
+        font-style: normal;
+        line-height: normal;
+        white-space: nowrap;
+    }
+
+    .telemetry-logs__eyebrow {
+        color: #66d9b2;
+        font-family: var(--font-mono);
+        font-size: 13px;
+        font-weight: 500;
+        letter-spacing: 1.04px;
+    }
+
+    .telemetry-logs__title {
+        width: 900px;
+        color: #f5f7fa;
+        font-family: var(--font-display);
+        font-size: 44px;
+        font-weight: 400;
+        line-height: 52px;
+        letter-spacing: -0.66px;
+    }
+
+    .telemetry-logs__lede {
+        width: 1280px;
+        min-width: 100%;
+        color: #8c94a1;
+        font-family: var(--font-body);
+        font-size: 15px;
+        font-weight: 400;
+        line-height: 24px;
+    }
+
+    .telemetry-logs__dashboard {
+        display: flex;
+        width: 1200px;
+        height: 520px;
+        align-items: flex-start;
+        overflow: clip;
+        border: 1px solid #1a1c24;
+        background: #0a0c0f;
+    }
+
+    .telemetry-logs__log-stream,
+    .telemetry-logs__metrics-panel,
+    .telemetry-logs__lifecycle-panel {
+        display: flex;
+        height: 520px;
+        flex-direction: column;
+        align-items: flex-start;
+        overflow: clip;
+        padding-bottom: 16px;
+    }
+
+    .telemetry-logs__log-stream {
+        width: 500px;
+    }
+
+    .telemetry-logs__metrics-panel {
+        width: 350px;
+        padding-bottom: 20px;
+    }
+
+    .telemetry-logs__lifecycle-panel {
+        width: 348px;
+        padding-bottom: 20px;
+    }
+
+    .telemetry-logs__dashboard-rule {
+        width: 1px;
+        height: 520px;
+        flex: 0 0 auto;
+        background: #1a1c24;
+    }
+
+    .telemetry-logs__panel-header {
+        display: flex;
+        width: 100%;
+        height: 44px;
+        flex: 0 0 auto;
+        align-items: flex-start;
+        padding: 16px 20px;
+        overflow: clip;
+        background: #0c0e11;
+    }
+
+    .telemetry-logs__panel-header--split {
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .telemetry-logs__panel-header h3 {
+        color: #595e66;
+        font-family: var(--font-body);
+        font-size: 10px;
+        font-weight: 500;
+        letter-spacing: 0.3px;
+    }
+
+    .telemetry-logs__panel-rule {
+        width: 100%;
+        height: 1px;
+        flex: 0 0 auto;
+        background: #1a1c24;
+    }
+
+    .telemetry-logs__live {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        color: #66d9a6;
+        font-family: var(--font-body);
+        font-size: 10px;
+        font-weight: 500;
+    }
+
+    .telemetry-logs__live-dot {
+        width: 6px;
+        height: 6px;
+        flex: 0 0 auto;
+        border-radius: 50%;
+        background: #66d9a6;
+    }
+
+    .telemetry-logs__log-rows,
+    .telemetry-logs__lifecycle {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .telemetry-logs__log-row {
+        display: flex;
+        width: 500px;
+        height: 28px;
+        flex: 0 0 auto;
+        align-items: center;
+        gap: 12px;
+        overflow: clip;
+        padding: 6px 20px;
+    }
+
+    .telemetry-logs__log-row:nth-child(even) {
+        background: rgba(12, 14, 17, 0.3);
+    }
+
+    .telemetry-logs__log-row time {
+        color: #595e66;
+        font-family: var(--font-body);
+        font-size: 11px;
+        font-weight: 400;
+    }
+
+    .telemetry-logs__log-badge {
+        display: flex;
+        align-items: flex-start;
+        overflow: clip;
+        padding: 2px 6px;
+        border-radius: 3px;
+        background: var(--telemetry-log-badge-bg);
+        color: var(--telemetry-log-badge-color);
+        font-family: var(--font-body);
+        font-size: 10px;
+        font-weight: 500;
+    }
+
+    .telemetry-logs__log-message {
+        color: var(--telemetry-log-message-color);
+        font-family: var(--font-body);
+        font-size: 11px;
+        font-weight: 400;
+    }
+
+    .telemetry-logs__metrics {
+        margin: 0;
+        padding: 0;
+    }
+
+    .telemetry-logs__metric {
+        display: flex;
+        width: 350px;
+        height: 57px;
+        flex: 0 0 auto;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+        overflow: clip;
+        padding: 14px 20px;
+        border-bottom: 1px solid rgba(26, 28, 36, 0.5);
+    }
+
+    .telemetry-logs__metric:first-child {
+        border-bottom-color: #1a1c24;
+    }
+
+    .telemetry-logs__metric--uptime {
+        height: 43px;
+        gap: 0;
+    }
+
+    .telemetry-logs__metric-label-row {
+        display: flex;
+        width: 310px;
+        align-items: flex-start;
+        justify-content: space-between;
+        overflow: clip;
+    }
+
+    .telemetry-logs__metric dt,
+    .telemetry-logs__metric dd {
+        font-family: var(--font-body);
+        font-weight: 500;
+    }
+
+    .telemetry-logs__metric dt {
+        color: #595e66;
+        font-size: 10px;
+        letter-spacing: 0.2px;
+    }
+
+    .telemetry-logs__metric dd {
+        color: #66d9a6;
+        font-size: 12px;
+    }
+
+    .telemetry-logs__metric--uptime dd {
+        color: #8a8f99;
+    }
+
+    .telemetry-logs__meter {
+        position: relative;
+        width: 310px;
+        height: 6px;
+        flex: 0 0 auto;
+        overflow: clip;
+        border-radius: 1px;
+        background: #1a1c24;
+    }
+
+    .telemetry-logs__meter-fill {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 6px;
+        border-radius: 1px;
+        background: rgba(102, 217, 166, 0.5);
+    }
+
+    .telemetry-logs__meter-fill--strong {
+        background: rgba(102, 217, 166, 0.7);
+    }
+
+    .telemetry-logs__lifecycle-row {
+        display: flex;
+        width: 348px;
+        height: 35px;
+        flex: 0 0 auto;
+        align-items: center;
+        gap: 12px;
+        overflow: clip;
+        padding: 10px 20px;
+    }
+
+    .telemetry-logs__lifecycle-icon {
+        position: relative;
+        width: 12px;
+        height: 8px;
+        flex: 0 0 auto;
+    }
+
+    .telemetry-logs__lifecycle-icon span {
+        position: absolute;
+        top: 0;
+        left: 2px;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #66d9a6;
+    }
+
+    .telemetry-logs__lifecycle-label {
+        min-width: 1px;
+        flex: 1 0 0;
+        color: #8a8f99;
+        font-family: var(--font-body);
+        font-size: 12px;
+        font-weight: 400;
+    }
+
+    .telemetry-logs__lifecycle time {
+        color: #66d9a6;
+        font-family: var(--font-body);
+        font-size: 11px;
+        font-weight: 500;
+    }
+
+    .telemetry-logs__lifecycle-row--muted .telemetry-logs__lifecycle-icon span,
+    .telemetry-logs__lifecycle-row--muted .telemetry-logs__lifecycle-label,
+    .telemetry-logs__lifecycle-row--muted time {
+        color: #595e66;
+        background: #595e66;
+    }
+
+    .telemetry-logs__lifecycle-row--muted .telemetry-logs__lifecycle-label,
+    .telemetry-logs__lifecycle-row--muted time {
+        background: transparent;
+    }
+</style>
