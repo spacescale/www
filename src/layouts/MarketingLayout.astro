@@ -9,8 +9,8 @@ interface Props {
 }
 
 const {
-    title = "SpaceScale: Infrastructure for Serious Workloads",
-    description = "SpaceScale is building infrastructure for serious workloads, with Ignite for isolated container execution and persistent Machines for humans and agents.",
+    title = "SpaceScale: Infrastructure for humans and agents",
+    description = "SpaceScale is building infrastructure for humans and agents, with Ignite for container workloads and Machines for persistent workspaces.",
 } = Astro.props;
 ---
 
@@ -20,6 +20,8 @@ const {
         <meta charset="UTF-8" />
         <meta name="description" content={description} />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" sizes="any" />
+        <link rel="shortcut icon" href="/favicon.svg" type="image/svg+xml" />
         <title>{title}</title>
     </head>
 
