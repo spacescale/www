@@ -1,0 +1,95 @@
+<section class="final-cta" aria-labelledby="final-cta-title">
+    <div class="final-cta__container">
+        <p class="final-cta__eyebrow">ALMOST READY...</p>
+        <h2 id="final-cta-title" class="final-cta__title">We are in active developement.</h2>
+        <p class="final-cta__copy">
+            Read our engineering blog to learn more about our design decisions,
+            architecture tradeoffs, and the systems work behind SpaceScale as we
+            build toward the first public runtime.
+        </p>
+        <a class="final-cta__button" href="/engineering">Read how we're building it</a>
+    </div>
+</section>
+
+<style>
+    .final-cta {
+        display: flex;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+        height: 523px;
+        padding: 120px 80px;
+        overflow: clip;
+        background: var(--color-bg-primary);
+    }
+
+    .final-cta__container {
+        display: flex;
+        width: 900px;
+        flex-direction: column;
+        align-items: center;
+        gap: 32px;
+        text-align: center;
+    }
+
+    .final-cta__eyebrow,
+    .final-cta__title,
+    .final-cta__copy {
+        margin: 0;
+    }
+
+    .final-cta__eyebrow {
+        color: #66d9b2;
+        font-family: "Geist Mono", var(--font-mono);
+        font-size: 13px;
+        font-weight: 500;
+        line-height: normal;
+        letter-spacing: 1.04px;
+        white-space: nowrap;
+    }
+
+    .final-cta__title {
+        width: 900px;
+        color: #f5f7fa;
+        font-family: var(--font-display);
+        font-size: 56px;
+        font-weight: 400;
+        line-height: 64px;
+        letter-spacing: -1.12px;
+    }
+
+    .final-cta__copy {
+        width: 786px;
+        color: #8c94a1;
+        font-family: var(--font-body);
+        font-size: 18px;
+        font-weight: 400;
+        line-height: 28px;
+    }
+
+    .final-cta__button {
+        display: inline-flex;
+        width: 250px;
+        height: 51px;
+        align-items: center;
+        justify-content: center;
+        padding: 16px 24px;
+        overflow: clip;
+        border: 1px solid #262b33;
+        color: #f5f7fa;
+        font-family: var(--font-body);
+        font-size: 16px;
+        font-weight: 600;
+        line-height: normal;
+        transition:
+            border-color var(--motion-fast),
+            background-color var(--motion-fast),
+            color var(--motion-fast);
+    }
+
+    .final-cta__button:hover {
+        border-color: #f5f7fa;
+        background: #f5f7fa;
+        color: #0a0d12;
+    }
+</style>
