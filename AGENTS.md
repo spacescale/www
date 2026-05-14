@@ -30,14 +30,22 @@
 - Links and buttons should have clear accessible labels.
 - Match approved visual direction for spacing, typography, colors, borders, asset placement, content width, and component boundaries.
 - Do not submit visually approximate implementations when the issue asks for a specific design.
+- When an issue references Figma, screenshots, or approved dimensions, match the desktop design first before adding responsive behavior.
+- Do not approximate Figma-specific details such as dimensions, line patterns, spacing, borders, asset positions, or visual hierarchy.
+- For responsive work, preserve the approved desktop composition unless the issue explicitly asks to redesign it.
+- For responsive sections with diagrams, verify desktop resize, tablet, and mobile behavior before finishing.
 - Do not mix implementation work with cleanup work.
+- Do not mix responsive fixes, visual redesign, file movement, and asset rewrites in one change unless the issue explicitly asks for that combined scope.
 - Do not move files or reshape folders unless the issue is specifically about structure.
 - Do not delete existing files unless the issue explicitly requires it.
 - Do not change package files, lockfiles, build config, or framework config unless the issue explicitly requires it.
+- Keep Astro scoped `<style>` blocks as the default for component-specific CSS.
+- Do not move component styles into sibling CSS files unless there is a clear reuse or readability reason that outweighs the extra file split.
 - Use `public/assets` for larger static visuals.
 - Use `src/components/icons` for small UI icons.
 - Do not add unused assets.
 - Do not delete assets unless the issue explicitly says to.
+- Do not split, rewrite, or replace existing SVG diagrams unless the resulting animation, proportions, labels, and desktop appearance are preserved.
 - Do not commit temporary external asset URLs.
 - Do not use placeholders for missing required assets.
 - Keep asset names descriptive and stable.

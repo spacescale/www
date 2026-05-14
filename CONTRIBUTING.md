@@ -21,6 +21,9 @@ architecture, or make a broad cleanup, open an issue first and wait for maintain
 If a change needs to touch shared layout, global styles, or project structure, explain why in the pull request and link
 the issue that approved the direction.
 
+Do not mix responsive fixes, visual redesign, file movement, asset rewrites, and broad cleanup in one pull request unless
+the issue explicitly asks for that combined scope.
+
 ## Branches
 
 Open pull requests against `dev` unless a maintainer asks otherwise.
@@ -55,12 +58,21 @@ Match the existing SpaceScale direction:
 If an issue includes a visual reference, screenshot, or asset list, follow it closely. If an asset is missing, ask
 before adding placeholders.
 
+If an issue references Figma, screenshots, or approved dimensions, match the desktop design first before responsive
+behavior is added. Do not approximate dimensions, line patterns, spacing, borders, asset placement, or visual hierarchy.
+
+For responsive changes, preserve the approved desktop composition unless the issue explicitly asks for a redesign. Include
+screenshots or notes for desktop resize, tablet, and mobile when the change affects layout, diagrams, navigation, or
+section structure.
+
 ## Styling
 
 Reuse existing tokens and patterns where possible.
 Avoid duplicated colors, font stacks, and spacing values when a shared token already exists. Do not change global styles
 for a single one-off section unless the change is truly shared.
 Do not make broad responsive changes unless the issue explicitly asks for them.
+Keep Astro scoped `<style>` blocks as the default for component-specific CSS. Move styles into sibling CSS files only
+when there is a clear reuse or readability reason that outweighs the extra file split.
 
 ## Assets And Icons
 
@@ -69,6 +81,8 @@ Use small Astro icon components for simple UI icons.
 Use files in `public/assets` for larger illustrations, diagrams, social preview images, and exported design assets.
 
 Do not add unused assets. Do not add third-party assets unless their license allows commercial public website use.
+Do not split, rewrite, or replace existing SVG diagrams unless the animation, proportions, labels, and desktop appearance
+remain intact.
 
 ## Dependencies
 
