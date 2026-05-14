@@ -65,14 +65,23 @@ For responsive changes, preserve the approved desktop composition unless the iss
 screenshots or notes for desktop resize, tablet, and mobile when the change affects layout, diagrams, navigation, or
 section structure.
 
+Responsive fixes should not change navigation, footer, or section copy unless the issue explicitly asks for copy or
+information architecture changes.
+
 ## Styling
 
 Reuse existing tokens and patterns where possible.
 Avoid duplicated colors, font stacks, and spacing values when a shared token already exists. Do not change global styles
 for a single one-off section unless the change is truly shared.
 Do not make broad responsive changes unless the issue explicitly asks for them.
+Prefer width-based or container-based breakpoints. Avoid `orientation` media queries unless the issue specifically needs
+orientation-aware behavior.
+Keep media queries clear and non-redundant. Do not nest a breakpoint inside another matching breakpoint block.
+Scope responsive overrides to the component or section that owns the layout. Avoid broad shared-layout overrides for a
+one-section fix.
 Keep Astro scoped `<style>` blocks as the default for component-specific CSS. Move styles into sibling CSS files only
 when there is a clear reuse or readability reason that outweighs the extra file split.
+Remove trailing whitespace before committing.
 
 ## Assets And Icons
 

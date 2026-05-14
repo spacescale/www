@@ -34,8 +34,12 @@
 - Do not approximate Figma-specific details such as dimensions, line patterns, spacing, borders, asset positions, or visual hierarchy.
 - For responsive work, preserve the approved desktop composition unless the issue explicitly asks to redesign it.
 - For responsive sections with diagrams, verify desktop resize, tablet, and mobile behavior before finishing.
+- Prefer width-based or container-based breakpoints for responsive layout. Avoid `orientation` media queries unless the issue explicitly requires orientation-specific behavior.
+- Keep media queries clear and non-redundant. Do not nest a breakpoint inside another matching breakpoint block.
+- Keep responsive overrides scoped to the component or section that owns the layout. Avoid broad shared-layout overrides for a one-section fix.
 - Do not mix implementation work with cleanup work.
 - Do not mix responsive fixes, visual redesign, file movement, and asset rewrites in one change unless the issue explicitly asks for that combined scope.
+- Do not change navigation, footer, or section copy while fixing responsive behavior unless the issue explicitly asks for copy or information architecture changes.
 - Do not move files or reshape folders unless the issue is specifically about structure.
 - Do not delete existing files unless the issue explicitly requires it.
 - Do not change package files, lockfiles, build config, or framework config unless the issue explicitly requires it.
@@ -51,6 +55,7 @@
 - Keep asset names descriptive and stable.
 - Use asset paths like `public/assets/<area>/<asset-name>.svg`.
 - Fix obvious spelling issues when touching nearby copy.
+- Remove trailing whitespace before committing.
 - Do not rewrite large copy blocks unless the issue asks for copy work.
 - Update nearby docs when a change alters structure, commands, assets, styling direction, or contribution expectations.
 - Add comments only when implementation intent is unclear, a visual choice is non-obvious, or a boundary decision needs to be preserved.
