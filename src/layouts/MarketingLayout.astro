@@ -1,6 +1,7 @@
 ---
 import Header from "../components/site/Header.astro";
 import Footer from "../components/site/Footer.astro";
+import FinalCtaFooterFrame from "../components/site/FinalCtaFooterFrame.astro";
 import "../styles/global.css";
 
 interface Props {
@@ -12,6 +13,8 @@ const {
     title = "SpaceScale: Infrastructure for humans and agents",
     description = "SpaceScale is building infrastructure for humans and agents, with Ignite for container workloads and Machines for persistent workspaces.",
 } = Astro.props;
+
+const hasFinalCta = Astro.slots.has("final-cta");
 ---
 
 <!doctype html>
@@ -20,6 +23,20 @@ const {
         <meta charset="UTF-8" />
         <meta name="description" content={description} />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            rel="icon"
+            href="/favicon-light.svg"
+            type="image/svg+xml"
+            media="(prefers-color-scheme: light)"
+            sizes="any"
+        />
+        <link
+            rel="icon"
+            href="/favicon-dark.svg"
+            type="image/svg+xml"
+            media="(prefers-color-scheme: dark)"
+            sizes="any"
+        />
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" sizes="any" />
         <link rel="shortcut icon" href="/favicon.svg" type="image/svg+xml" />
         <title>{title}</title>
@@ -28,6 +45,14 @@ const {
     <body>
         <Header />
         <slot />
-        <Footer />
+        {
+            hasFinalCta ? (
+                <FinalCtaFooterFrame>
+                    <slot name="final-cta" />
+                </FinalCtaFooterFrame>
+            ) : (
+                <Footer />
+            )
+        }
     </body>
 </html>
