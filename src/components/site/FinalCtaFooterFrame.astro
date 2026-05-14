@@ -1,0 +1,99 @@
+---
+import Footer from "./Footer.astro";
+
+const lowerFrameTiles = [
+    { x: 0, y: 264.2 },
+    { x: 176.1338, y: 440.3335 },
+    { x: 264.2, y: 176.1333 },
+    { x: 440.333, y: 354.0825 },
+    { x: 528.4004, y: 89.8823 },
+    { x: 704.5333, y: 264.2 },
+    { x: 616.4667, y: 530.2158 },
+    { x: 880.667, y: 442.1489 },
+    { x: 880.667, y: 88.0669 },
+    { x: 1056.8, y: 266.0158 },
+    { x: 88.0664, y: 352.2666 },
+    { x: 264.2, y: 528.4 },
+    { x: 352.2667, y: 264.2 },
+    { x: 528.4004, y: 442.1489 },
+    { x: 616.4667, y: 177.9491 },
+    { x: 792.5996, y: 352.2666 },
+    { x: 704.5332, y: 618.2822 },
+    { x: 968.7333, y: 530.2158 },
+    { x: 968.7333, y: 176.1333 },
+    { x: 1144.8672, y: 354.0825 },
+    { x: 88.0664, y: 176.1333 },
+    { x: 264.2, y: 352.2667 },
+    { x: 352.2667, y: 88.0667 },
+    { x: 528.4004, y: 266.0156 },
+    { x: 616.4667, y: 1.8158 },
+    { x: 792.5996, y: 176.1333 },
+    { x: 704.5333, y: 442.1491 },
+    { x: 968.7333, y: 354.0825 },
+    { x: 968.7333, y: 0 },
+    { x: 1144.8672, y: 177.9492 },
+    { x: 176.1338, y: 264.2002 },
+    { x: 352.2667, y: 440.3333 },
+    { x: 440.333, y: 176.1333 },
+    { x: 616.4667, y: 354.0825 },
+    { x: 704.5333, y: 89.8825 },
+    { x: 880.667, y: 264.2002 },
+    { x: 792.5996, y: 530.2158 },
+    { x: 1056.8, y: 442.1491 },
+    { x: 1056.8, y: 88.0667 },
+    { x: 1232.9333, y: 266.0158 },
+] as const;
+---
+
+<div class="final-cta-footer-frame">
+    <div class="final-cta-footer-frame__background" aria-hidden="true">
+        {
+            lowerFrameTiles.map((tile) => (
+                <span style={`--tile-x: ${tile.x}px; --tile-y: ${tile.y}px;`} />
+            ))
+        }
+    </div>
+    <slot />
+    <Footer />
+</div>
+
+<style>
+    .final-cta-footer-frame {
+        position: relative;
+        z-index: 0;
+        overflow: hidden;
+        background: var(--color-bg-primary);
+        isolation: isolate;
+    }
+
+    .final-cta-footer-frame__background {
+        position: absolute;
+        z-index: 0;
+        top: 232.4365px;
+        left: 40px;
+        width: 1321.0002px;
+        height: 706.3489px;
+        pointer-events: none;
+    }
+
+    .final-cta-footer-frame__background span {
+        position: absolute;
+        top: var(--tile-y);
+        left: var(--tile-x);
+        width: 88.0667px;
+        height: 88.0667px;
+        background: linear-gradient(180deg, #ffffff 0%, #999999 100%);
+        opacity: 0.02;
+    }
+
+    .final-cta-footer-frame :global(.final-cta),
+    .final-cta-footer-frame :global(.site-footer) {
+        position: relative;
+        z-index: 1;
+        background: transparent;
+    }
+
+    .final-cta-footer-frame :global(.site-footer) {
+        padding-bottom: 59px;
+    }
+</style>
