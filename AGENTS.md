@@ -32,6 +32,7 @@
 - Do not submit visually approximate implementations when the issue asks for a specific design.
 - When an issue references Figma, screenshots, or approved dimensions, match the desktop design first before adding responsive behavior.
 - Do not approximate Figma-specific details such as dimensions, line patterns, spacing, borders, asset positions, or visual hierarchy.
+- Do not rely on browser-native `dashed` or `dotted` borders for Figma line patterns unless the rendered dash rhythm has been visually verified. Use an explicit SVG stroke or CSS repeating gradient when exact dash and gap spacing matters.
 - For responsive work, preserve the approved desktop composition unless the issue explicitly asks to redesign it.
 - For responsive sections with diagrams, verify desktop resize, tablet, and mobile behavior before finishing.
 - Prefer width-based or container-based breakpoints for responsive layout. Avoid `orientation` media queries unless the issue explicitly requires orientation-specific behavior.
