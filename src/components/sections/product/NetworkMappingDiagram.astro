@@ -506,17 +506,14 @@
 
     @media (max-width: 640px) {
         .network-diagram {
-            --y-fork-width: 1px;
-            --y-fork-height: 38px;
-
             position: relative;
             display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-content: flex-start;
-            width: min(100%, 360px);
+            width: min(100%, 260px);
             height: auto;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 34px;
             margin-inline: auto;
             overflow: visible;
             border-radius: 0;
@@ -538,12 +535,22 @@
         }
 
         .network-diagram__app {
-            flex: 0 0 100%;
-            width: 100%;
-            max-width: 240px;
-            height: auto;
-            min-height: 115px;
-            margin: 0 auto 38px;
+            width: 180px;
+            height: 115px;
+        }
+
+        .network-diagram__app::before {
+            content: "";
+            position: absolute;
+            top: calc(100% + 28px);
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-right: 5px solid transparent;
+            border-left: 5px solid transparent;
+            border-top: 8px solid #8a8f99;
+            transform: translateX(-50%);
+            pointer-events: none;
         }
 
         .network-diagram__app::after {
@@ -552,18 +559,16 @@
             top: 100%;
             left: 50%;
             width: 1px;
-            height: 38px;
-            background: var(--network-signal);
+            height: 34px;
+            background: #8a8f99;
             transform: translateX(-50%);
             pointer-events: none;
         }
 
         .network-diagram__router {
-            flex: 0 0 100%;
-            width: 100%;
-            max-width: 260px;
-            height: 52px;
-            margin: 0 auto calc(var(--y-fork-height) + 14px);
+            width: 200px;
+            height: 44px;
+            margin: 0;
         }
 
         .network-diagram__router::before {
@@ -571,10 +576,10 @@
             position: absolute;
             top: 100%;
             left: 50%;
-            width: var(--y-fork-width);
-            height: var(--y-fork-height);
+            width: 1px;
+            height: 34px;
             transform: translateX(-50%);
-            background: var(--network-signal);
+            background: #2b3138;
             pointer-events: none;
         }
 
@@ -583,36 +588,18 @@
         }
 
         .network-diagram__path-label {
-            position: relative;
-            flex: 0 0 100%;
-            top: auto;
-            left: auto;
-            margin: 0;
-            padding-bottom: 4px;
-            font-size: 9px;
-            text-align: center;
-        }
-
-        .network-diagram__path-label--public {
-            top: auto;
-            left: auto;
-        }
-
-        .network-diagram__path-label--internal {
             display: none;
         }
 
         .network-diagram__card {
-            flex: 0 0 100%;
-            width: 100%;
-            height: auto;
-            gap: 9px;
-            padding: 14px;
+            width: 220px;
+            gap: 10px;
+            padding: 16px;
         }
 
         .network-diagram__card--public {
-            min-height: 138px;
-            margin: 12px 0 18px;
+            height: 162px;
+            margin: 0;
         }
 
         .network-diagram__card--internal {
@@ -625,14 +612,14 @@
         }
 
         .network-diagram__card p {
-            white-space: normal;
-            line-height: 1.35;
+            white-space: nowrap;
+            line-height: normal;
         }
 
         .network-diagram__pill {
             max-width: 100%;
-            white-space: normal;
-            line-height: 1.2;
+            white-space: nowrap;
+            line-height: normal;
         }
     }
 </style>
