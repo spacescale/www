@@ -506,8 +506,8 @@
 
     @media (max-width: 640px) {
         .network-diagram {
-            --y-fork-width: 180px;
-            --y-fork-height: 48px;
+            --y-fork-width: 1px;
+            --y-fork-height: 38px;
 
             position: relative;
             display: flex;
@@ -574,23 +574,7 @@
             width: var(--y-fork-width);
             height: var(--y-fork-height);
             transform: translateX(-50%);
-            background:
-                linear-gradient(
-                    to bottom left,
-                    transparent calc(50% - 0.5px),
-                    var(--network-signal) calc(50% - 0.5px),
-                    var(--network-signal) calc(50% + 0.5px),
-                    transparent calc(50% + 0.5px)
-                )
-                    left / 50% 100% no-repeat,
-                linear-gradient(
-                    to bottom right,
-                    transparent calc(50% - 0.5px),
-                    #595e66 calc(50% - 0.5px),
-                    #595e66 calc(50% + 0.5px),
-                    transparent calc(50% + 0.5px)
-                )
-                    right / 50% 100% no-repeat;
+            background: var(--network-signal);
             pointer-events: none;
         }
 
@@ -600,7 +584,7 @@
 
         .network-diagram__path-label {
             position: relative;
-            flex: 0 0 50%;
+            flex: 0 0 100%;
             top: auto;
             left: auto;
             margin: 0;
@@ -609,10 +593,13 @@
             text-align: center;
         }
 
-        .network-diagram__path-label--public,
-        .network-diagram__path-label--internal {
+        .network-diagram__path-label--public {
             top: auto;
             left: auto;
+        }
+
+        .network-diagram__path-label--internal {
+            display: none;
         }
 
         .network-diagram__card {
@@ -629,19 +616,7 @@
         }
 
         .network-diagram__card--internal {
-            min-height: 154px;
-        }
-
-        .network-diagram__card--internal::before {
-            content: "";
-            position: absolute;
-            bottom: 100%;
-            left: 50%;
-            width: 1px;
-            height: 18px;
-            background: #2b3138;
-            transform: translateX(-50%);
-            pointer-events: none;
+            display: none;
         }
 
         .network-diagram__card-header {

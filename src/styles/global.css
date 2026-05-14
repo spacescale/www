@@ -222,6 +222,22 @@ button, input, textarea, select {
 }
 
 /*
+  Desktop / tablet: the overlay wrappers are transparent to layout
+  so the Engineering link and CTA sit as direct flex children of .site-nav,
+  vertically centered alongside the brand. The caret and social icons are
+  overlay-only — hide them above the mobile breakpoint.
+*/
+.site-nav-list,
+.site-nav-footer {
+    display: contents;
+}
+
+.site-nav-caret,
+.site-nav-socials {
+    display: none;
+}
+
+/*
   SpaceScale logo mark.
 
   Figma uses 8 small vector squares in a 4-column, 3-row grid.
@@ -536,25 +552,19 @@ button, input, textarea, select {
 
 @media (max-width: 900px) {
     .site-header {
-        height: auto;
         min-height: 100px;
         padding-block: 24px;
     }
 
-    .site-header::after {
-        bottom: 0;
-    }
-
     .site-header-inner {
-        flex-wrap: wrap;
-        gap: 18px 24px;
+        flex-wrap: nowrap;
+        gap: 16px;
     }
 
     .site-nav {
-        width: 100%;
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
         align-items: center;
-        justify-content: flex-start;
+        justify-content: flex-end;
         gap: 8px;
     }
 
@@ -603,8 +613,21 @@ button, input, textarea, select {
 
 @media (max-width: 640px) {
     .site-header {
+        position: relative;
+        z-index: 50;
         min-height: 96px;
         padding-block: 20px;
+    }
+
+    .site-header[data-menu-open="true"] {
+        position: fixed;
+        top: 0;
+        right: 0;
+        left: 0;
+    }
+
+    .site-header[data-menu-open="true"]::after {
+        display: none;
     }
 
     .site-header-inner {
@@ -618,8 +641,8 @@ button, input, textarea, select {
         align-items: center;
         justify-content: center;
         gap: 7px;
-        width: 48px;
-        height: 48px;
+        width: 40px;
+        height: 40px;
         margin-left: auto;
         padding: 0;
         border: 1px solid #262b33;
@@ -628,8 +651,8 @@ button, input, textarea, select {
         cursor: pointer;
     }
 
-    .site-menu-toggle span {
-        width: 26px;
+    .site-menu-toggle > span {
+        width: 22px;
         height: 2px;
         flex-shrink: 0;
         background: currentColor;
@@ -648,64 +671,166 @@ button, input, textarea, select {
         outline-offset: 3px;
     }
 
+    /* When open: keep brand on the left, close button on the right (original layout).
+       Both must sit above .site-nav (z-index 40) so the overlay does not paint over them. */
+    .site-header[data-menu-open="true"] .site-menu-toggle,
+    .site-header[data-menu-open="true"] .brand-lockup {
+        position: relative;
+        z-index: 50;
+    }
+
+    .site-header[data-menu-open="true"] .site-menu-toggle > span:nth-child(1) {
+        transform: translateY(9px) rotate(45deg);
+    }
+
+    .site-header[data-menu-open="true"] .site-menu-toggle > span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .site-header[data-menu-open="true"] .site-menu-toggle > span:nth-child(3) {
+        transform: translateY(-9px) rotate(-45deg);
+    }
+
+    /* Full-screen overlay menu. */
     .site-nav {
-        position: absolute;
-        top: calc(100% + 18px);
+        position: fixed;
+        top: 0;
         right: 0;
+        bottom: 0;
         left: 0;
-        z-index: 2;
-        display: grid;
-        gap: 8px;
+        z-index: 40;
+        display: flex;
+        flex-direction: column;
+        gap: 0;
         width: 100%;
+        height: 100dvh;
         margin: 0;
-        padding: 10px;
-        overflow: hidden;
-        border: 1px solid var(--color-border-default);
-        background: rgba(4, 4, 6, 0.96);
-        box-shadow: 0 18px 36px rgba(0, 0, 0, 0.34);
+        padding: 96px 0 0;
+        overflow-y: auto;
+        background: var(--color-bg-primary);
         opacity: 0;
         visibility: hidden;
-        clip-path: inset(0 0 100% 0);
-        transform: translateY(-8px);
+        transform: translateY(-12px);
         pointer-events: none;
         transition:
             opacity var(--motion-fast),
             transform var(--motion-fast),
-            clip-path var(--motion-fast),
             visibility 0s linear var(--motion-fast);
     }
 
     .site-header[data-menu-open="true"] .site-nav {
         opacity: 1;
         visibility: visible;
-        clip-path: inset(0 0 0 0);
         transform: translateY(0);
         pointer-events: auto;
         transition-delay: 0s;
     }
 
-    .site-header[data-menu-open="true"] .site-menu-toggle span:nth-child(1) {
-        transform: translateY(9px) rotate(45deg);
-    }
-
-    .site-header[data-menu-open="true"] .site-menu-toggle span:nth-child(2) {
-        opacity: 0;
-    }
-
-    .site-header[data-menu-open="true"] .site-menu-toggle span:nth-child(3) {
-        transform: translateY(-9px) rotate(-45deg);
-    }
-
-    .site-nav a:not(.nav-cta),
-    .nav-cta {
+    .site-nav-list {
+        display: flex;
+        flex-direction: column;
         width: 100%;
-        justify-content: flex-start;
-        height: 44px;
-        padding-inline: 12px;
     }
 
-    .nav-cta {
+    .site-nav-list > * + * {
+        border-top: 1px solid var(--color-border-default);
+    }
+
+    .site-nav-list > :first-child {
+        border-top: 1px solid var(--color-border-default);
+    }
+
+    .site-nav-list > :last-child {
+        border-bottom: 1px solid var(--color-border-default);
+    }
+
+    .site-nav-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        width: 100%;
+        min-height: 56px;
+        padding: 0 var(--site-padding-x);
+
+        background: transparent;
+        color: #f5f7fa;
+        font-family: var(--font-body);
+        font-size: 15px;
+        font-weight: 500;
+        line-height: 1;
+
+        cursor: pointer;
+
+        transition: background-color var(--motion-fast);
+    }
+
+    .site-nav-row::-webkit-details-marker {
+        display: none;
+    }
+
+    .site-nav-row:hover {
+        background: var(--color-surface-hover);
+    }
+
+    .site-nav-caret {
+        display: inline-flex;
+        width: 16px;
+        height: 16px;
+        color: #8c94a1;
+    }
+
+    .site-nav-caret svg {
+        width: 100%;
+        height: 100%;
+    }
+
+    .site-nav-footer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 24px;
+        margin-top: auto;
+        padding: 32px var(--site-padding-x) calc(32px + env(safe-area-inset-bottom));
+    }
+
+    .site-nav-footer .nav-cta {
+        width: 100%;
+        max-width: 320px;
         justify-content: center;
+        height: 44px;
+        padding-inline: 16px;
+    }
+
+    .site-nav-socials {
+        display: inline-flex;
+        align-items: center;
+        gap: 24px;
+        color: #8c94a1;
+    }
+
+    /* Specificity-bumped past `.site-nav a:not(.nav-cta)` height rule at the 900px breakpoint. */
+    .site-nav .site-nav-socials a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 24px;
+        padding: 0;
+        color: inherit;
+        background: transparent;
+        transition: color var(--motion-fast);
+    }
+
+    .site-nav .site-nav-socials a:hover {
+        background: transparent;
+        color: #f5f7fa;
+    }
+
+    .site-nav-socials svg {
+        display: block;
+        width: 20px;
+        height: 20px;
     }
 
     .site-footer {

@@ -18,7 +18,7 @@
         align-items: center;
         justify-content: center;
         height: 523px;
-        padding: 120px 80px;
+        padding: 120px var(--site-padding-x);
         overflow: clip;
         background: var(--color-bg-primary);
     }
@@ -26,6 +26,7 @@
     .final-cta__container {
         display: flex;
         width: 900px;
+        max-width: 100%;
         flex-direction: column;
         align-items: center;
         gap: 32px;
@@ -50,6 +51,7 @@
 
     .final-cta__title {
         width: 900px;
+        max-width: 100%;
         color: #f5f7fa;
         font-family: var(--font-display);
         font-size: 56px;
@@ -60,6 +62,7 @@
 
     .final-cta__copy {
         width: 786px;
+        max-width: 100%;
         color: #8c94a1;
         font-family: var(--font-body);
         font-size: 18px;
@@ -67,20 +70,59 @@
         line-height: 28px;
     }
 
+    @media (max-width: 900px) {
+        .final-cta {
+            height: auto;
+            padding: 80px var(--site-padding-x);
+        }
+
+        .final-cta__title {
+            font-size: 40px;
+            line-height: 48px;
+            letter-spacing: -0.8px;
+        }
+
+        .final-cta__copy {
+            font-size: 16px;
+            line-height: 26px;
+        }
+    }
+
+    @media (max-width: 640px) {
+        .final-cta {
+            padding: 64px var(--site-padding-x);
+        }
+
+        .final-cta__container {
+            gap: 24px;
+        }
+
+        .final-cta__title {
+            font-size: 32px;
+            line-height: 38px;
+            letter-spacing: -0.4px;
+        }
+
+        .final-cta__copy {
+            font-size: 15px;
+            line-height: 23px;
+        }
+    }
+
     .final-cta__button {
         display: inline-flex;
-        width: 250px;
+        min-width: 250px;
         height: 51px;
         align-items: center;
         justify-content: center;
         padding: 16px 24px;
-        overflow: clip;
         border: 1px solid #262b33;
         color: #f5f7fa;
         font-family: var(--font-body);
         font-size: 16px;
         font-weight: 600;
         line-height: normal;
+        white-space: nowrap;
         transition:
             border-color var(--motion-fast),
             background-color var(--motion-fast),

@@ -10,8 +10,14 @@
 
 <div class="execution-isolation-visual" aria-hidden="true">
     <img
-        class="execution-isolation-visual__asset"
-        src="/assets/product/execution-isolation.svg"
+        class="execution-isolation-visual__diagram"
+        src="/assets/product/dedicated-workload.svg"
+        alt=""
+    />
+    <span class="execution-isolation-visual__vs">vs</span>
+    <img
+        class="execution-isolation-visual__diagram"
+        src="/assets/product/shared-platforms.svg"
         alt=""
     />
 </div>
@@ -53,16 +59,31 @@
         position: absolute;
         top: 63px;
         left: 495px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 32px;
         width: 770px;
         height: 475.588px;
         overflow: clip;
         user-select: none;
     }
 
-    .execution-isolation-visual__asset {
+    .execution-isolation-visual__diagram {
         display: block;
-        width: 770px;
+        flex: 1 1 0;
+        min-width: 0;
+        width: 100%;
+        max-width: 320px;
         height: auto;
+    }
+
+    .execution-isolation-visual__vs {
+        flex: 0 0 auto;
+        color: #5a5d64;
+        font-family: var(--font-body, Inter, system-ui, sans-serif);
+        font-size: 14px;
+        line-height: 1;
     }
 
     @media (max-width: 1180px) {
@@ -77,12 +98,9 @@
             right: 0;
             left: var(--execution-isolation-visual-tablet-left);
             width: auto;
-            height: auto;
-        }
-
-        .execution-isolation-visual__asset {
-            width: 100%;
             max-width: var(--execution-isolation-visual-tablet-max-width);
+            height: auto;
+            gap: 24px;
         }
     }
 
@@ -101,14 +119,11 @@
             right: auto;
             left: auto;
             width: 100%;
+            max-width: none;
             height: auto;
             margin-top: var(--product-row-mobile-visual-gap);
             overflow: visible;
-        }
-
-        .execution-isolation-visual__asset {
-            width: 100%;
-            max-width: 770px;
+            gap: 16px;
         }
     }
 
@@ -126,6 +141,16 @@
 
         .execution-isolation-visual {
             margin-top: var(--product-row-mobile-visual-gap-tight);
+        }
+    }
+
+    @media (max-width: 480px) {
+        .execution-isolation-visual {
+            gap: 12px;
+        }
+
+        .execution-isolation-visual__vs {
+            font-size: 12px;
         }
     }
 </style>

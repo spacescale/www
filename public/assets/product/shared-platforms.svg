@@ -1,0 +1,116 @@
+<svg viewBox="0 0 240 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="shared-platforms-title">
+  <title id="shared-platforms-title">Shared platforms diagram</title>
+  <style>
+    .base-line {
+      fill: none;
+      stroke: #8c94a1;
+      stroke-width: .566;
+      stroke-dasharray: 5.662 3.397;
+    }
+
+    .crowd-box {
+      fill: none;
+      stroke: #8c94a1;
+      stroke-width: .453;
+      stroke-dasharray: 3.397 3.397;
+    }
+
+    .dim-top {
+      fill: none;
+      stroke: #8c94a1;
+      stroke-width: .453;
+    }
+
+    .label {
+      fill: #8c94a1;
+      font-family: Inter, system-ui, sans-serif;
+      font-size: 13.588px;
+    }
+  </style>
+
+  <g opacity="0" transform="translate(120 102.138)">
+    <animate
+      attributeName="opacity"
+      values="0;1"
+      dur=".55s"
+      begin=".18s"
+      fill="freeze"
+    />
+    <animateTransform
+      attributeName="transform"
+      type="translate"
+      from="120 102.138"
+      to="120 84.021"
+      dur=".65s"
+      begin=".18s"
+      fill="freeze"
+    />
+
+    <g transform="scale(1.132353)">
+      <path class="base-line" d="M-80,60 L0,100 L80,60 L0,20 Z"/>
+      <path class="base-line" d="M-80,60 L-80,72 L0,112 L80,72 L80,60"/>
+      <path class="base-line" d="M0,100 L0,112"/>
+      <path class="base-line" d="M-80,40 L0,80 L80,40 L0,0 Z"/>
+      <path class="base-line" d="M-80,40 L-80,52 L0,92 L80,52 L80,40"/>
+      <path class="base-line" d="M0,80 L0,92"/>
+      <path class="base-line" d="M-80,20 L0,60 L80,20 L0,-20 Z"/>
+      <path class="base-line" d="M-80,20 L-80,32 L0,72 L80,32 L80,20"/>
+      <path class="base-line" d="M0,60 L0,72"/>
+
+      <g transform="translate(0,-50)">
+        <g opacity="0" transform="translate(-28,-24)">
+          <animate attributeName="opacity" values="0;1" dur=".32s" begin=".5s" fill="freeze"/>
+          <animateTransform attributeName="transform" type="translate" from="-28 -24" to="-28 -14" dur=".42s" begin=".5s" fill="freeze"/>
+          <path class="crowd-box" d="M-14,7 L0,14 L14,7 L0,0 Z"/>
+          <path class="crowd-box" d="M-14,7 L-14,17 L0,24 L14,17 L14,7"/>
+          <path class="dim-top" d="M0,14 L0,24"/>
+        </g>
+        <g opacity="0" transform="translate(0,-24)">
+          <animate attributeName="opacity" values="0;1" dur=".32s" begin=".58s" fill="freeze"/>
+          <animateTransform attributeName="transform" type="translate" from="0 -24" to="0 -14" dur=".42s" begin=".58s" fill="freeze"/>
+          <path class="crowd-box" d="M-14,7 L0,14 L14,7 L0,0 Z"/>
+          <path class="crowd-box" d="M-14,7 L-14,17 L0,24 L14,17 L14,7"/>
+          <path class="dim-top" d="M0,14 L0,24"/>
+        </g>
+        <g opacity="0" transform="translate(28,-24)">
+          <animate attributeName="opacity" values="0;1" dur=".32s" begin=".66s" fill="freeze"/>
+          <animateTransform attributeName="transform" type="translate" from="28 -24" to="28 -14" dur=".42s" begin=".66s" fill="freeze"/>
+          <path class="crowd-box" d="M-14,7 L0,14 L14,7 L0,0 Z"/>
+          <path class="crowd-box" d="M-14,7 L-14,17 L0,24 L14,17 L14,7"/>
+          <path class="dim-top" d="M0,14 L0,24"/>
+        </g>
+        <g opacity="0" transform="translate(-14,-10)">
+          <animate attributeName="opacity" values="0;1" dur=".32s" begin=".74s" fill="freeze"/>
+          <animateTransform attributeName="transform" type="translate" from="-14 -10" to="-14 0" dur=".42s" begin=".74s" fill="freeze"/>
+          <path class="crowd-box" d="M-14,7 L0,14 L14,7 L0,0 Z"/>
+          <path class="crowd-box" d="M-14,7 L-14,17 L0,24 L14,17 L14,7"/>
+          <path class="dim-top" d="M0,14 L0,24"/>
+        </g>
+        <g opacity="0" transform="translate(14,-10)">
+          <animate attributeName="opacity" values="0;1" dur=".32s" begin=".82s" fill="freeze"/>
+          <animateTransform attributeName="transform" type="translate" from="14 -10" to="14 0" dur=".42s" begin=".82s" fill="freeze"/>
+          <path class="crowd-box" d="M-14,7 L0,14 L14,7 L0,0 Z"/>
+          <path class="crowd-box" d="M-14,7 L-14,17 L0,24 L14,17 L14,7"/>
+          <path class="dim-top" d="M0,14 L0,24"/>
+        </g>
+        <g opacity="0" transform="translate(-14,-34)">
+          <animate attributeName="opacity" values="0;1" dur=".32s" begin=".9s" fill="freeze"/>
+          <animateTransform attributeName="transform" type="translate" from="-14 -34" to="-14 -24" dur=".42s" begin=".9s" fill="freeze"/>
+          <path class="crowd-box" d="M-14,7 L0,14 L14,7 L0,0 Z"/>
+          <path class="crowd-box" d="M-14,7 L-14,17 L0,24 L14,17 L14,7"/>
+          <path class="dim-top" d="M0,14 L0,24"/>
+        </g>
+        <g opacity="0" transform="translate(14,-34)">
+          <animate attributeName="opacity" values="0;1" dur=".32s" begin=".98s" fill="freeze"/>
+          <animateTransform attributeName="transform" type="translate" from="14 -34" to="14 -24" dur=".42s" begin=".98s" fill="freeze"/>
+          <path class="crowd-box" d="M-14,7 L0,14 L14,7 L0,0 Z"/>
+          <path class="crowd-box" d="M-14,7 L-14,17 L0,24 L14,17 L14,7"/>
+          <path class="dim-top" d="M0,14 L0,24"/>
+        </g>
+      </g>
+
+      <text class="label" x="0" y="130" text-anchor="middle">Shared platforms</text>
+      <text class="label" x="0" y="145" text-anchor="middle">Shared VM &#183; noisy neighbours</text>
+    </g>
+  </g>
+</svg>

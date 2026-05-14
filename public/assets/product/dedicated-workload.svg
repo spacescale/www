@@ -1,0 +1,135 @@
+<svg viewBox="0 0 240 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="dedicated-workload-title">
+  <title id="dedicated-workload-title">Dedicated workload diagram</title>
+  <style>
+    .base-line {
+      fill: none;
+      stroke: #8c94a1;
+      stroke-width: .566;
+      stroke-dasharray: 5.662 3.397;
+    }
+
+    .active-line {
+      fill: none;
+      stroke: #66d9a5;
+      stroke-width: .793;
+    }
+
+    .glow-ring {
+      fill: none;
+      stroke: #66d9a5;
+      stroke-width: .453;
+    }
+
+    .energy {
+      fill: none;
+      stroke: #66d9a5;
+      stroke-width: .566;
+      stroke-dasharray: 3.397 5.662;
+    }
+
+    .label {
+      fill: #8c94a1;
+      font-family: Inter, system-ui, sans-serif;
+      font-size: 13.588px;
+    }
+  </style>
+
+  <g opacity="0" transform="translate(120 102.138)">
+    <animate
+      attributeName="opacity"
+      values="0;1"
+      dur=".55s"
+      begin=".08s"
+      fill="freeze"
+    />
+    <animateTransform
+      attributeName="transform"
+      type="translate"
+      from="120 102.138"
+      to="120 84.021"
+      dur=".65s"
+      begin=".08s"
+      fill="freeze"
+    />
+
+    <g transform="scale(1.132353)">
+      <path class="base-line" d="M-80,60 L0,100 L80,60 L0,20 Z"/>
+      <path class="base-line" d="M-80,60 L-80,72 L0,112 L80,72 L80,60"/>
+      <path class="base-line" d="M0,100 L0,112"/>
+      <path class="base-line" d="M-80,40 L0,80 L80,40 L0,0 Z"/>
+      <path class="base-line" d="M-80,40 L-80,52 L0,92 L80,52 L80,40"/>
+      <path class="base-line" d="M0,80 L0,92"/>
+      <path class="base-line" d="M-80,20 L0,60 L80,20 L0,-20 Z"/>
+      <path class="base-line" d="M-80,20 L-80,32 L0,72 L80,32 L80,20"/>
+      <path class="base-line" d="M0,60 L0,72"/>
+
+      <g opacity="0" transform="translate(0,-78)">
+        <animate
+          attributeName="opacity"
+          values="0;1"
+          dur=".5s"
+          begin=".46s"
+          fill="freeze"
+        />
+        <animateTransform
+          attributeName="transform"
+          type="translate"
+          from="0 -78"
+          to="0 -60"
+          dur=".7s"
+          begin=".46s"
+          fill="freeze"
+        />
+        <path class="active-line" d="M-36,18 L0,36 L36,18 L0,0 Z"/>
+        <path class="active-line" d="M-36,18 L-36,42 L0,60 L36,42 L36,18"/>
+        <path class="active-line" d="M0,36 L0,60"/>
+        <circle class="glow-ring" cx="0" cy="18" r="20" opacity=".270192">
+          <animate
+            attributeName="opacity"
+            values=".270192;.6;.270192"
+            dur="3s"
+            repeatCount="indefinite"
+          />
+        </circle>
+        <circle class="glow-ring" cx="0" cy="18" r="32" opacity=".5354">
+          <animate
+            attributeName="opacity"
+            values=".5354;.8;.5354"
+            dur="3s"
+            begin=".8s"
+            repeatCount="indefinite"
+          />
+        </circle>
+        <path class="energy" d="M-60,50 C-50,30 -30,10 0,18" opacity=".4" stroke-dashoffset="0">
+          <animate
+            attributeName="stroke-dashoffset"
+            values="0;-16"
+            dur="2s"
+            repeatCount="indefinite"
+          />
+        </path>
+        <path class="energy" d="M60,50 C50,30 30,10 0,18" opacity=".4" stroke-dashoffset="0">
+          <animate
+            attributeName="stroke-dashoffset"
+            values="0;-16"
+            dur="2s"
+            begin=".6s"
+            repeatCount="indefinite"
+          />
+        </path>
+        <path class="energy" d="M0,80 C0,60 0,40 0,18" opacity=".4" stroke-dashoffset="0">
+          <animate
+            attributeName="stroke-dashoffset"
+            values="0;-16"
+            dur="2s"
+            begin="1.2s"
+            repeatCount="indefinite"
+          />
+        </path>
+      </g>
+
+      <text class="label" x="0" y="130" text-anchor="middle">Dedicated workload</text>
+      <text class="label" x="0" y="145" text-anchor="middle">Pinned microVM &#183; reserved cores</text>
+    </g>
+  </g>
+</svg>
