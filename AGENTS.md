@@ -32,6 +32,7 @@
 - Do not submit visually approximate implementations when the issue asks for a specific design.
 - When an issue references Figma, screenshots, or approved dimensions, match the desktop design first before adding responsive behavior.
 - Do not approximate Figma-specific details such as dimensions, line patterns, spacing, borders, asset positions, or visual hierarchy.
+- Do not rely on browser-native `dashed` or `dotted` borders for Figma line patterns unless the rendered dash rhythm has been visually verified. Use an explicit SVG stroke or CSS repeating gradient when exact dash and gap spacing matters.
 - For responsive work, preserve the approved desktop composition unless the issue explicitly asks to redesign it.
 - For responsive sections with diagrams, verify desktop resize, tablet, and mobile behavior before finishing.
 - Prefer width-based or container-based breakpoints for responsive layout. Avoid `orientation` media queries unless the issue explicitly requires orientation-specific behavior.
@@ -45,8 +46,7 @@
 - Do not change package files, lockfiles, build config, or framework config unless the issue explicitly requires it.
 - Keep Astro scoped `<style>` blocks as the default for component-specific CSS.
 - Do not move component styles into sibling CSS files unless there is a clear reuse or readability reason that outweighs the extra file split.
-- Use `public/assets` for larger static visuals.
-- Use `src/components/icons` for small UI icons.
+- Use `public/assets` for static visuals and brand/social SVG assets.
 - Do not add unused assets.
 - Do not delete assets unless the issue explicitly says to.
 - Do not split, rewrite, or replace existing SVG diagrams unless the resulting animation, proportions, labels, and desktop appearance are preserved.
@@ -54,6 +54,9 @@
 - Do not use placeholders for missing required assets.
 - Keep asset names descriptive and stable.
 - Use asset paths like `public/assets/<area>/<asset-name>.svg`.
+- Engineering blog cover images are Astro-generated static routes. Keep the route file in `src/pages/engineering/covers/[slug].png.ts` as a thin public endpoint, and keep the implementation beside the engineering section in `src/components/sections/engineering/covers`.
+- Keep Figma-exported cover backgrounds in `src/components/sections/engineering/covers/backgrounds` and Satori text placement specs in named cover files like `src/components/sections/engineering/covers/blue-green-glow.ts`.
+- Engineering MDX frontmatter should choose `cardVisual` and optional `cardText`; do not add manual generated image paths to individual posts.
 - Fix obvious spelling issues when touching nearby copy.
 - Remove trailing whitespace before committing.
 - Do not rewrite large copy blocks unless the issue asks for copy work.

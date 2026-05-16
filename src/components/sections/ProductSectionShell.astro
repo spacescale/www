@@ -16,7 +16,6 @@ import NetworkMappingRow from "./product/NetworkMappingRow.astro";
             <div class="product-section__row product-section__row--endpoints">
                 <EndpointsRow />
             </div>
-            <div class="product-section__row product-section__row--container"></div>
             <div class="product-section__row product-section__row--network">
                 <NetworkMappingRow />
             </div>
@@ -27,14 +26,12 @@ import NetworkMappingRow from "./product/NetworkMappingRow.astro";
 <style>
     .product-section {
         --product-section-padding-y: 80px;
-        --product-section-card-height: 2992px;
+        --product-section-padding-bottom: 80px;
         --product-section-performance-row-height: 592px;
         --product-section-isolation-row-height: 591px;
         --product-section-endpoints-row-height: 700px;
-        --product-section-container-row-height: 539px;
-        --product-section-network-row-height: 570px;
+        --product-section-network-row-height: 526px;
         --product-section-row-padding: 0;
-        --product-section-placeholder-row-height: auto;
         --product-row-tablet-copy-left: 64px;
         --product-row-tablet-copy-width: 330px;
         --product-row-mobile-copy-max-width: 460px;
@@ -46,7 +43,8 @@ import NetworkMappingRow from "./product/NetworkMappingRow.astro";
         --product-row-mobile-body-line-height: 22px;
 
         position: relative;
-        padding: var(--product-section-padding-y) var(--site-padding-x);
+        padding: var(--product-section-padding-y) var(--site-padding-x)
+            var(--product-section-padding-bottom);
         background: var(--color-bg-primary);
     }
 
@@ -77,10 +75,8 @@ import NetworkMappingRow from "./product/NetworkMappingRow.astro";
             var(--product-section-performance-row-height)
             var(--product-section-isolation-row-height)
             var(--product-section-endpoints-row-height)
-            var(--product-section-container-row-height)
             var(--product-section-network-row-height);
         width: 100%;
-        height: var(--product-section-card-height);
         overflow: clip;
         border: 1px solid #262b33;
         border-top: 0;
@@ -104,11 +100,10 @@ import NetworkMappingRow from "./product/NetworkMappingRow.astro";
     @media (max-width: 1180px) {
         .product-section {
             --product-section-padding-y: 72px;
-            --product-section-card-height: auto;
+            --product-section-padding-bottom: 72px;
             --product-section-performance-row-height: 540px;
             --product-section-isolation-row-height: 520px;
             --product-section-endpoints-row-height: 620px;
-            --product-section-container-row-height: 300px;
             --product-section-network-row-height: 460px;
         }
     }
@@ -116,26 +111,21 @@ import NetworkMappingRow from "./product/NetworkMappingRow.astro";
     @media (max-width: 900px) {
         .product-section {
             --product-section-padding-y: 64px;
+            --product-section-padding-bottom: 64px;
             --product-section-row-padding: 56px 32px;
-            --product-section-placeholder-row-height: 220px;
         }
 
         .product-section__card {
             display: block;
             overflow: visible;
         }
-
-        .product-section__row--container {
-            height: var(--product-section-placeholder-row-height);
-            padding: 0;
-        }
     }
 
     @media (max-width: 640px) {
         .product-section {
             --product-section-padding-y: 48px;
+            --product-section-padding-bottom: 48px;
             --product-section-row-padding: 40px 18px;
-            --product-section-placeholder-row-height: 150px;
         }
     }
 </style>

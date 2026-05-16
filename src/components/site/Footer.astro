@@ -1,6 +1,4 @@
 ---
-import SocialIcon from "../icons/SocialIcon.astro";
-
 /*
   Footer.astro is the shared footer for marketing pages.
 
@@ -9,39 +7,39 @@ import SocialIcon from "../icons/SocialIcon.astro";
 */
 
 const footerGroups = [
-  {
-    title: "Resources",
-    links: ["Documentation", "Changelog", "Partnerships"],
-  },
-  {
-    title: "Blog",
-    links: ["Engineering", "Tutorials"],
-  },
-  {
-    title: "Company",
-    links: ["Philosophy", "Careers"],
-  },
+    {
+        title: "Resources",
+        links: ["Documentation", "Changelog", "Partnerships"],
+    },
+    {
+        title: "Blog",
+        links: ["Engineering", "Tutorials"],
+    },
+    {
+        title: "Company",
+        links: ["Principles", "Careers"],
+    },
 ];
 
 const legalLinks = ["Privacy", "Terms", "Security"];
 const currentYear = new Date().getFullYear();
 
 const socialLinks = [
-  {
-    name: "linkedin",
-    label: "SpaceScale on LinkedIn",
-    href: "https://www.linkedin.com/company/spacescale",
-  },
-  {
-    name: "github",
-    label: "SpaceScale on GitHub",
-    href: "https://github.com/spacescale",
-  },
-  {
-    name: "youtube",
-    label: "SpaceScale on YouTube",
-    href: "#",
-  },
+    {
+        label: "SpaceScale on LinkedIn",
+        href: "https://www.linkedin.com/company/spacescale",
+        icon: "/assets/social/linkedin.svg",
+    },
+    {
+        label: "SpaceScale on GitHub",
+        href: "https://github.com/spacescale",
+        icon: "/assets/social/github.svg",
+    },
+    {
+        label: "SpaceScale on YouTube",
+        href: "#",
+        icon: "/assets/social/youtube.svg",
+    },
 ] as const;
 ---
 
@@ -54,16 +52,20 @@ const socialLinks = [
         All systems operational
       </div>
 
-      <div class="social-links" aria-label="Social links">
-        {
-          socialLinks.map((link) => (
-            <a href={link.href} aria-label={link.label}>
-              <SocialIcon name={link.name} />
-            </a>
-          ))
-        }
-      </div>
-    </section>
+            <div class="social-links" aria-label="Social links">
+                {
+                    socialLinks.map((link) => (
+                        <a href={link.href} aria-label={link.label}>
+                            <span
+                                class="site-social-icon"
+                                style={`--site-social-icon: url(${link.icon})`}
+                                aria-hidden="true"
+                            />
+                        </a>
+                    ))
+                }
+            </div>
+        </section>
 
     <nav class="footer-links" aria-label="Footer navigation">
       {

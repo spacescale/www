@@ -37,12 +37,18 @@ Use the existing structure:
 - `src/layouts` for page layouts
 - `src/components/site` for shared site shell components
 - `src/components/sections` for page sections
-- `src/components/icons` for small UI icons
 - `src/pages` for routes
 - `src/styles/global.css` for shared tokens, fonts, base styles, and reusable global rules
 - `public/assets` for static images, SVG illustrations, diagrams, and social preview assets
 
 Do not add new top-level folders unless there is a clear project-level reason.
+
+Engineering blog posts live in `src/content/engineering`. The engineering page UI and cover system live under
+`src/components/sections/engineering`. Generated cover routes may live in `src/pages/engineering/covers`, but those route
+files should stay thin and delegate implementation to `src/components/sections/engineering/covers`.
+
+For engineering covers, choose `cardVisual` and optional `cardText` in MDX frontmatter. Do not add per-post generated
+image paths; the cover route derives the image from the post slug.
 
 ## Design And UI
 
@@ -83,18 +89,8 @@ Keep Astro scoped `<style>` blocks as the default for component-specific CSS. Mo
 when there is a clear reuse or readability reason that outweighs the extra file split.
 Remove trailing whitespace before committing.
 
-## Assets And Icons
-
-Use small Astro icon components for simple UI icons.
-
-Use files in `public/assets` for larger illustrations, diagrams, social preview images, and exported design assets.
-
-Do not add unused assets. Do not add third-party assets unless their license allows commercial public website use.
-Do not split, rewrite, or replace existing SVG diagrams unless the animation, proportions, labels, and desktop appearance
-remain intact.
 
 ## Dependencies
-
 Do not add new dependencies without prior discussion.
 If a dependency seems necessary, explain what problem it solves and why the existing stack cannot solve it cleanly.
 

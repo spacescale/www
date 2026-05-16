@@ -1,6 +1,4 @@
 ---
-import SocialIcon from "../icons/SocialIcon.astro";
-
 type NavItem = {
   label: string;
   href: string;
@@ -15,98 +13,94 @@ const navItems: NavItem[] = [
 ];
 
 const navSocials = [
-  {
-    name: "github",
-    label: "SpaceScale on GitHub",
-    href: "https://github.com/spacescale",
-  },
-  {
-    name: "linkedin",
-    label: "SpaceScale on LinkedIn",
-    href: "https://www.linkedin.com/company/spacescale",
-  },
-  {
-    name: "youtube",
-    label: "SpaceScale on YouTube",
-    href: "#",
-  },
+    {
+        label: "SpaceScale on GitHub",
+        href: "https://github.com/spacescale",
+        icon: "/assets/social/github.svg",
+    },
+    {
+        label: "SpaceScale on LinkedIn",
+        href: "https://www.linkedin.com/company/spacescale",
+        icon: "/assets/social/linkedin.svg",
+    },
+    {
+        label: "SpaceScale on YouTube",
+        href: "#",
+        icon: "/assets/social/youtube.svg",
+    },
 ] as const;
 ---
 
 <header class="site-header" aria-label="Primary navigation" data-site-header>
-  <div class="site-header-inner">
-    <a class="brand-lockup" href="/" aria-label="SpaceScale home">
-      <span class="brand-mark" aria-hidden="true">
-        <!-- These empty spans become the SpaceScale square-dot logo in CSS. -->
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-      </span>
+    <div class="site-header-inner">
+        <a class="brand-lockup" href="/" aria-label="SpaceScale home">
+            <span class="brand-mark" aria-hidden="true">
+                <!-- These empty spans become the SpaceScale square-dot logo in CSS. -->
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </span>
 
-      <span class="brand-name">SpaceScale</span>
-    </a>
+            <span class="brand-name">SpaceScale</span>
+        </a>
 
-    <button
-      class="site-menu-toggle"
-      type="button"
-      aria-controls="site-nav"
-      aria-expanded="false"
-      aria-label="Open main menu"
-      data-site-menu-toggle
-    >
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-    </button>
+        <button
+            class="site-menu-toggle"
+            type="button"
+            aria-controls="site-nav"
+            aria-expanded="false"
+            aria-label="Open main menu"
+            data-site-menu-toggle
+        >
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </button>
 
-    <nav id="site-nav" class="site-nav" aria-label="Main menu" data-site-nav>
-      <div class="site-nav-list">
-        {
-          navItems.map((item) => (
-            <a
-              class="site-nav-row site-nav-link"
-              href={item.href}
-              {...(item.external
-                ? { target: "_blank", rel: "noreferrer noopener" }
-                : {})}
-            >
-              <span class="site-nav-label">{item.label}</span>
-              <span class="site-nav-caret" aria-hidden="true">
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.5"
-                  stroke-linecap="square"
-                >
-                  <path d="M9 6l6 6-6 6" />
-                </svg>
-              </span>
-            </a>
-          ))
-        }
-      </div>
+        <nav id="site-nav" class="site-nav" aria-label="Main menu" data-site-nav>
+            <div class="site-nav-list">
+                {
+                    navItems.map((item) => (
+                        <a
+                            class="site-nav-row site-nav-link"
+                            href={item.href}
+                            {...(item.external ? { target: "_blank", rel: "noreferrer noopener" } : {})}
+                        >
+                            <span class="site-nav-label">{item.label}</span>
+                            <span class="site-nav-caret" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square">
+                                    <path d="M9 6l6 6-6 6" />
+                                </svg>
+                            </span>
+                        </a>
+                    ))
+                }
+            </div>
 
-      <div class="site-nav-footer">
-        <a class="nav-cta" href="/engineering">Read how we are building it</a>
+            <div class="site-nav-footer">
+                <a class="nav-cta" href="/engineering">Read how we are building it</a>
 
-        <div class="site-nav-socials" aria-label="Social links">
-          {
-            navSocials.map((link) => (
-              <a href={link.href} aria-label={link.label}>
-                <SocialIcon name={link.name} />
-              </a>
-            ))
-          }
-        </div>
-      </div>
-    </nav>
-  </div>
+                <div class="site-nav-socials" aria-label="Social links">
+                    {
+                        navSocials.map((link) => (
+                            <a href={link.href} aria-label={link.label}>
+                                <span
+                                    class="site-social-icon"
+                                    style={`--site-social-icon: url(${link.icon})`}
+                                    aria-hidden="true"
+                                />
+                            </a>
+                        ))
+                    }
+                </div>
+            </div>
+        </nav>
+    </div>
 </header>
 
 <script>

@@ -1,0 +1,133 @@
+---
+import { getCollection } from "astro:content";
+import EngineeringCard from "./EngineeringCard.astro";
+
+const posts = (await getCollection("engineering")).sort(
+    (a, b) => b.data.date.getTime() - a.data.date.getTime(),
+);
+const visiblePosts = posts.slice(0, 8);
+
+const formatPostDate = (date: Date) => {
+    const month = new Intl.DateTimeFormat("en", {
+        month: "short",
+        timeZone: "UTC",
+    })
+        .format(date)
+        .toUpperCase();
+    const year = new Intl.DateTimeFormat("en", {
+        year: "2-digit",
+        timeZone: "UTC",
+    }).format(date);
+
+    return `${month} ‘${year}`;
+};
+
+const getGeneratedCoverPath = (postId: string) =>
+    `/engineering/covers/${postId.replace(/\.mdx$/, "")}.png`;
+---
+
+<section class="engineering-posts" aria-label="Engineering posts">
+    <div class="engineering-posts__bar-layer" aria-hidden="true">
+        <div class="engineering-posts__bar"></div>
+    </div>
+    <div class="engineering-posts__grid" data-node-id="490:34128">
+        {
+            visiblePosts.map((post, index) => (
+                <EngineeringCard
+                        date={formatPostDate(post.data.date)}
+                        title={post.data.title}
+                        description={post.data.description}
+                        coverImage={getGeneratedCoverPath(post.id)}
+                        cardVisual={post.data.cardVisual}
+                        rightDivider={index % 2 === 0}
+                        topDivider={index >= 2}
+                        stackedDivider={index > 0}
+                        insetText={index % 2 === 1}
+                />
+            ))
+        }
+    </div>
+</section>
+
+<style>
+    .engineering-posts {
+        --engineering-posts-rail-width: 80px;
+
+        position: relative;
+        display: flex;
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+        padding: 80px var(--site-padding-x) 120px;
+        overflow: clip;
+        background: var(--color-bg-primary);
+    }
+
+    .engineering-posts__grid {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        width: 100%;
+        max-width: 1279px;
+        grid-template-columns: repeat(2, minmax(0, 639.5px));
+        gap: 0;
+        border: 1px solid #262b33;
+    }
+
+    .engineering-posts__bar-layer {
+        position: absolute;
+        z-index: 0;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        width: var(--engineering-posts-rail-width);
+        pointer-events: none;
+    }
+
+    .engineering-posts__bar {
+        position: sticky;
+        top: 0;
+        display: flex;
+        width: var(--engineering-posts-rail-width);
+        height: 1215px;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-end;
+        overflow: clip;
+        background: repeating-linear-gradient(
+            135deg,
+            #ffffff 0,
+            #ffffff 2.2167px,
+            transparent 2.2167px,
+            transparent 6.807px
+        );
+        opacity: 0.14;
+    }
+
+    @media (max-width: 1180px) {
+        .engineering-posts__bar-layer {
+            display: none;
+        }
+    }
+
+    @media (max-width: 900px) {
+        .engineering-posts__grid {
+            max-width: 639.5px;
+            grid-template-columns: minmax(0, 1fr);
+        }
+    }
+
+    @media (max-width: 900px) {
+        .engineering-posts {
+            padding-top: 64px;
+            padding-bottom: 96px;
+        }
+    }
+
+    @media (max-width: 640px) {
+        .engineering-posts {
+            padding-top: 48px;
+            padding-bottom: 72px;
+        }
+    }
+</style>
