@@ -1,15 +1,17 @@
 ---
-import MarketingLayout from "../layouts/MarketingLayout.astro";
+import SiteLayout from "../layouts/SiteLayout.astro";
 import FinalCTA from "../components/sections/FinalCTA.astro";
 import EngineeringHero from "../components/sections/engineering/EngineeringHero.astro";
+import EngineeringPostsSection from "../components/sections/engineering/EngineeringPostsSection.astro";
 ---
 
-<MarketingLayout
+<SiteLayout
         title="Engineering | SpaceScale"
         description="Engineering notes and build updates from SpaceScale."
 >
     <main>
         <EngineeringHero />
+        <EngineeringPostsSection />
     </main>
     <FinalCTA slot="final-cta" />
-</MarketingLayout>
+</SiteLayout>

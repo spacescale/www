@@ -1,5 +1,5 @@
 ---
-import MarketingLayout from "../layouts/MarketingLayout.astro";
+import SiteLayout from "../layouts/SiteLayout.astro";
 import LandingHero from "../components/sections/hero/LandingHero.astro";
 import ProductSectionShell from "../components/sections/ProductSectionShell.astro";
 import Stories from "../components/sections/Stories/Stories.astro";
@@ -8,7 +8,7 @@ import TelemetryLogs from "../components/sections/TelemetryLogs/TelemetryLogs.as
 import FinalCTA from "../components/sections/FinalCTA.astro";
 ---
 
-<MarketingLayout>
+<SiteLayout>
     <main>
         <LandingHero />
         <ProductSectionShell />
@@ -17,4 +17,4 @@ import FinalCTA from "../components/sections/FinalCTA.astro";
         <TelemetryLogs />
     </main>
     <FinalCTA slot="final-cta" />
-</MarketingLayout>
+</SiteLayout>

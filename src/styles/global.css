@@ -535,8 +535,14 @@ button, input, textarea, select {
     line-height: 1;
 }
 
-.social-links svg {
+.site-social-icon {
     display: block;
+    background: currentColor;
+    mask: var(--site-social-icon) center / contain no-repeat;
+    -webkit-mask: var(--site-social-icon) center / contain no-repeat;
+}
+
+.social-links .site-social-icon {
     width: 16px;
     height: 16px;
 }
@@ -847,8 +853,7 @@ button, input, textarea, select {
         color: #f5f7fa;
     }
 
-    .site-nav-socials svg {
-        display: block;
+    .site-nav-socials .site-social-icon {
         width: 20px;
         height: 20px;
     }
