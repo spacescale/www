@@ -26,6 +26,7 @@ import NetworkMappingRow from "./product/NetworkMappingRow.astro";
 <style>
     .product-section {
         --product-section-padding-y: 80px;
+        --product-section-padding-bottom: 80px;
         --product-section-performance-row-height: 592px;
         --product-section-isolation-row-height: 591px;
         --product-section-endpoints-row-height: 700px;
@@ -42,7 +43,8 @@ import NetworkMappingRow from "./product/NetworkMappingRow.astro";
         --product-row-mobile-body-line-height: 22px;
 
         position: relative;
-        padding: var(--product-section-padding-y) var(--site-padding-x) 0;
+        padding: var(--product-section-padding-y) var(--site-padding-x)
+            var(--product-section-padding-bottom);
         background: var(--color-bg-primary);
     }
 
@@ -98,6 +100,7 @@ import NetworkMappingRow from "./product/NetworkMappingRow.astro";
     @media (max-width: 1180px) {
         .product-section {
             --product-section-padding-y: 72px;
+            --product-section-padding-bottom: 72px;
             --product-section-performance-row-height: 540px;
             --product-section-isolation-row-height: 520px;
             --product-section-endpoints-row-height: 620px;
@@ -108,6 +111,7 @@ import NetworkMappingRow from "./product/NetworkMappingRow.astro";
     @media (max-width: 900px) {
         .product-section {
             --product-section-padding-y: 64px;
+            --product-section-padding-bottom: 64px;
             --product-section-row-padding: 56px 32px;
         }
 
@@ -120,6 +124,7 @@ import NetworkMappingRow from "./product/NetworkMappingRow.astro";
     @media (max-width: 640px) {
         .product-section {
             --product-section-padding-y: 48px;
+            --product-section-padding-bottom: 48px;
             --product-section-row-padding: 40px 18px;
         }
     }
