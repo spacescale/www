@@ -2,161 +2,175 @@
 import SocialIcon from "../icons/SocialIcon.astro";
 
 type NavItem = {
-    label: string;
-    href: string;
-    external?: boolean;
+  label: string;
+  href: string;
+  external?: boolean;
 };
 
 const navItems: NavItem[] = [
-    {
-        label: "Engineering",
-        href: "/engineering",
-    },
+  {
+    label: "Engineering",
+    href: "/engineering",
+  },
 ];
 
 const navSocials = [
-    {
-        name: "github",
-        label: "SpaceScale on GitHub",
-        href: "https://github.com/spacescale",
-    },
-    {
-        name: "linkedin",
-        label: "SpaceScale on LinkedIn",
-        href: "https://www.linkedin.com/company/spacescale",
-    },
-    {
-        name: "youtube",
-        label: "SpaceScale on YouTube",
-        href: "#",
-    },
+  {
+    name: "github",
+    label: "SpaceScale on GitHub",
+    href: "https://github.com/spacescale",
+  },
+  {
+    name: "linkedin",
+    label: "SpaceScale on LinkedIn",
+    href: "https://www.linkedin.com/company/spacescale",
+  },
+  {
+    name: "youtube",
+    label: "SpaceScale on YouTube",
+    href: "#",
+  },
 ] as const;
 ---
 
 <header class="site-header" aria-label="Primary navigation" data-site-header>
-    <div class="site-header-inner">
-        <a class="brand-lockup" href="/" aria-label="SpaceScale home">
-            <span class="brand-mark" aria-hidden="true">
-                <!-- These empty spans become the SpaceScale square-dot logo in CSS. -->
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-            </span>
+  <div class="site-header-inner">
+    <a class="brand-lockup" href="/" aria-label="SpaceScale home">
+      <span class="brand-mark" aria-hidden="true">
+        <!-- These empty spans become the SpaceScale square-dot logo in CSS. -->
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </span>
 
-            <span class="brand-name">SpaceScale</span>
-        </a>
+      <span class="brand-name">SpaceScale</span>
+    </a>
 
-        <button
-            class="site-menu-toggle"
-            type="button"
-            aria-controls="site-nav"
-            aria-expanded="false"
-            aria-label="Open main menu"
-            data-site-menu-toggle
-        >
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-        </button>
+    <button
+      class="site-menu-toggle"
+      type="button"
+      aria-controls="site-nav"
+      aria-expanded="false"
+      aria-label="Open main menu"
+      data-site-menu-toggle
+    >
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </button>
 
-        <nav id="site-nav" class="site-nav" aria-label="Main menu" data-site-nav>
-            <div class="site-nav-list">
-                {
-                    navItems.map((item) => (
-                        <a
-                            class="site-nav-row site-nav-link"
-                            href={item.href}
-                            {...(item.external ? { target: "_blank", rel: "noreferrer noopener" } : {})}
-                        >
-                            <span class="site-nav-label">{item.label}</span>
-                            <span class="site-nav-caret" aria-hidden="true">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square">
-                                    <path d="M9 6l6 6-6 6" />
-                                </svg>
-                            </span>
-                        </a>
-                    ))
-                }
-            </div>
+    <nav id="site-nav" class="site-nav" aria-label="Main menu" data-site-nav>
+      <div class="site-nav-list">
+        {
+          navItems.map((item) => (
+            <a
+              class="site-nav-row site-nav-link"
+              href={item.href}
+              {...(item.external
+                ? { target: "_blank", rel: "noreferrer noopener" }
+                : {})}
+            >
+              <span class="site-nav-label">{item.label}</span>
+              <span class="site-nav-caret" aria-hidden="true">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="square"
+                >
+                  <path d="M9 6l6 6-6 6" />
+                </svg>
+              </span>
+            </a>
+          ))
+        }
+      </div>
 
-            <div class="site-nav-footer">
-                <a class="nav-cta" href="/engineering">Read how we are building it</a>
+      <div class="site-nav-footer">
+        <a class="nav-cta" href="/engineering">Read how we are building it</a>
 
-                <div class="site-nav-socials" aria-label="Social links">
-                    {
-                        navSocials.map((link) => (
-                            <a href={link.href} aria-label={link.label}>
-                                <SocialIcon name={link.name} />
-                            </a>
-                        ))
-                    }
-                </div>
-            </div>
-        </nav>
-    </div>
+        <div class="site-nav-socials" aria-label="Social links">
+          {
+            navSocials.map((link) => (
+              <a href={link.href} aria-label={link.label}>
+                <SocialIcon name={link.name} />
+              </a>
+            ))
+          }
+        </div>
+      </div>
+    </nav>
+  </div>
 </header>
 
 <script>
-    document.querySelectorAll("[data-site-header]").forEach((header) => {
-        const toggle = header.querySelector("[data-site-menu-toggle]");
-        const nav = header.querySelector("[data-site-nav]");
+  document.querySelectorAll("[data-site-header]").forEach((header) => {
+    const toggle = header.querySelector("[data-site-menu-toggle]");
+    const nav = header.querySelector("[data-site-nav]");
 
-        if (!(toggle instanceof HTMLButtonElement) || !(nav instanceof HTMLElement)) {
-            return;
-        }
+    if (
+      !(toggle instanceof HTMLButtonElement) ||
+      !(nav instanceof HTMLElement)
+    ) {
+      return;
+    }
 
-        if (toggle.dataset.menuReady === "true") {
-            return;
-        }
+    if (toggle.dataset.menuReady === "true") {
+      return;
+    }
 
-        toggle.dataset.menuReady = "true";
+    toggle.dataset.menuReady = "true";
 
-        const mobileQuery = window.matchMedia("(max-width: 640px)");
+    const mobileQuery = window.matchMedia("(max-width: 640px)");
 
-        const closeMenu = () => {
-            header.removeAttribute("data-menu-open");
-            toggle.setAttribute("aria-expanded", "false");
-            toggle.setAttribute("aria-label", "Open main menu");
-            document.body.style.overflow = "";
-        };
+    const closeMenu = () => {
+      header.removeAttribute("data-menu-open");
+      toggle.setAttribute("aria-expanded", "false");
+      toggle.setAttribute("aria-label", "Open main menu");
+      document.body.style.overflow = "";
+    };
 
-        const openMenu = () => {
-            header.setAttribute("data-menu-open", "true");
-            toggle.setAttribute("aria-expanded", "true");
-            toggle.setAttribute("aria-label", "Close main menu");
-            if (mobileQuery.matches) {
-                document.body.style.overflow = "hidden";
-            }
-        };
+    const openMenu = () => {
+      header.setAttribute("data-menu-open", "true");
+      toggle.setAttribute("aria-expanded", "true");
+      toggle.setAttribute("aria-label", "Close main menu");
+      if (mobileQuery.matches) {
+        document.body.style.overflow = "hidden";
+      }
+    };
 
-        toggle.addEventListener("click", () => {
-            const isOpen = header.getAttribute("data-menu-open") === "true";
-            if (isOpen) {
-                closeMenu();
-            } else {
-                openMenu();
-            }
-        });
-
-        nav.querySelectorAll("a").forEach((link) => {
-            link.addEventListener("click", closeMenu);
-        });
-
-        mobileQuery.addEventListener("change", (event) => {
-            if (!event.matches) {
-                closeMenu();
-            }
-        });
-
-        document.addEventListener("keydown", (event) => {
-            if (event.key === "Escape" && header.getAttribute("data-menu-open") === "true") {
-                closeMenu();
-            }
-        });
+    toggle.addEventListener("click", () => {
+      const isOpen = header.getAttribute("data-menu-open") === "true";
+      if (isOpen) {
+        closeMenu();
+      } else {
+        openMenu();
+      }
     });
+
+    nav.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", closeMenu);
+    });
+
+    mobileQuery.addEventListener("change", (event) => {
+      if (!event.matches) {
+        closeMenu();
+      }
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (
+        event.key === "Escape" &&
+        header.getAttribute("data-menu-open") === "true"
+      ) {
+        closeMenu();
+      }
+    });
+  });
 </script>

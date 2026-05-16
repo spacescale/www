@@ -600,7 +600,6 @@ button, input, textarea, select {
     }
 
     .footer-inner {
-        display: grid;
         gap: 40px;
     }
 
@@ -873,6 +872,17 @@ button, input, textarea, select {
     .footer-bottom nav {
         flex-wrap: wrap;
         gap: 14px 20px;
+    }
+
+    .footer-inner {
+        display: grid;
+        gap: 40px;
+    }
+
+    .footer-links {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 28px 24px;
     }
 }
 
