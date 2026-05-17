@@ -1,6 +1,4 @@
 ---
-import SocialIcon from "../icons/SocialIcon.astro";
-
 /*
   Footer.astro is the shared footer for marketing pages.
 
@@ -19,7 +17,7 @@ const footerGroups = [
     },
     {
         title: "Company",
-        links: ["Philosophy", "Careers"],
+        links: ["Principles", "Careers"],
     },
 ];
 
@@ -28,19 +26,19 @@ const currentYear = new Date().getFullYear();
 
 const socialLinks = [
     {
-        name: "linkedin",
         label: "SpaceScale on LinkedIn",
         href: "https://www.linkedin.com/company/spacescale",
+        icon: "/assets/social/linkedin.svg",
     },
     {
-        name: "github",
         label: "SpaceScale on GitHub",
         href: "https://github.com/spacescale",
+        icon: "/assets/social/github.svg",
     },
     {
-        name: "youtube",
         label: "SpaceScale on YouTube",
         href: "#",
+        icon: "/assets/social/youtube.svg",
     },
 ] as const;
 ---
@@ -58,7 +56,11 @@ const socialLinks = [
                 {
                     socialLinks.map((link) => (
                         <a href={link.href} aria-label={link.label}>
-                            <SocialIcon name={link.name} />
+                            <span
+                                class="site-social-icon"
+                                style={`--site-social-icon: url(${link.icon})`}
+                                aria-hidden="true"
+                            />
                         </a>
                     ))
                 }

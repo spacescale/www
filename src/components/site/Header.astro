@@ -1,6 +1,4 @@
 ---
-import SocialIcon from "../icons/SocialIcon.astro";
-
 type NavItem = {
     label: string;
     href: string;
@@ -16,19 +14,19 @@ const navItems: NavItem[] = [
 
 const navSocials = [
     {
-        name: "github",
         label: "SpaceScale on GitHub",
         href: "https://github.com/spacescale",
+        icon: "/assets/social/github.svg",
     },
     {
-        name: "linkedin",
         label: "SpaceScale on LinkedIn",
         href: "https://www.linkedin.com/company/spacescale",
+        icon: "/assets/social/linkedin.svg",
     },
     {
-        name: "youtube",
         label: "SpaceScale on YouTube",
         href: "#",
+        icon: "/assets/social/youtube.svg",
     },
 ] as const;
 ---
@@ -91,7 +89,11 @@ const navSocials = [
                     {
                         navSocials.map((link) => (
                             <a href={link.href} aria-label={link.label}>
-                                <SocialIcon name={link.name} />
+                                <span
+                                    class="site-social-icon"
+                                    style={`--site-social-icon: url(${link.icon})`}
+                                    aria-hidden="true"
+                                />
                             </a>
                         ))
                     }
