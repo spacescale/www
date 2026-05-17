@@ -606,13 +606,7 @@ button, input, textarea, select {
     }
 
     .footer-inner {
-        display: grid;
         gap: 40px;
-    }
-
-    .footer-brand {
-        width: 100%;
-        max-width: 420px;
     }
 
     .footer-brand h2 {
@@ -862,6 +856,15 @@ button, input, textarea, select {
         padding-top: 40px;
     }
 
+    .footer-inner {
+        display: grid;
+    }
+
+    .footer-brand {
+        width: 100%;
+        max-width: 420px;
+    }
+
     .footer-brand h2 {
         font-size: 27px;
     }
@@ -879,6 +882,7 @@ button, input, textarea, select {
         flex-wrap: wrap;
         gap: 14px 20px;
     }
+
 }
 
 @media (prefers-reduced-motion: reduce) {
