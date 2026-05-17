@@ -44,13 +44,13 @@ const socialLinks = [
 ---
 
 <footer class="site-footer">
-  <div class="footer-inner">
-    <section class="footer-brand" aria-label="SpaceScale">
-      <h2>Infrastructure for<br />Serious Workloads</h2>
-      <div class="status-badge" aria-label="System status">
-        <span aria-hidden="true"></span>
-        All systems operational
-      </div>
+    <div class="footer-inner">
+        <section class="footer-brand" aria-label="SpaceScale">
+            <h2>Infrastructure for<br />Serious Workloads</h2>
+            <div class="status-badge" aria-label="System status">
+                <span aria-hidden="true"></span>
+                All systems operational
+            </div>
 
             <div class="social-links" aria-label="Social links">
                 {
@@ -67,39 +67,43 @@ const socialLinks = [
             </div>
         </section>
 
-    <nav class="footer-links" aria-label="Footer navigation">
-      {
-        footerGroups.map((group) => (
-          <section>
-            <h3>{group.title}</h3>
+        <nav class="footer-links" aria-label="Footer navigation">
+            {
+                footerGroups.map((group) => (
+                    <section>
+                        <h3>{group.title}</h3>
 
-            <ul>
-              {group.links.map((link) => (
-                <li>
-                  <a href="#">{link}</a>
-                </li>
-              ))}
-            </ul>
-          </section>
-        ))
-      }
-    </nav>
-  </div>
+                        <ul>
+                            {group.links.map((link) => (
+                                <li>
+                                    <a href="#">{link}</a>
+                                </li>
+                            ))}
+                        </ul>
+                    </section>
+                ))
+            }
+        </nav>
+    </div>
 
-  <div class="footer-divider" aria-hidden="true"></div>
+    <div class="footer-divider" aria-hidden="true"></div>
 
-  <div class="footer-bottom">
-    <p>© <span data-footer-year>{currentYear}</span> SpaceScale Systems Inc.</p>
-    <nav aria-label="Legal links">
-      {legalLinks.map((link) => <a href="#">{link}</a>)}
-    </nav>
-  </div>
+    <div class="footer-bottom">
+        <p>© <span data-footer-year>{currentYear}</span> SpaceScale Systems Inc.</p>
+        <nav aria-label="Legal links">
+            {
+                legalLinks.map((link) => (
+                    <a href="#">{link}</a>
+                ))
+            }
+        </nav>
+    </div>
 </footer>
 
 <script>
-  const footerYear = document.querySelector("[data-footer-year]");
+    const footerYear = document.querySelector("[data-footer-year]");
 
-  if (footerYear) {
-    footerYear.textContent = String(new Date().getFullYear());
-  }
+    if (footerYear) {
+        footerYear.textContent = String(new Date().getFullYear());
+    }
 </script>

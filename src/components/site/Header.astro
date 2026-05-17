@@ -1,15 +1,15 @@
 ---
 type NavItem = {
-  label: string;
-  href: string;
-  external?: boolean;
+    label: string;
+    href: string;
+    external?: boolean;
 };
 
 const navItems: NavItem[] = [
-  {
-    label: "Engineering",
-    href: "/engineering",
-  },
+    {
+        label: "Engineering",
+        href: "/engineering",
+    },
 ];
 
 const navSocials = [
@@ -104,67 +104,61 @@ const navSocials = [
 </header>
 
 <script>
-  document.querySelectorAll("[data-site-header]").forEach((header) => {
-    const toggle = header.querySelector("[data-site-menu-toggle]");
-    const nav = header.querySelector("[data-site-nav]");
+    document.querySelectorAll("[data-site-header]").forEach((header) => {
+        const toggle = header.querySelector("[data-site-menu-toggle]");
+        const nav = header.querySelector("[data-site-nav]");
 
-    if (
-      !(toggle instanceof HTMLButtonElement) ||
-      !(nav instanceof HTMLElement)
-    ) {
-      return;
-    }
+        if (!(toggle instanceof HTMLButtonElement) || !(nav instanceof HTMLElement)) {
+            return;
+        }
 
-    if (toggle.dataset.menuReady === "true") {
-      return;
-    }
+        if (toggle.dataset.menuReady === "true") {
+            return;
+        }
 
-    toggle.dataset.menuReady = "true";
+        toggle.dataset.menuReady = "true";
 
-    const mobileQuery = window.matchMedia("(max-width: 640px)");
+        const mobileQuery = window.matchMedia("(max-width: 640px)");
 
-    const closeMenu = () => {
-      header.removeAttribute("data-menu-open");
-      toggle.setAttribute("aria-expanded", "false");
-      toggle.setAttribute("aria-label", "Open main menu");
-      document.body.style.overflow = "";
-    };
+        const closeMenu = () => {
+            header.removeAttribute("data-menu-open");
+            toggle.setAttribute("aria-expanded", "false");
+            toggle.setAttribute("aria-label", "Open main menu");
+            document.body.style.overflow = "";
+        };
 
-    const openMenu = () => {
-      header.setAttribute("data-menu-open", "true");
-      toggle.setAttribute("aria-expanded", "true");
-      toggle.setAttribute("aria-label", "Close main menu");
-      if (mobileQuery.matches) {
-        document.body.style.overflow = "hidden";
-      }
-    };
+        const openMenu = () => {
+            header.setAttribute("data-menu-open", "true");
+            toggle.setAttribute("aria-expanded", "true");
+            toggle.setAttribute("aria-label", "Close main menu");
+            if (mobileQuery.matches) {
+                document.body.style.overflow = "hidden";
+            }
+        };
 
-    toggle.addEventListener("click", () => {
-      const isOpen = header.getAttribute("data-menu-open") === "true";
-      if (isOpen) {
-        closeMenu();
-      } else {
-        openMenu();
-      }
+        toggle.addEventListener("click", () => {
+            const isOpen = header.getAttribute("data-menu-open") === "true";
+            if (isOpen) {
+                closeMenu();
+            } else {
+                openMenu();
+            }
+        });
+
+        nav.querySelectorAll("a").forEach((link) => {
+            link.addEventListener("click", closeMenu);
+        });
+
+        mobileQuery.addEventListener("change", (event) => {
+            if (!event.matches) {
+                closeMenu();
+            }
+        });
+
+        document.addEventListener("keydown", (event) => {
+            if (event.key === "Escape" && header.getAttribute("data-menu-open") === "true") {
+                closeMenu();
+            }
+        });
     });
-
-    nav.querySelectorAll("a").forEach((link) => {
-      link.addEventListener("click", closeMenu);
-    });
-
-    mobileQuery.addEventListener("change", (event) => {
-      if (!event.matches) {
-        closeMenu();
-      }
-    });
-
-    document.addEventListener("keydown", (event) => {
-      if (
-        event.key === "Escape" &&
-        header.getAttribute("data-menu-open") === "true"
-      ) {
-        closeMenu();
-      }
-    });
-  });
 </script>

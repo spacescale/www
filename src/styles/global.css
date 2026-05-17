@@ -609,11 +609,6 @@ button, input, textarea, select {
         gap: 40px;
     }
 
-    .footer-brand {
-        width: 100%;
-        max-width: 420px;
-    }
-
     .footer-brand h2 {
         font-size: 30px;
     }
@@ -861,6 +856,15 @@ button, input, textarea, select {
         padding-top: 40px;
     }
 
+    .footer-inner {
+        display: grid;
+    }
+
+    .footer-brand {
+        width: 100%;
+        max-width: 420px;
+    }
+
     .footer-brand h2 {
         font-size: 27px;
     }
@@ -879,16 +883,6 @@ button, input, textarea, select {
         gap: 14px 20px;
     }
 
-    .footer-inner {
-        display: grid;
-        gap: 40px;
-    }
-
-    .footer-links {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 28px 24px;
-    }
 }
 
 @media (prefers-reduced-motion: reduce) {
