@@ -6,6 +6,7 @@ const posts = (await getCollection("engineering")).sort(
     (a, b) => b.data.date.getTime() - a.data.date.getTime(),
 );
 const visiblePosts = posts.slice(0, 8);
+const isSinglePost = visiblePosts.length === 1;
 
 const formatPostDate = (date: Date) => {
     const month = new Intl.DateTimeFormat("en", {
@@ -22,28 +23,33 @@ const formatPostDate = (date: Date) => {
     return `${month} ‘${year}`;
 };
 
-const getGeneratedCoverPath = (postId: string) =>
-    `/engineering/covers/${postId.replace(/\.mdx$/, "")}.png`;
+const getCoverPath = (cardVisual: string) =>
+    `/assets/engineering/covers/${cardVisual}.png`;
+const gridClass = isSinglePost
+    ? "engineering-posts__grid engineering-posts__grid--single"
+    : "engineering-posts__grid";
 ---
 
 <section class="engineering-posts" aria-label="Engineering posts">
     <div class="engineering-posts__bar-layer" aria-hidden="true">
         <div class="engineering-posts__bar"></div>
     </div>
-    <div class="engineering-posts__grid" data-node-id="490:34128">
+    <div class={gridClass} data-node-id="490:34128">
         {
             visiblePosts.map((post, index) => (
-                <EngineeringCard
-                        date={formatPostDate(post.data.date)}
-                        title={post.data.title}
-                        description={post.data.description}
-                        coverImage={getGeneratedCoverPath(post.id)}
-                        cardVisual={post.data.cardVisual}
-                        rightDivider={index % 2 === 0}
-                        topDivider={index >= 2}
-                        stackedDivider={index > 0}
-                        insetText={index % 2 === 1}
-                />
+                <div class="engineering-posts__cell">
+                    <EngineeringCard
+                            date={formatPostDate(post.data.date)}
+                            title={post.data.title}
+                            description={post.data.description}
+                            coverImage={getCoverPath(post.data.cardVisual)}
+                            cardVisual={post.data.cardVisual}
+                            rightDivider={!isSinglePost && index % 2 === 0}
+                            topDivider={index >= 2}
+                            stackedDivider={index > 0}
+                            insetText={index % 2 === 1}
+                    />
+                </div>
             ))
         }
     </div>
@@ -71,6 +77,20 @@ const getGeneratedCoverPath = (postId: string) =>
         max-width: 1279px;
         grid-template-columns: repeat(2, minmax(0, 639.5px));
         gap: 0;
+        border: 1px solid #262b33;
+    }
+
+    .engineering-posts__cell {
+        min-width: 0;
+    }
+
+    .engineering-posts__grid--single {
+        max-width: 1279px;
+        grid-template-columns: minmax(0, 639.5px);
+        border: 0;
+    }
+
+    .engineering-posts__grid--single .engineering-posts__cell {
         border: 1px solid #262b33;
     }
 

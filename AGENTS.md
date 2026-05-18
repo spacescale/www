@@ -1,65 +1,50 @@
 # Agent Rules
 
-- Preserve the SpaceScale visual language: dark surfaces, sharp edges, restrained mint accents, technical diagrams, and calm typography.
-- Prefer useful technical visuals over decorative graphics.
-- Avoid rounded-card-heavy SaaS layouts unless the approved design requires them.
-- Avoid gradients, blobs, decorative orbs, stock-like hero art, and generic startup hero patterns.
-- Use Astro components with modern native CSS as the long-term styling direction.
-- Use modern CSS features only when they improve maintainability, readability, or design fidelity.
-- Prioritize maintainable and readable code over shortcuts that only make the current task faster.
-- Do not implement UI with Tailwind utility classes.
-- Do not reintroduce Tailwind setup, Tailwind config, or Tailwind-oriented patterns.
-- Do not add styling libraries, icon libraries, animation libraries, or build plugins without explicit approval.
-- Use CSS custom properties from `src/styles/global.css` for shared SpaceScale tokens.
-- Use direct CSS values when a visual spec requires exact spacing, size, border, or placement.
+Keep SpaceScale deliberate, sharp, and maintainable. Prefer the smallest correct change that preserves the existing visual language and folder ownership.
+
+## Design
+
+- Preserve the SpaceScale direction: dark surfaces, sharp edges, restrained mint accents, calm typography, and useful technical visuals.
+- Avoid generic SaaS layouts, decorative blobs, stock-like hero art, and unnecessary gradients.
+- Match approved designs closely when a task provides screenshots, Figma, or exact dimensions.
+- For Figma-backed work, verify spacing, borders, line patterns, typography, asset placement, and hierarchy instead of tuning by eye.
+- Preserve the approved desktop composition before adding responsive behavior.
+- For responsive layout work, verify desktop resize, tablet, and mobile states before finishing.
+
+## Code
+
+- Use Astro components with scoped CSS as the default.
+- Use native CSS and existing tokens from `src/styles/global.css` where they fit.
+- Use exact local values when a visual spec requires exact spacing, size, border, or placement.
 - Keep section-specific styles under a namespaced owner class.
-- Use ownership-based class names like `.site-header`, `.site-footer`, `.engineering-index__item`, and `.telemetry-panel__row`.
-- Avoid generic class names like `.box`, `.card`, `.title`, `.text`, `.content`, `.section`, and `.wrapper`.
-- Keep selectors shallow enough that the owning component is obvious.
+- Prefer semantic HTML, shallow selectors, and clear accessible labels.
+- Do not use Tailwind, styling libraries, icon libraries, animation libraries, or build plugins without explicit approval.
 - Do not use `!important`.
 - Do not change global tokens to solve a one-section problem.
-- Stop before creating a file that does not clearly fit the existing folder ownership.
-- Keep one visual section in one section component unless there is a real reuse boundary.
-- Do not create abstractions for a single call site.
-- Do not add wrapper components just to make code look generic.
+
+## Structure
+
+- Keep one visual section in the component that owns it unless there is real reuse.
+- Do not create abstractions, wrapper components, or helper layers for a single call site.
 - Keep component props minimal and concrete.
 - Keep data arrays close to the component that owns them.
-- Extract only when it improves readability or real reuse.
-- Prefer semantic HTML before adding extra divs.
-- Decorative visuals should use `aria-hidden="true"`.
-- Links and buttons should have clear accessible labels.
-- Match approved visual direction for spacing, typography, colors, borders, asset placement, content width, and component boundaries.
-- Do not submit visually approximate implementations when the issue asks for a specific design.
-- When an issue references Figma, screenshots, or approved dimensions, match the desktop design first before adding responsive behavior.
-- Do not approximate Figma-specific details such as dimensions, line patterns, spacing, borders, asset positions, or visual hierarchy.
-- Do not rely on browser-native `dashed` or `dotted` borders for Figma line patterns unless the rendered dash rhythm has been visually verified. Use an explicit SVG stroke or CSS repeating gradient when exact dash and gap spacing matters.
-- For responsive work, preserve the approved desktop composition unless the issue explicitly asks to redesign it.
-- For responsive sections with diagrams, verify desktop resize, tablet, and mobile behavior before finishing.
-- Prefer width-based or container-based breakpoints for responsive layout. Avoid `orientation` media queries unless the issue explicitly requires orientation-specific behavior.
-- Keep media queries clear and non-redundant. Do not nest a breakpoint inside another matching breakpoint block.
-- Keep responsive overrides scoped to the component or section that owns the layout. Avoid broad shared-layout overrides for a one-section fix.
-- Do not mix implementation work with cleanup work.
-- Do not mix responsive fixes, visual redesign, file movement, and asset rewrites in one change unless the issue explicitly asks for that combined scope.
-- Do not change navigation, footer, or section copy while fixing responsive behavior unless the issue explicitly asks for copy or information architecture changes.
-- Do not move files or reshape folders unless the issue is specifically about structure.
-- Do not delete existing files unless the issue explicitly requires it.
-- Do not change package files, lockfiles, build config, or framework config unless the issue explicitly requires it.
-- Keep Astro scoped `<style>` blocks as the default for component-specific CSS.
-- Do not move component styles into sibling CSS files unless there is a clear reuse or readability reason that outweighs the extra file split.
-- Use `public/assets` for static visuals and brand/social SVG assets.
-- Do not add unused assets.
-- Do not delete assets unless the issue explicitly says to.
-- Do not split, rewrite, or replace existing SVG diagrams unless the resulting animation, proportions, labels, and desktop appearance are preserved.
-- Do not commit temporary external asset URLs.
-- Do not use placeholders for missing required assets.
+- Do not move files or reshape folders unless the task is specifically about structure.
+- Do not change package files, lockfiles, build config, or framework config unless the task requires it.
+
+## Assets
+
+- Use `public/assets` for shared static visuals and brand/social SVG assets.
+- Keep section-owned assets beside the section when they are implementation details of that section.
+- Do not add unused assets, placeholders, temporary external asset URLs, or manual generated image paths.
+- Do not replace existing SVG diagrams unless animation, proportions, labels, and desktop appearance are preserved.
 - Keep asset names descriptive and stable.
-- Use asset paths like `public/assets/<area>/<asset-name>.svg`.
-- Engineering blog cover images are Astro-generated static routes. Keep the route file in `src/pages/engineering/covers/[slug].png.ts` as a thin public endpoint, and keep the implementation beside the engineering section in `src/components/sections/engineering/covers`.
-- Keep Figma-exported cover backgrounds in `src/components/sections/engineering/covers/backgrounds` and Satori text placement specs in named cover files like `src/components/sections/engineering/covers/blue-green-glow.ts`.
-- Engineering MDX frontmatter should choose `cardVisual` and optional `cardText`; do not add manual generated image paths to individual posts.
+
+## PR Hygiene
+
+- Do not mix implementation work with unrelated cleanup.
+- Do not mix responsive fixes, visual redesign, file movement, asset rewrites, and copy changes unless the task asks for that scope.
+- Do not change navigation, footer, or section copy while fixing responsive behavior unless requested.
 - Fix obvious spelling issues when touching nearby copy.
 - Remove trailing whitespace before committing.
-- Do not rewrite large copy blocks unless the issue asks for copy work.
 - Update nearby docs when a change alters structure, commands, assets, styling direction, or contribution expectations.
-- Add comments only when implementation intent is unclear, a visual choice is non-obvious, or a boundary decision needs to be preserved.
-- Do not add comments that simply repeat what the code already says.
+- Add comments only when they preserve non-obvious intent or a boundary decision.

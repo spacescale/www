@@ -14,7 +14,6 @@ const engineering = defineCollection({
         description: z.string(),
         date: z.coerce.date(),
         cardVisual: z.string(),
-        cardText: z.string().optional(),
     }),
 });
 
