@@ -25,6 +25,8 @@ const formatPostDate = (date: Date) => {
 
 const getCoverPath = (cardVisual: string) =>
     `/assets/engineering/covers/${cardVisual}.png`;
+const getPostHref = (postId: string) =>
+    `/engineering/${postId.replace(/\.(md|mdx)$/, "")}`;
 const gridClass = isSinglePost
     ? "engineering-posts__grid engineering-posts__grid--single"
     : "engineering-posts__grid";
@@ -43,6 +45,7 @@ const gridClass = isSinglePost
                             title={post.data.title}
                             description={post.data.description}
                             coverImage={getCoverPath(post.data.cardVisual)}
+                            href={getPostHref(post.id)}
                             cardVisual={post.data.cardVisual}
                             rightDivider={!isSinglePost && index % 2 === 0}
                             topDivider={index >= 2}
