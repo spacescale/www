@@ -1,0 +1,734 @@
+---
+import { getCollection, render } from "astro:content";
+import FinalCTA from "../../components/sections/FinalCTA.astro";
+import SiteLayout from "../../layouts/SiteLayout.astro";
+
+export const getStaticPaths = async () => {
+    const posts = await getCollection("engineering");
+
+    return posts.map((post) => ({
+        params: { slug: post.id.replace(/\.(md|mdx)$/, "") },
+        props: { post },
+    }));
+};
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const coverImage = `/assets/engineering/covers/${post.data.cardVisual}.png`;
+
+const formatPostMonth = (date: Date) => {
+    const month = new Intl.DateTimeFormat("en", {
+        month: "short",
+        timeZone: "UTC",
+    })
+        .format(date)
+        .toUpperCase();
+    const year = new Intl.DateTimeFormat("en", {
+        year: "2-digit",
+        timeZone: "UTC",
+    }).format(date);
+
+    return `${month} ‘${year}`;
+};
+
+const plainBody = (post.body ?? "")
+    .replace(/```[\s\S]*?```/g, " ")
+    .replace(/<[^>]*>/g, " ")
+    .replace(/[#>*_`~\-[\]()+.!?]/g, " ");
+const wordCount = plainBody.trim().split(/\s+/).filter(Boolean).length;
+const readTime = Math.max(1, Math.ceil(wordCount / 220));
+---
+
+<SiteLayout
+    title={`${post.data.title} | SpaceScale`}
+    description={post.data.description}
+    image={coverImage}
+>
+    <main class="engineering-article">
+        <section class="engineering-article__hero-section">
+            <article class="engineering-article__shell">
+                <header class="engineering-article__hero">
+                    <div class="engineering-article__meta-row">
+                        <div class="engineering-article__meta-group">
+                            <p>{formatPostMonth(post.data.date)}</p>
+                            <p>ENGINEERING BLOG</p>
+                        </div>
+                        <p>{readTime} MIN READ</p>
+                    </div>
+                </header>
+            </article>
+        </section>
+
+        <section class="engineering-article__content-section">
+            <div class="engineering-article__bar-layer" aria-hidden="true">
+                <div class="engineering-article__bar"></div>
+            </div>
+
+            <article class="engineering-article__shell">
+                <section class="engineering-article__content-card">
+                    <div class="engineering-article__intro">
+                        <h1>{post.data.title}</h1>
+                        <div class="engineering-article__byline">
+                            {
+                                post.data.authorUrl ? (
+                                    <a
+                                        href={post.data.authorUrl}
+                                        target="_blank"
+                                        rel="noreferrer"
+                                    >
+                                        {post.data.author}
+                                    </a>
+                                ) : (
+                                    <p>{post.data.author}</p>
+                                )
+                            }
+                        </div>
+                    </div>
+
+                    <div class="engineering-article__body-layout">
+                        <div class="engineering-article__body">
+                            <Content />
+                        </div>
+                    </div>
+                </section>
+            </article>
+        </section>
+    </main>
+    <FinalCTA slot="final-cta" />
+</SiteLayout>
+
+<script is:inline>
+    const enhanceEngineeringCodeBlocks = () => {
+        document
+            .querySelectorAll(".engineering-article__body pre")
+            .forEach((pre) => {
+                if (pre.parentElement?.classList.contains("engineering-code-block")) {
+                    return;
+                }
+
+                const wrapper = document.createElement("div");
+                wrapper.className = "engineering-code-block";
+                pre.parentNode?.insertBefore(wrapper, pre);
+                wrapper.append(pre);
+
+                const button = document.createElement("button");
+                button.className = "engineering-code-block__copy";
+                button.type = "button";
+                button.setAttribute("aria-label", "Copy code");
+                button.innerHTML =
+                    '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 2.5h6.5v8H5z"/><path d="M3.5 5.5v8H10"/></svg>';
+                wrapper.append(button);
+
+                button.addEventListener("click", async () => {
+                    const code = pre.querySelector("code")?.innerText ?? pre.innerText;
+
+                    try {
+                        await navigator.clipboard.writeText(code);
+                        button.dataset.copied = "true";
+                        window.setTimeout(() => {
+                            delete button.dataset.copied;
+                        }, 1200);
+                    } catch {
+                        button.dataset.copied = "false";
+                    }
+                });
+            });
+    };
+
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", enhanceEngineeringCodeBlocks);
+    } else {
+        enhanceEngineeringCodeBlocks();
+    }
+</script>
+
+<style>
+    .engineering-article {
+        --engineering-article-rail-width: 80px;
+
+        position: relative;
+        display: flex;
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+        overflow: clip;
+        background: var(--color-bg-primary);
+        color: #f5f7fa;
+    }
+
+    .engineering-article__hero-section,
+    .engineering-article__content-section {
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        background: var(--color-bg-primary);
+    }
+
+    .engineering-article__hero-section {
+        padding: 32px var(--site-padding-x) 0;
+    }
+
+    .engineering-article__content-section {
+        position: relative;
+        padding: 64px var(--site-padding-x) 120px;
+        overflow: clip;
+    }
+
+    .engineering-article__shell {
+        position: relative;
+        z-index: 1;
+        width: 100%;
+        max-width: 1280px;
+    }
+
+    .engineering-article__hero {
+        position: relative;
+        width: 100%;
+        padding: 70px 0 20px;
+    }
+
+    .engineering-article__hero::after {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        width: 100vw;
+        height: 1px;
+        background-image: repeating-linear-gradient(
+            to right,
+            #262b33 0,
+            #262b33 6px,
+            transparent 6px,
+            transparent 12px
+        );
+        transform: translateX(-50%);
+        content: "";
+    }
+
+    .engineering-article__meta-row {
+        position: relative;
+        display: flex;
+        width: 100%;
+        align-items: flex-start;
+        justify-content: space-between;
+        overflow: hidden;
+        font-family: var(--font-body);
+        font-size: 13px;
+        font-weight: 500;
+        line-height: normal;
+        letter-spacing: 1.04px;
+        white-space: nowrap;
+    }
+
+    .engineering-article__meta-row::before {
+        content: "";
+        position: absolute;
+        top: 30px;
+        left: 119px;
+        z-index: -1;
+        width: 163px;
+        height: 59px;
+        background: #66d9b2;
+    }
+
+    .engineering-article__meta-row p {
+        margin: 0;
+    }
+
+    .engineering-article__meta-row > p,
+    .engineering-article__meta-group p:first-child {
+        color: #8c94a1;
+    }
+
+    .engineering-article__meta-group {
+        display: flex;
+        gap: 32px;
+        align-items: flex-start;
+    }
+
+    .engineering-article__meta-group p:last-child {
+        color: #8c94a1;
+    }
+
+    .engineering-article__content-card {
+        position: relative;
+        border: 1px solid #262b33;
+        padding: 62px 88px 80px;
+        background: var(--color-bg-primary);
+    }
+
+    .engineering-article__intro {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .engineering-article__intro h1 {
+        margin: 0;
+        color: #ffffff;
+        font-family: var(--font-display);
+        font-size: 44px;
+        font-weight: 400;
+        line-height: 52px;
+        letter-spacing: -0.66px;
+    }
+
+    .engineering-article__byline {
+        display: flex;
+        gap: 7px;
+        align-items: center;
+        color: #8c94a1;
+        font-family: var(--font-body);
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 1.45;
+        letter-spacing: -0.08px;
+        white-space: nowrap;
+    }
+
+    .engineering-article__byline p,
+    .engineering-article__byline a {
+        margin: 0;
+        overflow: hidden;
+        color: inherit;
+        text-decoration: none;
+        text-overflow: ellipsis;
+    }
+
+    .engineering-article__byline a:focus-visible {
+        outline: 1px solid #66d9b2;
+        outline-offset: 4px;
+    }
+
+    .engineering-article__body-layout {
+        width: 100%;
+        max-width: 820px;
+        margin: 56px auto 0;
+    }
+
+    .engineering-article__body {
+        width: 100%;
+        color: #8c94a1;
+        font-family: var(--font-body);
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 25px;
+        letter-spacing: -0.08px;
+    }
+
+    .engineering-article__body :global(h1),
+    .engineering-article__body :global(h2),
+    .engineering-article__body :global(h3) {
+        margin: 52px 0 18px;
+        color: #f5f7fa;
+        font-family: var(--font-display);
+        font-weight: 400;
+        letter-spacing: 0;
+    }
+
+    .engineering-article__body :global(h1) {
+        font-size: 34px;
+        line-height: 40px;
+    }
+
+    .engineering-article__body :global(h2) {
+        font-size: 28px;
+        line-height: 34px;
+    }
+
+    .engineering-article__body :global(h3) {
+        color: #d8dee8;
+        font-family: var(--font-body);
+        font-size: 20px;
+        line-height: 28px;
+        letter-spacing: -0.08px;
+    }
+
+    .engineering-article__body :global(h1:first-child),
+    .engineering-article__body :global(h2:first-child),
+    .engineering-article__body :global(h3:first-child) {
+        margin-top: 0;
+    }
+
+    .engineering-article__body :global(p) {
+        margin: 0 0 24px;
+    }
+
+    .engineering-article__body :global(p:last-child) {
+        margin-bottom: 0;
+    }
+
+    .engineering-article__body :global(ul),
+    .engineering-article__body :global(ol) {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+        margin: 22px 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .engineering-article__body :global(li ul),
+    .engineering-article__body :global(li ol) {
+        margin: 7px 0 0;
+    }
+
+    .engineering-article__body :global(ol) {
+        counter-reset: engineering-list;
+    }
+
+    .engineering-article__body :global(li) {
+        position: relative;
+        padding-left: 20px;
+        color: #8c94a1;
+        line-height: 23px;
+    }
+
+    .engineering-article__body :global(ul li::before) {
+        position: absolute;
+        top: 9px;
+        left: 2px;
+        width: 5px;
+        height: 5px;
+        background: rgb(102 217 178 / 70%);
+        content: "";
+    }
+
+    .engineering-article__body :global(ol li) {
+        counter-increment: engineering-list;
+    }
+
+    .engineering-article__body :global(ol li::before) {
+        position: absolute;
+        top: 0;
+        left: 0;
+        color: rgb(102 217 178 / 70%);
+        font-family: var(--font-mono);
+        font-size: 11px;
+        line-height: 23px;
+        content: counter(engineering-list, decimal-leading-zero);
+    }
+
+    .engineering-article__body :global(code) {
+        border: 1px solid rgb(38 43 51 / 78%);
+        padding: 2px 5px;
+        background: #05070a;
+        color: #c8d0dc;
+        font-family: var(--font-mono);
+        font-size: 0.86em;
+        letter-spacing: 0;
+    }
+
+    .engineering-article__body :global(table) {
+        width: 100%;
+        margin: 32px 0;
+        border-collapse: collapse;
+        color: #8c94a1;
+        font-size: 15px;
+        line-height: 22px;
+    }
+
+    .engineering-article__body :global(th),
+    .engineering-article__body :global(td) {
+        border-bottom: 1px solid #262b33;
+        padding: 13px 16px;
+        text-align: left;
+        vertical-align: top;
+    }
+
+    .engineering-article__body :global(th) {
+        color: rgb(102 217 178 / 78%);
+        font-weight: 400;
+    }
+
+    .engineering-article__body :global(hr) {
+        width: 100%;
+        height: 1px;
+        margin: 44px 0;
+        border: 0;
+        background-image: repeating-linear-gradient(
+            to right,
+            #262b33 0,
+            #262b33 6px,
+            transparent 6px,
+            transparent 12px
+        );
+    }
+
+    .engineering-article__body :global(img) {
+        display: block;
+        width: 100%;
+        height: auto;
+        margin: 32px 0;
+        border: 1px solid #262b33;
+        background: #040406;
+    }
+
+    .engineering-article__body :global(blockquote) {
+        margin: 32px 0;
+        border-left: 1px solid rgb(102 217 178 / 42%);
+        padding: 2px 0 2px 24px;
+        color: #c5ccd8;
+    }
+
+    .engineering-article__body :global(blockquote p) {
+        margin-bottom: 0;
+    }
+
+    .engineering-article__body :global(strong) {
+        color: rgb(102 217 178 / 78%);
+        font-weight: 400;
+    }
+
+    .engineering-article__body :global(em) {
+        color: #b9c1cd;
+        font-style: italic;
+    }
+
+    .engineering-article__body :global(a) {
+        overflow-wrap: anywhere;
+        color: rgb(102 217 178 / 78%);
+        text-decoration-line: underline;
+        text-decoration-color: rgb(102 217 178 / 42%);
+        text-underline-offset: 4px;
+        transition:
+            color 160ms ease,
+            text-decoration-color 160ms ease;
+    }
+
+    .engineering-article__body :global(a:hover),
+    .engineering-article__body :global(a:focus-visible) {
+        color: #9debcf;
+        text-decoration-line: underline;
+        text-decoration-color: rgb(157 235 207 / 56%);
+    }
+
+    .engineering-article__body :global(.engineering-code-block) {
+        position: relative;
+        margin: 32px 0;
+        overflow: hidden;
+        border: 1px solid #262b33;
+        background: #030406;
+        box-shadow:
+            inset 0 1px 0 rgb(255 255 255 / 3%),
+            inset 0 -1px 0 rgb(255 255 255 / 2%);
+    }
+
+    .engineering-article__body :global(pre) {
+        margin: 0;
+        overflow-x: auto;
+        overscroll-behavior-x: contain;
+        border: 0;
+        background:
+            linear-gradient(180deg, rgb(255 255 255 / 2.5%) 0, transparent 74px),
+            linear-gradient(90deg, rgb(255 255 255 / 1.5%) 0, transparent 38%),
+            #030406 !important;
+        padding: 24px 64px 24px 26px;
+        color: #c8d0dc;
+        font-family: var(--font-mono);
+        font-size: 12px;
+        line-height: 20px;
+        letter-spacing: 0;
+        white-space: pre;
+    }
+
+    .engineering-article__body :global(pre code) {
+        font: inherit;
+    }
+
+    .engineering-article__body :global(.engineering-code-block__copy) {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        display: grid;
+        width: 30px;
+        height: 30px;
+        place-items: center;
+        border: 1px solid #262b33;
+        background: #05070a;
+        color: #8c94a1;
+        cursor: pointer;
+        transition:
+            border-color 160ms ease,
+            color 160ms ease,
+            background-color 160ms ease;
+    }
+
+    .engineering-article__body :global(.engineering-code-block__copy svg) {
+        width: 15px;
+        height: 15px;
+        fill: none;
+        stroke: currentColor;
+        stroke-linejoin: round;
+        stroke-width: 1.35;
+    }
+
+    .engineering-article__body :global(.engineering-code-block__copy:hover),
+    .engineering-article__body :global(.engineering-code-block__copy:focus-visible),
+    .engineering-article__body :global(.engineering-code-block__copy[data-copied="true"]) {
+        border-color: #3a414c;
+        color: #d8dee8;
+        background: #090c10;
+    }
+
+    .engineering-article__body :global(.engineering-code-block__copy:focus-visible) {
+        outline: 1px solid #4b5563;
+        outline-offset: 3px;
+    }
+
+    .engineering-article__bar-layer {
+        position: absolute;
+        z-index: 0;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        width: var(--engineering-article-rail-width);
+        pointer-events: none;
+    }
+
+    .engineering-article__bar {
+        position: sticky;
+        top: 0;
+        display: flex;
+        width: var(--engineering-article-rail-width);
+        height: 1215px;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-end;
+        overflow: clip;
+        background: repeating-linear-gradient(
+            135deg,
+            #ffffff 0,
+            #ffffff 2.2167px,
+            transparent 2.2167px,
+            transparent 6.807px
+        );
+        opacity: 0.14;
+    }
+
+    @media (max-width: 1180px) {
+        .engineering-article__bar-layer {
+            display: none;
+        }
+
+        .engineering-article__content-card {
+            padding-right: 64px;
+            padding-left: 64px;
+        }
+    }
+
+    @media (max-width: 900px) {
+        .engineering-article__hero-section {
+            padding-top: 24px;
+        }
+
+        .engineering-article__content-section {
+            padding-top: 48px;
+            padding-bottom: 96px;
+        }
+
+        .engineering-article__hero {
+            padding-top: 56px;
+        }
+
+        .engineering-article__content-card {
+            padding: 48px;
+        }
+    }
+
+    @media (max-width: 640px) {
+        .engineering-article__hero-section {
+            padding-top: 16px;
+        }
+
+        .engineering-article__content-section {
+            padding-top: 40px;
+            padding-bottom: 72px;
+        }
+
+        .engineering-article__hero {
+            padding-top: 48px;
+        }
+
+        .engineering-article__meta-row {
+            gap: 24px;
+            overflow-x: auto;
+        }
+
+        .engineering-article__meta-row::before {
+            left: 94px;
+            width: 132px;
+            height: 48px;
+        }
+
+        .engineering-article__content-card {
+            padding: 32px 24px 48px;
+        }
+
+        .engineering-article__intro h1 {
+            font-size: 36px;
+            line-height: 42px;
+            letter-spacing: -0.4px;
+        }
+
+        .engineering-article__body-layout {
+            margin-top: 44px;
+        }
+
+        .engineering-article__body :global(h1) {
+            font-size: 30px;
+            line-height: 36px;
+        }
+
+        .engineering-article__body :global(h2) {
+            font-size: 25px;
+            line-height: 31px;
+        }
+
+        .engineering-article__body :global(h3) {
+            font-size: 19px;
+            line-height: 27px;
+        }
+
+        .engineering-article__body :global(table) {
+            margin: 28px 0;
+            table-layout: fixed;
+            font-size: 13px;
+            line-height: 19px;
+        }
+
+        .engineering-article__body :global(th),
+        .engineering-article__body :global(td) {
+            padding: 11px 8px;
+            overflow-wrap: anywhere;
+        }
+
+        .engineering-article__body :global(th:nth-child(1)),
+        .engineering-article__body :global(td:nth-child(1)),
+        .engineering-article__body :global(th:nth-child(2)),
+        .engineering-article__body :global(td:nth-child(2)) {
+            width: 28%;
+        }
+
+        .engineering-article__body :global(.engineering-code-block) {
+            margin: 28px calc(var(--site-padding-x) * -1);
+            border-right: 0;
+            border-left: 0;
+        }
+
+        .engineering-article__body :global(pre) {
+            padding: 20px 52px 20px var(--site-padding-x);
+            background:
+                linear-gradient(180deg, rgb(255 255 255 / 1.5%) 0, transparent 62px),
+                #020304 !important;
+            font-size: 11px;
+            line-height: 19px;
+        }
+
+        .engineering-article__body :global(.engineering-code-block__copy) {
+            top: 8px;
+            right: var(--site-padding-x);
+            width: 28px;
+            height: 28px;
+        }
+    }
+</style>

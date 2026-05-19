@@ -1,9 +1,20 @@
 ---
 title: "Placement without a central lock"
 description: "How regional auctions, node-local capacity checks, and jitter can shape a simpler scheduler."
-date: "2026-02-07"
-cardVisual: "blue-green-glow"
-cardText: "Placement without a central lock"
+author: "Tobiloba Ogundiyan"
+authorUrl: "https://www.linkedin.com/in/tobilobaogundiyan/"
+date: "2026-05-10"
+cardVisual: "motherboard"
 ---
 
-This post will cover SpaceScale's placement model and the tradeoffs behind it.
+The cleanest scheduler is not always the one with the most state in the control plane. Sometimes the better shape is to let the edge nodes speak for themselves, then let the control plane choose from the first useful answer.
+
+That is the direction SpaceScale keeps exploring. A stateless control plane can ask a region for capacity, and the nodes in that region can decide whether they are able to accept the work. The node already knows its local pressure. It knows what is running, what is reserved, what is healthy, and what should not receive more load.
+
+The interesting part is not just the auction. The interesting part is restraint. If every node replies at once, the control plane receives noise. If only the nodes with useful capacity reply quickly, the system begins to feel calmer. Capacity-weighted jitter gives the fleet a way to express priority without introducing a centralized lock.
+
+The emptiest node can answer first. Busier nodes can wait. Once the auction closes, delayed bidders can stop without wasting more work. That keeps placement fast while preserving a simple mental model: the control plane asks, the region answers, and the workload lands where the machine itself says it can run.
+
+This matters because SpaceScale is not trying to hide execution behind vague magic. Placement should be visible enough to trust and small enough to operate. The user should not need to understand every internal signal, but the platform should still be able to explain why a workload landed where it did.
+
+That is the kind of runtime behavior we want more of. Serious infrastructure does not need to be louder. It needs to make the right decision at the right boundary, then leave a clean signal behind.

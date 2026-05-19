@@ -12,9 +12,10 @@ const engineering = defineCollection({
     schema: z.object({
         title: z.string(),
         description: z.string(),
+        author: z.string(),
+        authorUrl: z.url().optional(),
         date: z.coerce.date(),
         cardVisual: z.string(),
-        cardText: z.string().optional(),
     }),
 });
 

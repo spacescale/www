@@ -4,6 +4,7 @@ interface Props {
     title: string;
     description: string;
     coverImage: string;
+    href: string;
     cardVisual?: string;
     insetText?: boolean;
     rightDivider?: boolean;
@@ -16,6 +17,7 @@ const {
     title,
     description,
     coverImage,
+    href,
     cardVisual,
     insetText = false,
     rightDivider = false,
@@ -37,7 +39,7 @@ const copyClass = insetText
 ---
 
 <article class={cardClass}>
-    <div class="engineering-card__image">
+    <a class="engineering-card__image" href={href} aria-label={`Read ${title}`}>
         <img
             class="engineering-card__cover"
             src={coverImage}
@@ -46,10 +48,12 @@ const copyClass = insetText
             decoding="async"
             data-visual={cardVisual}
         />
-    </div>
+    </a>
     <div class={copyClass}>
         <p class="engineering-card__date">{date}</p>
-        <h2 class="engineering-card__title">{title}</h2>
+        <h2 class="engineering-card__title">
+            <a class="engineering-card__title-link" href={href}>{title}</a>
+        </h2>
         <p class="engineering-card__description">
             {description}
         </p>
@@ -83,6 +87,8 @@ const copyClass = insetText
         width: 100%;
         height: 310px;
         flex-shrink: 0;
+        color: inherit;
+        text-decoration: none;
     }
 
     .engineering-card__cover {
@@ -141,6 +147,17 @@ const copyClass = insetText
 
     .engineering-card__description {
         -webkit-line-clamp: 2;
+    }
+
+    .engineering-card__title-link {
+        color: inherit;
+        text-decoration: none;
+    }
+
+    .engineering-card__image:focus-visible,
+    .engineering-card__title-link:focus-visible {
+        outline: 1px solid #66d9a8;
+        outline-offset: 4px;
     }
 
     .engineering-card__title {
