@@ -69,7 +69,19 @@ const readTime = Math.max(1, Math.ceil(wordCount / 220));
                     <div class="engineering-article__intro">
                         <h1>{post.data.title}</h1>
                         <div class="engineering-article__byline">
-                            <p>{post.data.author}</p>
+                            {
+                                post.data.authorUrl ? (
+                                    <a
+                                        href={post.data.authorUrl}
+                                        target="_blank"
+                                        rel="noreferrer"
+                                    >
+                                        {post.data.author}
+                                    </a>
+                                ) : (
+                                    <p>{post.data.author}</p>
+                                )
+                            }
                         </div>
                     </div>
 
@@ -273,10 +285,18 @@ const readTime = Math.max(1, Math.ceil(wordCount / 220));
         white-space: nowrap;
     }
 
-    .engineering-article__byline p {
+    .engineering-article__byline p,
+    .engineering-article__byline a {
         margin: 0;
         overflow: hidden;
+        color: inherit;
+        text-decoration: none;
         text-overflow: ellipsis;
+    }
+
+    .engineering-article__byline a:focus-visible {
+        outline: 1px solid #66d9b2;
+        outline-offset: 4px;
     }
 
     .engineering-article__body-layout {
@@ -295,6 +315,40 @@ const readTime = Math.max(1, Math.ceil(wordCount / 220));
         letter-spacing: -0.08px;
     }
 
+    .engineering-article__body :global(h1),
+    .engineering-article__body :global(h2),
+    .engineering-article__body :global(h3) {
+        margin: 52px 0 18px;
+        color: #f5f7fa;
+        font-family: var(--font-display);
+        font-weight: 400;
+        letter-spacing: 0;
+    }
+
+    .engineering-article__body :global(h1) {
+        font-size: 34px;
+        line-height: 40px;
+    }
+
+    .engineering-article__body :global(h2) {
+        font-size: 28px;
+        line-height: 34px;
+    }
+
+    .engineering-article__body :global(h3) {
+        color: #d8dee8;
+        font-family: var(--font-body);
+        font-size: 20px;
+        line-height: 28px;
+        letter-spacing: -0.08px;
+    }
+
+    .engineering-article__body :global(h1:first-child),
+    .engineering-article__body :global(h2:first-child),
+    .engineering-article__body :global(h3:first-child) {
+        margin-top: 0;
+    }
+
     .engineering-article__body :global(p) {
         margin: 0 0 24px;
     }
@@ -303,10 +357,138 @@ const readTime = Math.max(1, Math.ceil(wordCount / 220));
         margin-bottom: 0;
     }
 
+    .engineering-article__body :global(ul),
+    .engineering-article__body :global(ol) {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+        margin: 22px 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .engineering-article__body :global(li ul),
+    .engineering-article__body :global(li ol) {
+        margin: 7px 0 0;
+    }
+
+    .engineering-article__body :global(ol) {
+        counter-reset: engineering-list;
+    }
+
+    .engineering-article__body :global(li) {
+        position: relative;
+        padding-left: 20px;
+        color: #8c94a1;
+        line-height: 23px;
+    }
+
+    .engineering-article__body :global(ul li::before) {
+        position: absolute;
+        top: 9px;
+        left: 2px;
+        width: 5px;
+        height: 5px;
+        background: rgb(102 217 178 / 70%);
+        content: "";
+    }
+
+    .engineering-article__body :global(ol li) {
+        counter-increment: engineering-list;
+    }
+
+    .engineering-article__body :global(ol li::before) {
+        position: absolute;
+        top: 0;
+        left: 0;
+        color: rgb(102 217 178 / 70%);
+        font-family: var(--font-mono);
+        font-size: 11px;
+        line-height: 23px;
+        content: counter(engineering-list, decimal-leading-zero);
+    }
+
+    .engineering-article__body :global(code) {
+        border: 1px solid rgb(38 43 51 / 78%);
+        padding: 2px 5px;
+        background: #05070a;
+        color: #c8d0dc;
+        font-family: var(--font-mono);
+        font-size: 0.86em;
+        letter-spacing: 0;
+    }
+
+    .engineering-article__body :global(table) {
+        width: 100%;
+        margin: 32px 0;
+        border-collapse: collapse;
+        color: #8c94a1;
+        font-size: 15px;
+        line-height: 22px;
+    }
+
+    .engineering-article__body :global(th),
+    .engineering-article__body :global(td) {
+        border-bottom: 1px solid #262b33;
+        padding: 13px 16px;
+        text-align: left;
+        vertical-align: top;
+    }
+
+    .engineering-article__body :global(th) {
+        color: rgb(102 217 178 / 78%);
+        font-weight: 400;
+    }
+
+    .engineering-article__body :global(hr) {
+        width: 100%;
+        height: 1px;
+        margin: 44px 0;
+        border: 0;
+        background-image: repeating-linear-gradient(
+            to right,
+            #262b33 0,
+            #262b33 6px,
+            transparent 6px,
+            transparent 12px
+        );
+    }
+
+    .engineering-article__body :global(img) {
+        display: block;
+        width: 100%;
+        height: auto;
+        margin: 32px 0;
+        border: 1px solid #262b33;
+        background: #040406;
+    }
+
+    .engineering-article__body :global(blockquote) {
+        margin: 32px 0;
+        border-left: 1px solid rgb(102 217 178 / 42%);
+        padding: 2px 0 2px 24px;
+        color: #c5ccd8;
+    }
+
+    .engineering-article__body :global(blockquote p) {
+        margin-bottom: 0;
+    }
+
+    .engineering-article__body :global(strong) {
+        color: rgb(102 217 178 / 78%);
+        font-weight: 400;
+    }
+
+    .engineering-article__body :global(em) {
+        color: #b9c1cd;
+        font-style: italic;
+    }
+
     .engineering-article__body :global(a) {
-        color: #66d9b2;
-        text-decoration-line: none;
-        text-decoration-color: transparent;
+        overflow-wrap: anywhere;
+        color: rgb(102 217 178 / 78%);
+        text-decoration-line: underline;
+        text-decoration-color: rgb(102 217 178 / 42%);
         text-underline-offset: 4px;
         transition:
             color 160ms ease,
@@ -315,9 +497,9 @@ const readTime = Math.max(1, Math.ceil(wordCount / 220));
 
     .engineering-article__body :global(a:hover),
     .engineering-article__body :global(a:focus-visible) {
-        color: #8ff0cf;
+        color: #9debcf;
         text-decoration-line: underline;
-        text-decoration-color: rgb(143 240 207 / 75%);
+        text-decoration-color: rgb(157 235 207 / 56%);
     }
 
     .engineering-article__body :global(.engineering-code-block) {
@@ -490,6 +672,41 @@ const readTime = Math.max(1, Math.ceil(wordCount / 220));
 
         .engineering-article__body-layout {
             margin-top: 44px;
+        }
+
+        .engineering-article__body :global(h1) {
+            font-size: 30px;
+            line-height: 36px;
+        }
+
+        .engineering-article__body :global(h2) {
+            font-size: 25px;
+            line-height: 31px;
+        }
+
+        .engineering-article__body :global(h3) {
+            font-size: 19px;
+            line-height: 27px;
+        }
+
+        .engineering-article__body :global(table) {
+            margin: 28px 0;
+            table-layout: fixed;
+            font-size: 13px;
+            line-height: 19px;
+        }
+
+        .engineering-article__body :global(th),
+        .engineering-article__body :global(td) {
+            padding: 11px 8px;
+            overflow-wrap: anywhere;
+        }
+
+        .engineering-article__body :global(th:nth-child(1)),
+        .engineering-article__body :global(td:nth-child(1)),
+        .engineering-article__body :global(th:nth-child(2)),
+        .engineering-article__body :global(td:nth-child(2)) {
+            width: 28%;
         }
 
         .engineering-article__body :global(.engineering-code-block) {

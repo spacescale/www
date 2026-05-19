@@ -13,6 +13,7 @@ const engineering = defineCollection({
         title: z.string(),
         description: z.string(),
         author: z.string(),
+        authorUrl: z.url().optional(),
         date: z.coerce.date(),
         cardVisual: z.string(),
     }),
