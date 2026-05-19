@@ -7,14 +7,19 @@ import "../styles/global.css";
 interface Props {
     title?: string;
     description?: string;
+    image?: string;
 }
 
 const {
     title = "SpaceScale: Infrastructure for humans and agents",
     description = "SpaceScale is building infrastructure for humans and agents, with Ignite for container workloads and Machines for persistent workspaces.",
+    image,
 } = Astro.props;
 
 const hasFinalCta = Astro.slots.has("final-cta");
+const siteOrigin = Astro.site?.toString() ?? "https://spacescale.io";
+const pageUrl = new URL(Astro.url.pathname, siteOrigin).toString();
+const imageUrl = image ? new URL(image, siteOrigin).toString() : undefined;
 ---
 
 <!doctype html>
@@ -23,6 +28,15 @@ const hasFinalCta = Astro.slots.has("final-cta");
         <meta charset="UTF-8" />
         <meta name="description" content={description} />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={pageUrl} />
+        {imageUrl && <meta property="og:image" content={imageUrl} />}
+        <meta name="twitter:card" content={imageUrl ? "summary_large_image" : "summary"} />
+        <meta name="twitter:title" content={title} />
+        <meta name="twitter:description" content={description} />
+        {imageUrl && <meta name="twitter:image" content={imageUrl} />}
         <link
             rel="icon"
             href="/favicon-light.svg"
