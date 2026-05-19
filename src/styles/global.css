@@ -81,6 +81,11 @@
     box-sizing: border-box;
 }
 
+::selection {
+    background: rgb(102 217 178 / 28%);
+    color: #ffffff;
+}
+
 html {
     background: var(--color-bg-primary);
     color: var(--color-text-primary);
