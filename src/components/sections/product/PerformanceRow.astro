@@ -6,6 +6,10 @@
     </p>
 </div>
 
+<div class="performance-visual" aria-hidden="true">
+    <div class="performance-visual__asset"></div>
+</div>
+
 <style>
     .performance-copy {
         --performance-copy-tablet-top: 104px;
@@ -36,11 +40,48 @@
         line-height: 24px;
     }
 
+    .performance-visual {
+        --performance-visual-tablet-top: 0px;
+        --performance-visual-tablet-left: 410px;
+        --performance-visual-tablet-max-width: 672px;
+
+        position: absolute;
+        top: 0;
+        left: 608px;
+        width: 672px;
+        height: 580px;
+        overflow: clip;
+        user-select: none;
+    }
+
+    .performance-visual__asset {
+        width: 672px;
+        height: 580px;
+        background-image: url("/assets/product/performance-latency-graph.svg");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: contain;
+    }
+
     @media (max-width: 1180px) {
         .performance-copy {
             top: var(--performance-copy-tablet-top);
             left: var(--product-row-tablet-copy-left);
             width: var(--product-row-tablet-copy-width);
+        }
+
+        .performance-visual {
+            top: var(--performance-visual-tablet-top);
+            right: 0;
+            left: var(--performance-visual-tablet-left);
+            width: auto;
+            height: auto;
+        }
+
+        .performance-visual__asset {
+            width: 100%;
+            max-width: var(--performance-visual-tablet-max-width);
+            aspect-ratio: 672 / 580;
         }
     }
 
@@ -53,6 +94,21 @@
             max-width: var(--performance-copy-mobile-max-width);
         }
 
+        .performance-visual {
+            position: relative;
+            top: auto;
+            right: auto;
+            left: auto;
+            width: 100%;
+            height: auto;
+            margin-top: var(--product-row-mobile-visual-gap);
+            overflow: visible;
+        }
+
+        .performance-visual__asset {
+            width: 100%;
+            max-width: 672px;
+        }
     }
 
     @media (max-width: 640px) {
@@ -65,6 +121,10 @@
         .performance-copy p {
             font-size: var(--product-row-mobile-body-size);
             line-height: var(--product-row-mobile-body-line-height);
+        }
+
+        .performance-visual {
+            margin-top: var(--product-row-mobile-visual-gap-tight);
         }
     }
 </style>
