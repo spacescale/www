@@ -2,9 +2,11 @@
 import { getCollection } from "astro:content";
 import EngineeringCard from "./EngineeringCard.astro";
 
-const posts = (await getCollection("engineering")).sort(
-    (a, b) => b.data.date.getTime() - a.data.date.getTime(),
-);
+const posts = (await getCollection("engineering")).sort((a, b) => {
+    const dateOrder = b.data.date.getTime() - a.data.date.getTime();
+
+    return dateOrder || a.id.localeCompare(b.id);
+});
 const visiblePosts = posts.slice(0, 8);
 const isSinglePost = visiblePosts.length === 1;
 
