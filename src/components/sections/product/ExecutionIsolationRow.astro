@@ -14,6 +14,12 @@
         src="/assets/product/execution-isolation.svg"
         alt=""
     />
+
+    <img
+        class="execution-isolation-visual__asset__mobile"
+        src="/assets/product/execution-isolation-mobile.svg"
+        alt=""
+    />
 </div>
 
 <style>
@@ -62,6 +68,12 @@
     .execution-isolation-visual__asset {
         display: block;
         width: 770px;
+        height: auto;
+    }
+
+    .execution-isolation-visual__asset__mobile {
+        display: none;
+        width: 100%;
         height: auto;
     }
 
@@ -126,6 +138,16 @@
 
         .execution-isolation-visual {
             margin-top: var(--product-row-mobile-visual-gap-tight);
+        }
+
+        .execution-isolation-visual__asset {
+            display: none;
+        }
+
+        .execution-isolation-visual__asset__mobile {
+            display: block;
+            width: auto;
+            margin: 0 auto;
         }
     }
 </style>
