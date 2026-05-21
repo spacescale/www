@@ -31,7 +31,12 @@ const navSocials = [
 ] as const;
 ---
 
-<header class="site-header" aria-label="Primary navigation" data-site-header>
+<header
+    class="site-header"
+    aria-label="Primary navigation"
+    data-site-header
+    transition:persist
+>
     <div class="site-header-inner">
         <a class="brand-lockup" href="/" aria-label="SpaceScale home">
             <span class="brand-mark" aria-hidden="true">
@@ -104,61 +109,72 @@ const navSocials = [
 </header>
 
 <script>
-    document.querySelectorAll("[data-site-header]").forEach((header) => {
-        const toggle = header.querySelector("[data-site-menu-toggle]");
-        const nav = header.querySelector("[data-site-nav]");
+    let cleanupSiteHeader: (() => void) | undefined;
 
-        if (!(toggle instanceof HTMLButtonElement) || !(nav instanceof HTMLElement)) {
-            return;
-        }
+    const initializeSiteHeader = () => {
+        cleanupSiteHeader?.();
+        cleanupSiteHeader = undefined;
 
-        if (toggle.dataset.menuReady === "true") {
-            return;
-        }
+        document.querySelectorAll("[data-site-header]").forEach((header) => {
+            const toggle = header.querySelector("[data-site-menu-toggle]");
+            const nav = header.querySelector("[data-site-nav]");
 
-        toggle.dataset.menuReady = "true";
-
-        const mobileQuery = window.matchMedia("(max-width: 640px)");
-
-        const closeMenu = () => {
-            header.removeAttribute("data-menu-open");
-            toggle.setAttribute("aria-expanded", "false");
-            toggle.setAttribute("aria-label", "Open main menu");
-            document.body.style.overflow = "";
-        };
-
-        const openMenu = () => {
-            header.setAttribute("data-menu-open", "true");
-            toggle.setAttribute("aria-expanded", "true");
-            toggle.setAttribute("aria-label", "Close main menu");
-            if (mobileQuery.matches) {
-                document.body.style.overflow = "hidden";
+            if (!(toggle instanceof HTMLButtonElement) || !(nav instanceof HTMLElement)) {
+                return;
             }
-        };
 
-        toggle.addEventListener("click", () => {
-            const isOpen = header.getAttribute("data-menu-open") === "true";
-            if (isOpen) {
+            const controller = new AbortController();
+            const { signal } = controller;
+            const mobileQuery = window.matchMedia("(max-width: 640px)");
+
+            const closeMenu = () => {
+                header.removeAttribute("data-menu-open");
+                toggle.setAttribute("aria-expanded", "false");
+                toggle.setAttribute("aria-label", "Open main menu");
+                document.body.style.overflow = "";
+            };
+
+            const openMenu = () => {
+                header.setAttribute("data-menu-open", "true");
+                toggle.setAttribute("aria-expanded", "true");
+                toggle.setAttribute("aria-label", "Close main menu");
+                if (mobileQuery.matches) {
+                    document.body.style.overflow = "hidden";
+                }
+            };
+
+            toggle.addEventListener("click", () => {
+                const isOpen = header.getAttribute("data-menu-open") === "true";
+                if (isOpen) {
+                    closeMenu();
+                } else {
+                    openMenu();
+                }
+            }, { signal });
+
+            nav.querySelectorAll("a").forEach((link) => {
+                link.addEventListener("click", closeMenu, { signal });
+            });
+
+            mobileQuery.addEventListener("change", (event) => {
+                if (!event.matches) {
+                    closeMenu();
+                }
+            }, { signal });
+
+            document.addEventListener("keydown", (event) => {
+                if (event.key === "Escape" && header.getAttribute("data-menu-open") === "true") {
+                    closeMenu();
+                }
+            }, { signal });
+
+            cleanupSiteHeader = () => {
                 closeMenu();
-            } else {
-                openMenu();
-            }
+                controller.abort();
+            };
         });
+    };
 
-        nav.querySelectorAll("a").forEach((link) => {
-            link.addEventListener("click", closeMenu);
-        });
-
-        mobileQuery.addEventListener("change", (event) => {
-            if (!event.matches) {
-                closeMenu();
-            }
-        });
-
-        document.addEventListener("keydown", (event) => {
-            if (event.key === "Escape" && header.getAttribute("data-menu-open") === "true") {
-                closeMenu();
-            }
-        });
-    });
+    initializeSiteHeader();
+    document.addEventListener("astro:page-load", initializeSiteHeader);
 </script>

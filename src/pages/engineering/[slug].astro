@@ -13,6 +13,8 @@ export const getStaticPaths = async () => {
 
 const { post } = Astro.props;
 const { Content } = await render(post);
+const postSlug = post.id.replace(/\.(md|mdx)$/, "");
+const titleTransitionName = `engineering-post-title-${postSlug}`;
 const coverImage = `/assets/engineering/covers/${post.data.cardVisual}.png`;
 
 const formatPostMonth = (date: Date) => {
@@ -42,6 +44,7 @@ const readTime = Math.max(1, Math.ceil(wordCount / 220));
     title={`${post.data.title} | SpaceScale`}
     description={post.data.description}
     image={coverImage}
+    enableViewTransitions
 >
     <main class="engineering-article">
         <section class="engineering-article__hero-section">
@@ -66,7 +69,7 @@ const readTime = Math.max(1, Math.ceil(wordCount / 220));
             <article class="engineering-article__shell">
                 <section class="engineering-article__content-card">
                     <div class="engineering-article__intro">
-                        <h1>{post.data.title}</h1>
+                        <h1 transition:name={titleTransitionName}>{post.data.title}</h1>
                         <div class="engineering-article__byline">
                             {
                                 post.data.authorUrl ? (

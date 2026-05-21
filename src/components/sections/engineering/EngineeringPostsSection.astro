@@ -25,8 +25,10 @@ const formatPostDate = (date: Date) => {
 
 const getCoverPath = (cardVisual: string) =>
     `/assets/engineering/covers/${cardVisual}.png`;
-const getPostHref = (postId: string) =>
-    `/engineering/${postId.replace(/\.(md|mdx)$/, "")}`;
+const getPostSlug = (postId: string) => postId.replace(/\.(md|mdx)$/, "");
+const getPostHref = (postId: string) => `/engineering/${getPostSlug(postId)}`;
+const getPostTransitionName = (postId: string) =>
+    `engineering-post-title-${getPostSlug(postId)}`;
 const gridClass = isSinglePost
     ? "engineering-posts__grid engineering-posts__grid--single"
     : "engineering-posts__grid";
@@ -47,6 +49,7 @@ const gridClass = isSinglePost
                             coverImage={getCoverPath(post.data.cardVisual)}
                             href={getPostHref(post.id)}
                             cardVisual={post.data.cardVisual}
+                            transitionName={getPostTransitionName(post.id)}
                             rightDivider={!isSinglePost && index % 2 === 0}
                             topDivider={index >= 2}
                             stackedDivider={index > 0}

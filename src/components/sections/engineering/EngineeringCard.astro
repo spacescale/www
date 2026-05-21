@@ -6,6 +6,7 @@ interface Props {
     coverImage: string;
     href: string;
     cardVisual?: string;
+    transitionName?: string;
     insetText?: boolean;
     rightDivider?: boolean;
     topDivider?: boolean;
@@ -19,6 +20,7 @@ const {
     coverImage,
     href,
     cardVisual,
+    transitionName,
     insetText = false,
     rightDivider = false,
     topDivider = false,
@@ -51,7 +53,7 @@ const copyClass = insetText
     </a>
     <div class={copyClass}>
         <p class="engineering-card__date">{date}</p>
-        <h2 class="engineering-card__title">
+        <h2 class="engineering-card__title" transition:name={transitionName}>
             <a class="engineering-card__title-link" href={href}>{title}</a>
         </h2>
         <p class="engineering-card__description">
