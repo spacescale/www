@@ -9,15 +9,26 @@
 const footerGroups = [
     {
         title: "Resources",
-        links: ["Documentation", "Changelog", "Partnerships"],
+        links: [
+            { label: "Documentation", href: "#" },
+            { label: "Changelog", href: "#" },
+            { label: "Partnerships", href: "#" },
+        ],
     },
     {
         title: "Blog",
-        links: ["Engineering", "Tutorials"],
+        links: [
+            { label: "Engineering", href: "/engineering" },
+            { label: "Tutorials", href: "#" },
+        ],
     },
     {
         title: "Company",
-        links: ["Principles", "Careers", "Privacy Policy"],
+        links: [
+            { label: "Principles", href: "/principles" },
+            { label: "Careers", href: "#" },
+            { label: "Privacy Policy", href: "#" },
+        ],
     },
 ];
 
@@ -75,7 +86,7 @@ const socialLinks = [
                         <ul>
                             {group.links.map((link) => (
                                 <li>
-                                    <a href="#">{link}</a>
+                                    <a href={link.href}>{link.label}</a>
                                 </li>
                             ))}
                         </ul>

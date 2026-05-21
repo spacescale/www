@@ -1,0 +1,244 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+
+const principles = [
+    {
+        index: "01",
+        title: "The Foundation",
+        body: "SpaceScale starts close to the metal because fragile abstractions do not survive serious workloads. The surface should feel simple, but the foundation underneath has to stay explicit, correct, and strong.",
+    },
+    {
+        index: "02",
+        title: "Low Level, Still Simple",
+        body: "Infrastructure should expose enough of the system to be trusted without making every builder manage the machine underneath. The work is to remove ceremony without hiding the truth of execution.",
+    },
+    {
+        index: "03",
+        title: "Humans And Agents",
+        body: "The long-term direction is one SpaceScale platform where humans deploy workloads and agents receive real environments to work, inspect, hand off, and continue.",
+    },
+    {
+        index: "04",
+        title: "Customer Pain First",
+        body: "SpaceScale is shaped by problems we have felt directly. Feedback, pressure, and real usage keep the platform honest about what needs to be built next.",
+    },
+];
+---
+
+<SiteLayout
+    title="Principles | SpaceScale"
+    description="The principles behind SpaceScale: infrastructure built from the metal up for humans, agents, and serious workloads."
+>
+    <main class="principles-page">
+        <section class="principles-hero" aria-labelledby="principles-title">
+            <div class="principles-hero__inner">
+                <p class="principles-hero__eyebrow">SPACESCALE PRINCIPLES</p>
+                <h1 id="principles-title">
+                    Infrastructure built from the metal up.
+                </h1>
+                <p>
+                    SpaceScale exists because compute should be low level, correct, and
+                    still simple to use. These are the principles guiding the runtime
+                    we are building.
+                </p>
+            </div>
+        </section>
+
+        <section class="principles-list" aria-label="SpaceScale principles">
+            <div class="principles-list__inner">
+                {
+                    principles.map((principle) => (
+                        <article class="principle">
+                            <p class="principle__index">{principle.index}</p>
+                            <div class="principle__copy">
+                                <h2>{principle.title}</h2>
+                                <p>{principle.body}</p>
+                            </div>
+                        </article>
+                    ))
+                }
+            </div>
+        </section>
+    </main>
+</SiteLayout>
+
+<style>
+    .principles-page {
+        background: var(--color-bg-primary);
+        color: #f5f7fa;
+    }
+
+    .principles-hero,
+    .principles-list {
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        padding-right: var(--site-padding-x);
+        padding-left: var(--site-padding-x);
+    }
+
+    .principles-hero {
+        padding-top: 96px;
+        padding-bottom: 96px;
+    }
+
+    .principles-hero__inner,
+    .principles-list__inner {
+        width: 100%;
+        max-width: var(--site-max-width);
+    }
+
+    .principles-hero__inner {
+        max-width: 860px;
+        margin-right: auto;
+        margin-left: auto;
+    }
+
+    .principles-hero__eyebrow {
+        margin: 0 0 18px;
+        color: #8c94a1;
+        font-family: var(--font-body);
+        font-size: 13px;
+        font-weight: 500;
+        line-height: 16px;
+        letter-spacing: 1.04px;
+    }
+
+    .principles-hero h1 {
+        margin: 0;
+        color: #f5f7fa;
+        font-family: var(--font-display);
+        font-size: 64px;
+        font-weight: 400;
+        line-height: 72px;
+        letter-spacing: 0;
+    }
+
+    .principles-hero h1 + p {
+        max-width: 720px;
+        margin: 28px 0 0;
+        color: #8c94a1;
+        font-family: var(--font-body);
+        font-size: 20px;
+        font-weight: 400;
+        line-height: 34px;
+    }
+
+    .principles-list {
+        padding-bottom: 132px;
+    }
+
+    .principles-list__inner {
+        border-top: 1px solid #262b33;
+    }
+
+    .principle {
+        display: grid;
+        grid-template-columns: 96px minmax(0, 1fr);
+        gap: 48px;
+        padding: 40px 0;
+        border-bottom: 1px solid #262b33;
+    }
+
+    .principle__index {
+        margin: 7px 0 0;
+        color: #66d9b2;
+        font-family: var(--font-mono);
+        font-size: 13px;
+        font-weight: 500;
+        line-height: 18px;
+    }
+
+    .principle__copy {
+        max-width: 820px;
+    }
+
+    .principle h2 {
+        margin: 0;
+        color: #f5f7fa;
+        font-family: var(--font-display);
+        font-size: 36px;
+        font-weight: 400;
+        line-height: 44px;
+        letter-spacing: 0;
+    }
+
+    .principle p {
+        margin: 14px 0 0;
+        color: #8c94a1;
+        font-family: var(--font-body);
+        font-size: 18px;
+        font-weight: 400;
+        line-height: 30px;
+    }
+
+    @media (max-width: 900px) {
+        .principles-hero {
+            padding-top: 80px;
+            padding-bottom: 80px;
+        }
+
+        .principles-hero h1 {
+            font-size: 48px;
+            line-height: 56px;
+        }
+
+        .principles-hero h1 + p {
+            font-size: 18px;
+            line-height: 30px;
+        }
+
+        .principle {
+            grid-template-columns: 64px minmax(0, 1fr);
+            gap: 28px;
+        }
+    }
+
+    @media (max-width: 640px) {
+        .principles-hero {
+            padding-top: 72px;
+            padding-bottom: 64px;
+        }
+
+        .principles-hero__eyebrow {
+            font-size: 12px;
+            line-height: 15px;
+            letter-spacing: 0.96px;
+        }
+
+        .principles-hero h1 {
+            font-size: 40px;
+            line-height: 46px;
+        }
+
+        .principles-hero h1 + p {
+            margin-top: 22px;
+            font-size: 16px;
+            line-height: 27px;
+        }
+
+        .principles-list {
+            padding-bottom: 88px;
+        }
+
+        .principle {
+            grid-template-columns: 1fr;
+            gap: 12px;
+            padding: 32px 0;
+        }
+
+        .principle__index {
+            margin-top: 0;
+        }
+
+        .principle h2 {
+            font-size: 30px;
+            line-height: 38px;
+        }
+
+        .principle p {
+            font-size: 16px;
+            line-height: 27px;
+        }
+    }
+</style>
