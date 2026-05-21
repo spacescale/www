@@ -9,17 +9,9 @@
 </div>
 
 <div class="execution-isolation-visual" aria-hidden="true">
-    <img
-        class="execution-isolation-visual__asset"
-        src="/assets/product/execution-isolation.svg"
-        alt=""
-    />
-
-    <img
-        class="execution-isolation-visual__asset__mobile"
-        src="/assets/product/execution-isolation-mobile.svg"
-        alt=""
-    />
+    <!-- Keep one decorative visual node here. Separate desktop/mobile images once
+    rendered together during resize and leaked into the next product row. -->
+    <div class="execution-isolation-visual__asset"></div>
 </div>
 
 <style>
@@ -66,15 +58,12 @@
     }
 
     .execution-isolation-visual__asset {
-        display: block;
         width: 770px;
-        height: auto;
-    }
-
-    .execution-isolation-visual__asset__mobile {
-        display: none;
-        width: 100%;
-        height: auto;
+        height: 476px;
+        background-image: url("/assets/product/execution-isolation.svg");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: contain;
     }
 
     @media (max-width: 1180px) {
@@ -95,6 +84,7 @@
         .execution-isolation-visual__asset {
             width: 100%;
             max-width: var(--execution-isolation-visual-tablet-max-width);
+            aspect-ratio: 770 / 476;
         }
     }
 
@@ -141,13 +131,11 @@
         }
 
         .execution-isolation-visual__asset {
-            display: none;
-        }
-
-        .execution-isolation-visual__asset__mobile {
-            display: block;
-            width: auto;
+            width: 224px;
+            max-width: none;
+            height: 256px;
             margin: 0 auto;
+            background-image: url("/assets/product/execution-isolation-mobile.svg");
         }
     }
 </style>
