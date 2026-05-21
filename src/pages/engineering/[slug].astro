@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from "astro:content";
 import SiteLayout from "../../layouts/SiteLayout.astro";
+import EngineeringArticleReader from "../../components/sections/engineering/EngineeringArticleReader";
 
 export const getStaticPaths = async () => {
     const posts = await getCollection("engineering");
@@ -13,9 +14,18 @@ export const getStaticPaths = async () => {
 
 const { post } = Astro.props;
 const { Content } = await render(post);
-const postSlug = post.id.replace(/\.(md|mdx)$/, "");
-const titleTransitionName = `engineering-post-title-${postSlug}`;
 const coverImage = `/assets/engineering/covers/${post.data.cardVisual}.png`;
+const posts = (await getCollection("engineering")).sort(
+    (a, b) => b.data.date.getTime() - a.data.date.getTime(),
+);
+const currentPostIndex = posts.findIndex((entry) => entry.id === post.id);
+const previousPost = currentPostIndex > 0 ? posts[currentPostIndex - 1] : undefined;
+const nextPost =
+    currentPostIndex >= 0 && currentPostIndex < posts.length - 1
+        ? posts[currentPostIndex + 1]
+        : undefined;
+const getPostHref = (postId: string) =>
+    `/engineering/${postId.replace(/\.(md|mdx)$/, "")}`;
 
 const formatPostMonth = (date: Date) => {
     const month = new Intl.DateTimeFormat("en", {
@@ -44,7 +54,6 @@ const readTime = Math.max(1, Math.ceil(wordCount / 220));
     title={`${post.data.title} | SpaceScale`}
     description={post.data.description}
     image={coverImage}
-    enableViewTransitions
 >
     <main class="engineering-article">
         <section class="engineering-article__hero-section">
@@ -53,7 +62,9 @@ const readTime = Math.max(1, Math.ceil(wordCount / 220));
                     <div class="engineering-article__meta-row">
                         <div class="engineering-article__meta-group">
                             <p>{formatPostMonth(post.data.date)}</p>
-                            <p>ENGINEERING BLOG</p>
+                            <a class="engineering-article__meta-link" href="/engineering">
+                                ENGINEERING BLOG
+                            </a>
                         </div>
                         <p>{readTime} MIN READ</p>
                     </div>
@@ -68,34 +79,67 @@ const readTime = Math.max(1, Math.ceil(wordCount / 220));
 
             <article class="engineering-article__shell">
                 <section class="engineering-article__content-card">
-                    <div class="engineering-article__intro">
-                        <h1 transition:name={titleTransitionName}>{post.data.title}</h1>
-                        <div class="engineering-article__byline">
+                    <div class="engineering-article__reader-content">
+                        <div class="engineering-article__intro">
+                            <h1>{post.data.title}</h1>
+                            <div class="engineering-article__byline">
+                                {
+                                    post.data.authorUrl ? (
+                                        <a
+                                            href={post.data.authorUrl}
+                                            target="_blank"
+                                            rel="noreferrer"
+                                        >
+                                            {post.data.author}
+                                        </a>
+                                    ) : (
+                                        <p>{post.data.author}</p>
+                                    )
+                                }
+                            </div>
+                        </div>
+
+                        <div class="engineering-article__body-layout">
                             {
-                                post.data.authorUrl ? (
+                                previousPost && (
                                     <a
-                                        href={post.data.authorUrl}
-                                        target="_blank"
-                                        rel="noreferrer"
+                                        class="engineering-article__post-nav engineering-article__post-nav--previous"
+                                        href={getPostHref(previousPost.id)}
+                                        data-engineering-reader-link="previous"
+                                        aria-label={`Read previous post: ${previousPost.data.title}`}
                                     >
-                                        {post.data.author}
+                                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                                            <path d="M15 6l-6 6 6 6" />
+                                        </svg>
                                     </a>
-                                ) : (
-                                    <p>{post.data.author}</p>
                                 )
                             }
-                        </div>
-                    </div>
 
-                    <div class="engineering-article__body-layout">
-                        <div class="engineering-article__body">
-                            <Content />
+                            <div class="engineering-article__body">
+                                <Content />
+                            </div>
+
+                            {
+                                nextPost && (
+                                    <a
+                                        class="engineering-article__post-nav engineering-article__post-nav--next"
+                                        href={getPostHref(nextPost.id)}
+                                        data-engineering-reader-link="next"
+                                        aria-label={`Read next post: ${nextPost.data.title}`}
+                                    >
+                                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                                            <path d="M9 6l6 6-6 6" />
+                                        </svg>
+                                    </a>
+                                )
+                            }
                         </div>
                     </div>
                 </section>
             </article>
         </section>
     </main>
+    <EngineeringArticleReader client:load />
 </SiteLayout>
 
 <script is:inline>
@@ -141,6 +185,11 @@ const readTime = Math.max(1, Math.ceil(wordCount / 220));
     } else {
         enhanceEngineeringCodeBlocks();
     }
+
+    window.addEventListener(
+        "spacescale:engineering-article-swapped",
+        enhanceEngineeringCodeBlocks,
+    );
 </script>
 
 <style>
@@ -235,6 +284,21 @@ const readTime = Math.max(1, Math.ceil(wordCount / 220));
         margin: 0;
     }
 
+    .engineering-article__meta-link {
+        color: #8c94a1;
+        text-decoration: none;
+    }
+
+    .engineering-article__meta-link:hover {
+        color: #8c94a1;
+        text-decoration: none;
+    }
+
+    .engineering-article__meta-link:focus-visible {
+        outline: 1px solid #66d9b2;
+        outline-offset: 4px;
+    }
+
     .engineering-article__meta-row > p,
     .engineering-article__meta-group p:first-child {
         color: #8c94a1;
@@ -246,15 +310,73 @@ const readTime = Math.max(1, Math.ceil(wordCount / 220));
         align-items: flex-start;
     }
 
-    .engineering-article__meta-group p:last-child {
+    .engineering-article__meta-group p:last-child,
+    .engineering-article__meta-group a:last-child {
         color: #8c94a1;
     }
 
     .engineering-article__content-card {
         position: relative;
+        overflow: clip;
         border: 1px solid #262b33;
         padding: 62px 88px 80px;
         background: var(--color-bg-primary);
+    }
+
+    .engineering-article__reader-content {
+        transition:
+            opacity 460ms cubic-bezier(0.22, 1, 0.36, 1),
+            transform 460ms cubic-bezier(0.22, 1, 0.36, 1),
+            filter 460ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .engineering-article[data-reader-active="true"] .engineering-article__reader-content {
+        will-change: opacity, transform, filter;
+    }
+
+    .engineering-article[data-reader-phase="exit"][data-reader-direction="next"]
+        .engineering-article__reader-content {
+        opacity: 0;
+        filter: blur(0.4px);
+        transform: translateX(-72px);
+    }
+
+    .engineering-article[data-reader-phase="exit"][data-reader-direction="previous"]
+        .engineering-article__reader-content {
+        opacity: 0;
+        filter: blur(0.4px);
+        transform: translateX(72px);
+    }
+
+    .engineering-article[data-reader-phase="exit"][data-reader-direction="pop"]
+        .engineering-article__reader-content {
+        opacity: 0;
+        filter: blur(0.4px);
+        transform: translateY(8px);
+    }
+
+    .engineering-article[data-reader-phase="enter-from"][data-reader-direction="next"]
+        .engineering-article__reader-content {
+        opacity: 0;
+        filter: blur(0.4px);
+        transform: translateX(72px);
+        transition: none;
+    }
+
+    .engineering-article[data-reader-phase="enter-from"][data-reader-direction="previous"]
+        .engineering-article__reader-content {
+        opacity: 0;
+        filter: blur(0.4px);
+        transform: translateX(-72px);
+        transition: none;
+    }
+
+    .engineering-article[data-reader-phase="enter-from"][data-reader-direction="pop"]
+        .engineering-article__reader-content {
+        opacity: 0;
+        filter: blur(0.4px);
+        transform: translateY(8px);
+        transition: none;
     }
 
     .engineering-article__intro {
@@ -301,9 +423,55 @@ const readTime = Math.max(1, Math.ceil(wordCount / 220));
     }
 
     .engineering-article__body-layout {
+        position: relative;
         width: 100%;
         max-width: 820px;
         margin: 56px auto 0;
+    }
+
+    .engineering-article__post-nav {
+        position: absolute;
+        top: 50%;
+        display: grid;
+        width: 28px;
+        height: 28px;
+        place-items: center;
+        border: 0;
+        background: transparent;
+        color: rgb(140 148 161 / 64%);
+        text-decoration: none;
+        outline: 0;
+        transform: translateY(-50%);
+        transition:
+            color 160ms ease,
+            opacity 160ms ease;
+    }
+
+    .engineering-article__post-nav--previous {
+        left: -126px;
+    }
+
+    .engineering-article__post-nav--next {
+        right: -126px;
+    }
+
+    .engineering-article__post-nav svg {
+        width: 20px;
+        height: 20px;
+        fill: none;
+        stroke: currentColor;
+        stroke-linecap: square;
+        stroke-linejoin: round;
+        stroke-width: 1.25;
+    }
+
+    .engineering-article__post-nav:hover,
+    .engineering-article__post-nav:focus-visible {
+        color: #d8dee8;
+    }
+
+    .engineering-article__post-nav:focus-visible {
+        color: #d8dee8;
     }
 
     .engineering-article__body {
@@ -615,6 +783,10 @@ const readTime = Math.max(1, Math.ceil(wordCount / 220));
             padding-right: 64px;
             padding-left: 64px;
         }
+
+        .engineering-article__post-nav {
+            display: none;
+        }
     }
 
     @media (max-width: 900px) {
@@ -732,4 +904,11 @@ const readTime = Math.max(1, Math.ceil(wordCount / 220));
             height: 28px;
         }
     }
+
+    @media (prefers-reduced-motion: reduce) {
+        .engineering-article__reader-content {
+            transition: none;
+        }
+    }
+
 </style>
