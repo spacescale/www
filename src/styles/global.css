@@ -119,8 +119,9 @@ button, input, textarea, select {
   */
 
 .site-header {
-    position: relative;
-    z-index: 20;
+    position: sticky;
+    top: 0;
+    z-index: 60;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -596,8 +597,6 @@ button, input, textarea, select {
 
 @media (max-width: 640px) {
     .site-header {
-        position: relative;
-        z-index: 50;
         min-height: 96px;
         padding-block: 20px;
     }
