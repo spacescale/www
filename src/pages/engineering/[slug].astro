@@ -1,6 +1,5 @@
 ---
 import { getCollection, render } from "astro:content";
-import FinalCTA from "../../components/sections/FinalCTA.astro";
 import SiteLayout from "../../layouts/SiteLayout.astro";
 
 export const getStaticPaths = async () => {
@@ -94,7 +93,6 @@ const readTime = Math.max(1, Math.ceil(wordCount / 220));
             </article>
         </section>
     </main>
-    <FinalCTA slot="final-cta" />
 </SiteLayout>
 
 <script is:inline>
@@ -170,7 +168,7 @@ const readTime = Math.max(1, Math.ceil(wordCount / 220));
 
     .engineering-article__content-section {
         position: relative;
-        padding: 64px var(--site-padding-x) 120px;
+        padding: 64px var(--site-padding-x) 240px;
         overflow: clip;
     }
 
@@ -623,7 +621,7 @@ const readTime = Math.max(1, Math.ceil(wordCount / 220));
 
         .engineering-article__content-section {
             padding-top: 48px;
-            padding-bottom: 96px;
+            padding-bottom: 184px;
         }
 
         .engineering-article__hero {
@@ -642,7 +640,7 @@ const readTime = Math.max(1, Math.ceil(wordCount / 220));
 
         .engineering-article__content-section {
             padding-top: 40px;
-            padding-bottom: 72px;
+            padding-bottom: 144px;
         }
 
         .engineering-article__hero {

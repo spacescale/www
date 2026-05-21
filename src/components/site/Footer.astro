@@ -17,12 +17,9 @@ const footerGroups = [
     },
     {
         title: "Company",
-        links: ["Principles", "Careers"],
+        links: ["Principles", "Careers", "Privacy Policy"],
     },
 ];
-
-const legalLinks = ["Privacy", "Terms", "Security"];
-const currentYear = new Date().getFullYear();
 
 const socialLinks = [
     {
@@ -44,9 +41,11 @@ const socialLinks = [
 ---
 
 <footer class="site-footer">
+    <div class="footer-divider" aria-hidden="true"></div>
+
     <div class="footer-inner">
         <section class="footer-brand" aria-label="SpaceScale">
-            <h2>Infrastructure for<br />Serious Workloads</h2>
+            <h2>Infrastructure for<br />humans and agents</h2>
             <div class="status-badge" aria-label="System status">
                 <span aria-hidden="true"></span>
                 All systems operational
@@ -85,25 +84,4 @@ const socialLinks = [
             }
         </nav>
     </div>
-
-    <div class="footer-divider" aria-hidden="true"></div>
-
-    <div class="footer-bottom">
-        <p>© <span data-footer-year>{currentYear}</span> SpaceScale Systems Inc.</p>
-        <nav aria-label="Legal links">
-            {
-                legalLinks.map((link) => (
-                    <a href="#">{link}</a>
-                ))
-            }
-        </nav>
-    </div>
 </footer>
-
-<script>
-    const footerYear = document.querySelector("[data-footer-year]");
-
-    if (footerYear) {
-        footerYear.textContent = String(new Date().getFullYear());
-    }
-</script>
