@@ -1,4 +1,6 @@
 ---
+import Badge from "../ui/Badge.astro";
+
 /*
   Footer.astro is the shared footer for marketing pages.
 
@@ -57,10 +59,13 @@ const socialLinks = [
     <div class="footer-inner">
         <section class="footer-brand" aria-label="SpaceScale">
             <h2>Infrastructure for<br />humans and agents</h2>
-            <div class="status-badge" aria-label="System status">
-                <span aria-hidden="true"></span>
+            <Badge
+                icon="status"
+                size="compact"
+                ariaLabel="System status: All systems operational"
+            >
                 All systems operational
-            </div>
+            </Badge>
 
             <div class="social-links" aria-label="Social links">
                 {
