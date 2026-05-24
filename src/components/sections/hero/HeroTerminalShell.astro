@@ -1,3 +1,7 @@
+---
+import HeroIgniteSurface from "./HeroIgniteSurface";
+---
+
 <div class="hero-terminal" data-node-id="1175:481" aria-hidden="true">
     <div class="hero-terminal__topbar">
         <div class="hero-terminal__traffic-lights">
@@ -24,9 +28,7 @@
         </div>
     </div>
 
-    <div class="hero-terminal__surface">
-        <pre><span>~</span> $</pre>
-    </div>
+    <HeroIgniteSurface client:load />
 </div>
 
 <style>
@@ -162,22 +164,4 @@
         font-weight: 400;
     }
 
-    .hero-terminal__surface {
-        height: calc(100% - 85px);
-        background: #060709;
-    }
-
-    .hero-terminal__surface pre {
-        margin: 0;
-        padding: 24px 20px;
-        color: #80858f;
-        font-family: var(--font-mono);
-        font-size: 13px;
-        font-weight: 400;
-        line-height: 22px;
-    }
-
-    .hero-terminal__surface span {
-        color: #4d525c;
-    }
 </style>
