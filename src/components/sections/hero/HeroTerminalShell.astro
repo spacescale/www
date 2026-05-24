@@ -1,0 +1,183 @@
+<div class="hero-terminal" data-node-id="1175:481" aria-hidden="true">
+    <div class="hero-terminal__topbar">
+        <div class="hero-terminal__traffic-lights">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        <div class="hero-terminal__tabs">
+            <span class="hero-terminal__tab hero-terminal__tab--active">IGNITE</span>
+            <span class="hero-terminal__tab">MACHINES</span>
+        </div>
+    </div>
+
+    <div class="hero-terminal__toolbar">
+        <div class="hero-terminal__new-shell">
+            <span>≡</span>
+            <span>+ New shell</span>
+        </div>
+
+        <div class="hero-terminal__session">
+            <span>Linux shell</span>
+            <span>▾</span>
+        </div>
+    </div>
+
+    <div class="hero-terminal__surface">
+        <pre><span>~</span> $</pre>
+    </div>
+</div>
+
+<style>
+    .hero-terminal {
+        position: absolute;
+        top: var(--landing-hero-terminal-top);
+        left: 50%;
+        z-index: 1;
+        width: min(1280px, calc(100vw - (var(--site-padding-x) * 2)));
+        height: 770px;
+        overflow: hidden;
+        transform: translateX(-50%);
+        border: 1px solid #191c23;
+        background: #060709;
+        color: #ebedf0;
+    }
+
+    .hero-terminal__topbar {
+        position: relative;
+        height: 44px;
+        border-bottom: 1px solid #191c23;
+        background: #0b0d10;
+    }
+
+    .hero-terminal__traffic-lights {
+        position: absolute;
+        top: 16px;
+        left: 14px;
+        display: flex;
+        gap: 4px;
+    }
+
+    .hero-terminal__traffic-lights span {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+    }
+
+    .hero-terminal__traffic-lights span:nth-child(1) {
+        background: #592626;
+    }
+
+    .hero-terminal__traffic-lights span:nth-child(2) {
+        background: #594d1f;
+    }
+
+    .hero-terminal__traffic-lights span:nth-child(3) {
+        background: #264d2e;
+    }
+
+    .hero-terminal__tabs {
+        position: absolute;
+        top: 0;
+        left: 97px;
+        display: flex;
+        height: 44px;
+        align-items: center;
+        gap: 32px;
+        padding: 8px 16px;
+        font-family: var(--font-mono);
+        font-size: 12px;
+        font-weight: 400;
+        line-height: 22px;
+        letter-spacing: 0;
+    }
+
+    .hero-terminal__tab {
+        position: relative;
+        color: rgb(255 255 255 / 40%);
+    }
+
+    .hero-terminal__tab--active {
+        color: #66d9a5;
+    }
+
+    .hero-terminal__tab--active::after {
+        content: "";
+        position: absolute;
+        right: -6px;
+        bottom: -12px;
+        left: -6px;
+        height: 2px;
+        background: #66d9a5;
+    }
+
+    .hero-terminal__toolbar {
+        position: relative;
+        height: 41px;
+        border-bottom: 1px solid #191c23;
+        background: #0b0d10;
+    }
+
+    .hero-terminal__new-shell {
+        position: absolute;
+        top: 8px;
+        left: 20px;
+        display: flex;
+        align-items: flex-end;
+        gap: 18px;
+        color: #80858f;
+        font-family: var(--font-body);
+        font-size: 12px;
+        font-weight: 500;
+        line-height: normal;
+        white-space: nowrap;
+    }
+
+    .hero-terminal__new-shell span:first-child {
+        color: #4d525c;
+        font-size: 16px;
+        font-weight: 400;
+    }
+
+    .hero-terminal__session {
+        position: absolute;
+        top: 12px;
+        left: 50%;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transform: translateX(-50%);
+        color: #ebedf0;
+        font-family: var(--font-body);
+        font-size: 12px;
+        font-weight: 500;
+        line-height: normal;
+        white-space: nowrap;
+    }
+
+    .hero-terminal__session span:last-child {
+        color: #4d525c;
+        font-size: 10px;
+        font-weight: 400;
+    }
+
+    .hero-terminal__surface {
+        height: calc(100% - 85px);
+        background: #060709;
+    }
+
+    .hero-terminal__surface pre {
+        margin: 0;
+        padding: 24px 20px;
+        color: #80858f;
+        font-family: var(--font-mono);
+        font-size: 13px;
+        font-weight: 400;
+        line-height: 22px;
+    }
+
+    .hero-terminal__surface span {
+        color: #4d525c;
+    }
+</style>
