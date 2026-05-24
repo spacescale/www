@@ -1,14 +1,15 @@
 ---
 import HeroTerminalShell from "./HeroTerminalShell.astro";
+import Badge from "../../ui/Badge.astro";
 ---
 
 <section class="landing-hero" aria-labelledby="landing-hero-title">
     <div class="landing-hero__foundation" data-node-id="1177:601" aria-hidden="true"></div>
 
     <div class="landing-hero__inner">
-        <a class="landing-hero__badge" href="/engineering">
+        <Badge class="landing-hero__badge" href="/engineering">
             Currently in active development — follow our story
-        </a>
+        </Badge>
 
         <h1 id="landing-hero-title" class="landing-hero__title">
             Infrastructure for<br />
@@ -64,36 +65,11 @@ import HeroTerminalShell from "./HeroTerminalShell.astro";
         margin: 0 auto;
     }
 
-    .landing-hero__badge,
+    :global(.landing-hero__badge),
     .landing-hero__title,
     .landing-hero__support {
         position: relative;
         z-index: 1;
-    }
-
-    .landing-hero__badge {
-        display: inline-flex;
-        align-items: center;
-        height: 32px;
-        margin: 0;
-        padding: 8px 14px;
-        border: 1px solid #262b33;
-        background: transparent;
-        color: #8c94a1;
-        font-family: var(--font-body);
-        font-size: 13px;
-        line-height: normal;
-        text-decoration: none;
-        transition:
-            background-color var(--motion-fast),
-            border-color var(--motion-fast),
-            color var(--motion-fast);
-    }
-
-    .landing-hero__badge:hover {
-        border-color: #343a45;
-        background: var(--color-surface-hover);
-        color: var(--color-text-hover);
     }
 
     .landing-hero__title {
@@ -139,11 +115,6 @@ import HeroTerminalShell from "./HeroTerminalShell.astro";
             --landing-hero-title-line-height: 54px;
             --landing-hero-terminal-top: 420px;
         }
-
-        .landing-hero__badge {
-            height: auto;
-            min-height: 32px;
-        }
     }
 
     @media (max-width: 640px) {
@@ -154,12 +125,6 @@ import HeroTerminalShell from "./HeroTerminalShell.astro";
             --landing-hero-title-size: 40px;
             --landing-hero-title-line-height: 46px;
             --landing-hero-terminal-top: 460px;
-        }
-
-        .landing-hero__badge {
-            padding: 7px 10px;
-            font-size: 12px;
-            line-height: 18px;
         }
 
         .landing-hero__title {
