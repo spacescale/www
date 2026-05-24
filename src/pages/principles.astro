@@ -1,5 +1,4 @@
 ---
-import FinalCTA from "../components/sections/FinalCTA.astro";
 import Badge from "../components/ui/Badge.astro";
 import SiteLayout from "../layouts/SiteLayout.astro";
 
@@ -71,8 +70,9 @@ const values = [
         <Badge class="principles-hero__badge">OUR PRINCIPLES</Badge>
 
         <h1 id="principles-title">
-          The engineering philosophy, architectural foundation, and human
-          convictions behind SpaceScale.
+          The engineering philosophy, architectural foundation, and <span
+            >human convictions</span
+          > behind SpaceScale.
         </h1>
       </div>
     </section>
@@ -224,6 +224,10 @@ const values = [
     letter-spacing: -1.28px;
   }
 
+  .principles-hero h1 span {
+    color: #8c94a1;
+  }
+
   .principles-system {
     padding-top: 80px;
     padding-bottom: 80px;
@@ -305,7 +309,7 @@ const values = [
 
   .principles-copy-block p {
     margin: 0;
-    color: #f5f7fa;
+    color: #8c94a1;
     font-family: var(--font-display);
     font-size: 20px;
     font-weight: 400;
@@ -505,8 +509,9 @@ const values = [
       overflow: visible;
     }
 
-    .principles-value-card {
-      min-height: 228px;
+    .principles-value-card,
+    .principles-value-card:nth-child(n + 6) {
+      min-height: 0;
       padding: 32px;
     }
   }
@@ -595,11 +600,12 @@ const values = [
 
     .principles-value-card {
       min-height: 0;
-      padding: 28px;
+      padding: 24px;
     }
 
     .principles-value-card:nth-child(n + 6) {
-      padding: 28px;
+      min-height: 0;
+      padding: 24px;
     }
   }
 </style>
