@@ -8,6 +8,11 @@
             Infrastructure for<br />
             humans and agents.
         </h1>
+
+        <p class="landing-hero__support" data-node-id="1085:113">
+            Deploy isolated container workloads with Ignite. Create persistent Machines
+            for humans and agents to use as real workspaces.
+        </p>
     </div>
 </section>
 
@@ -35,7 +40,8 @@
     }
 
     .landing-hero__badge,
-    .landing-hero__title {
+    .landing-hero__title,
+    .landing-hero__support {
         position: relative;
         z-index: 1;
     }
@@ -74,6 +80,18 @@
         font-size: var(--landing-hero-title-size);
         font-weight: 400;
         line-height: var(--landing-hero-title-line-height);
+        letter-spacing: 0;
+    }
+
+    .landing-hero__support {
+        width: 609px;
+        max-width: 100%;
+        margin: 24px 0 0;
+        color: #8c94a1;
+        font-family: var(--font-body);
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 24px;
         letter-spacing: 0;
     }
 
