@@ -1,4 +1,6 @@
 <section class="landing-hero" aria-labelledby="landing-hero-title">
+    <div class="landing-hero__foundation" data-node-id="1177:601" aria-hidden="true"></div>
+
     <div class="landing-hero__inner">
         <a class="landing-hero__badge" href="/engineering">
             Currently in active development — follow our story
@@ -23,14 +25,30 @@
         --landing-hero-title-width: 760px;
         --landing-hero-title-size: 64px;
         --landing-hero-title-line-height: 72px;
+        --landing-hero-foundation-top: 846px;
+        --landing-hero-foundation-height: 432px;
+        --landing-hero-min-height: 1278px;
 
         position: relative;
         overflow: clip;
+        min-height: var(--landing-hero-min-height);
         padding:
             var(--landing-hero-padding-top)
             var(--site-padding-x)
             var(--landing-hero-padding-bottom);
         background: #040406;
+    }
+
+    .landing-hero__foundation {
+        position: absolute;
+        top: var(--landing-hero-foundation-top);
+        left: 50%;
+        z-index: 0;
+        width: 100vw;
+        height: var(--landing-hero-foundation-height);
+        transform: translateX(-50%);
+        background: linear-gradient(180deg, #040406 0%, #737373 100%);
+        pointer-events: none;
     }
 
     .landing-hero__inner {
