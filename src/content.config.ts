@@ -1,6 +1,7 @@
 import { defineCollection } from "astro:content";
 import { glob } from "astro/loaders";
 import { z } from "astro/zod";
+import { authorIds } from "./data/authors";
 
 // Astro 6 content collections are configured from the app source root.
 // Keep this file at `src/content.config.ts` and keep entries under `src/content`.
@@ -12,8 +13,7 @@ const engineering = defineCollection({
     schema: z.object({
         title: z.string(),
         description: z.string(),
-        author: z.string(),
-        authorUrl: z.url().optional(),
+        author: z.enum(authorIds),
         date: z.coerce.date(),
         cardVisual: z.string(),
     }),
