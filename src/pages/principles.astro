@@ -1,244 +1,602 @@
 ---
+import FinalCTA from "../components/sections/FinalCTA.astro";
+import Badge from "../components/ui/Badge.astro";
 import SiteLayout from "../layouts/SiteLayout.astro";
 
-const principles = [
-    {
-        index: "01",
-        title: "The Foundation",
-        body: "SpaceScale starts close to the metal because fragile abstractions do not survive serious workloads. The surface should feel simple, but the foundation underneath has to stay explicit, correct, and strong.",
-    },
-    {
-        index: "02",
-        title: "Low Level, Still Simple",
-        body: "Infrastructure should expose enough of the system to be trusted without making every builder manage the machine underneath. The work is to remove ceremony without hiding the truth of execution.",
-    },
-    {
-        index: "03",
-        title: "Humans And Agents",
-        body: "The long-term direction is one SpaceScale platform where humans deploy workloads and agents receive real environments to work, inspect, hand off, and continue.",
-    },
-    {
-        index: "04",
-        title: "Customer Pain First",
-        body: "SpaceScale is shaped by problems we have felt directly. Feedback, pressure, and real usage keep the platform honest about what needs to be built next.",
-    },
+const systemBlocks = [
+  {
+    title: "Philosophy",
+    body: "Hardware has never been faster, yet modern infrastructure makes it nearly impossible to harness that power directly. Today's platforms bury the machine under so many layers of abstraction that engineers lose the ability to reason about what is actually happening. We are stripping away the bloated abstractions that make powerful systems sluggish and opaque. SpaceScale is built on a singular belief: infrastructure can be lower-level, strictly isolated, mathematically correct, and still brilliantly simple to operate.",
+  },
+  {
+    title: "Our Vision",
+    body: "Our long-term vision is a unified compute fabric. We are building a single, global SpaceScale platform where teams can seamlessly deploy high-performance multi-tenant workloads, and AI agents are finally given the terminal-first, sandboxed environments they need to execute, experiment, and reason autonomously. We are providing the native execution layer for the next era of software.",
+  },
+];
+
+const foundationBlocks = [
+  {
+    title: "The Foundation",
+    body: "We built our foundation on solid rock. When at-scale pressure hits a distributed system, you cannot rely on hope, you rely on architecture. The lower layers matter. Hardware-level isolation matters. Runtime determinism and network packet routing matter. That is why SpaceScale operates as close to the bare metal as possible. We don't do this to make infrastructure complicated; we do it because true simplicity can only be achieved on top of an uncompromising foundation. Our goal is to make compute feel powerful, elegant, and minimal, without obscuring the primitives that actually dictate performance.",
+  },
+  {
+    title: "Customer First",
+    body: "Customer pain is what drives us at SpaceScale. This is not only a business to us. It comes from problems we have experienced firsthand, and that keeps the platform close to the people it is meant to serve. SpaceScale stays close to customers, engineers, and design partners. Their workloads, constraints, and feedback reveal what needs to become clearer, faster, safer, and easier to use. Feedback matters in every form. Positive feedback shows what is working. Critical feedback shows what needs to be sharpened. Both give clarity on where to focus next.",
+  },
+];
+
+const values = [
+  {
+    title: "Exceptionality",
+    body: 'We do not settle for "good enough." We treat our work as a craft, pursuing a standard of exceptionalism that demands our absolute best. We reject mediocrity in all its forms.',
+  },
+  {
+    title: "Hunger",
+    body: "We are driven by a relentless, intense thirst for excellence. We have a deep appetite for doing great, meaningful work, and that inner fire pushes us to continuously elevate our standards.",
+  },
+  {
+    title: "Versatility",
+    body: "While we take pride in being deep specialists, no task is beneath us. We willingly roll up our sleeves to do the unglamorous, foundational work. We adapt, we learn whatever is necessary, and we get the job done.",
+  },
+  {
+    title: "Courage",
+    body: "We do not fear the unknown. We actively challenge the standards, dogmas, and limits that others have blindly accepted. We willingly step into difficult territory because that is where the hardest, most valuable problems are solved.",
+  },
+  {
+    title: "Humility",
+    body: "We check our egos at the door. No matter how much we know, we remain profoundly humble; always allowing the market, our customers, and our own failures to teach us what we do not yet understand.",
+  },
+  {
+    title: "Resilience",
+    body: "We are a company built in the crucible. We have overcome severe challenges in our own lives, and we channel that battle-tested energy directly into our work. When pressure hits or setbacks occur, we do not break; we endure.",
+  },
+  {
+    title: "Transparency",
+    body: "We operate in the light. Whether we are communicating with a customer, a partner, or each other, we default to absolute honesty, clarity, and truth in everything we do.",
+  },
+  {
+    title: "Responsibility",
+    body: "We recognize the immense weight of our work. People and businesses rely on us, and we carry that trust as a sacred obligation. We believe that taking extreme ownership of our responsibilities is what dictates the longevity and strength of our relationships.",
+  },
 ];
 ---
 
 <SiteLayout
-    title="Principles | SpaceScale"
-    description="The principles behind SpaceScale: infrastructure built from the metal up for humans, agents, and serious workloads."
+  title="Principles | SpaceScale"
+  description="The principles behind SpaceScale: infrastructure built from the metal up for humans, agents, and serious workloads."
 >
-    <main class="principles-page">
-        <section class="principles-hero" aria-labelledby="principles-title">
-            <div class="principles-hero__inner">
-                <p class="principles-hero__eyebrow">SPACESCALE PRINCIPLES</p>
-                <h1 id="principles-title">
-                    Infrastructure built from the metal up.
-                </h1>
-                <p>
-                    SpaceScale exists because compute should be low level, correct, and
-                    still simple to use. These are the principles guiding the runtime
-                    we are building.
-                </p>
-            </div>
-        </section>
+  <main class="principles-page">
+    <section class="principles-hero" aria-labelledby="principles-title">
+      <div class="principles-hero__inner">
+        <Badge class="principles-hero__badge">OUR PRINCIPLES</Badge>
 
-        <section class="principles-list" aria-label="SpaceScale principles">
-            <div class="principles-list__inner">
-                {
-                    principles.map((principle) => (
-                        <article class="principle">
-                            <p class="principle__index">{principle.index}</p>
-                            <div class="principle__copy">
-                                <h2>{principle.title}</h2>
-                                <p>{principle.body}</p>
-                            </div>
-                        </article>
-                    ))
-                }
-            </div>
-        </section>
-    </main>
+        <h1 id="principles-title">
+          The engineering philosophy, architectural foundation, and human
+          convictions behind SpaceScale.
+        </h1>
+      </div>
+    </section>
+
+    <section
+      class="principles-system"
+      aria-label="Engineering philosophy and vision"
+    >
+      <div class="principles-system__inner">
+        <div class="principles-system__grid" aria-hidden="true"></div>
+        <div class="principles-system__visual">
+          <img
+            class="principles-system__asset"
+            src="/assets/principles/ascii-brain-1.png"
+            width="521"
+            height="460"
+            alt="ASCII illustration of a brain representing SpaceScale's engineering philosophy"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+
+        <div class="principles-copy-stack principles-system__copy">
+          {
+            systemBlocks.map((block) => (
+              <article class="principles-copy-block">
+                <h2>{block.title}</h2>
+                <p>{block.body}</p>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- <div class="principles-spacer" aria-hidden="true"></div> -->
+
+    <section
+      class="principles-foundation"
+      aria-label="Foundation and customer principles"
+    >
+      <div class="principles-foundation__inner">
+        <div class="principles-copy-stack principles-foundation__copy">
+          {
+            foundationBlocks.map((block) => (
+              <article class="principles-copy-block">
+                <h2>{block.title}</h2>
+                <p>{block.body}</p>
+              </article>
+            ))
+          }
+        </div>
+
+        <div class="principles-foundation__visual">
+          <img
+            class="principles-foundation__asset"
+            src="/assets/principles/ascii-foundation-1.png"
+            width="626"
+            height="739"
+            alt="ASCII illustration of a foundation representing SpaceScale's bare-metal infrastructure"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+      </div>
+    </section>
+
+    <section
+      class="principles-spirit"
+      aria-labelledby="principles-spirit-title"
+    >
+      <div class="principles-spirit__inner">
+        <div class="principles-spirit__header">
+          <h2 id="principles-spirit-title">The Spirit of SpaceScale</h2>
+          <p>
+            Our core values are more than corporate guidelines; they are the
+            deeply held beliefs and personal convictions that dictate how we
+            work, make decisions, and treat others. These are the human
+            principles that define who we are:
+          </p>
+        </div>
+
+        <div class="principles-values">
+          {
+            values.map((value) => (
+              <article class="principles-value-card">
+                <h3>{value.title}</h3>
+                <p>{value.body}</p>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <FinalCTA slot="final-cta" />
 </SiteLayout>
 
 <style>
-    .principles-page {
-        background: var(--color-bg-primary);
-        color: #f5f7fa;
+  .principles-page {
+    overflow: clip;
+    background: var(--color-bg-primary);
+    color: #f5f7fa;
+  }
+
+  .principles-hero,
+  .principles-system,
+  .principles-foundation,
+  .principles-spirit {
+    width: 100%;
+    padding-right: var(--site-padding-x);
+    padding-left: var(--site-padding-x);
+    background: var(--color-bg-primary);
+  }
+
+  .principles-hero {
+    padding-top: 80px;
+    padding-bottom: 44px;
+  }
+
+  .principles-hero__inner,
+  .principles-system__inner,
+  .principles-foundation__inner,
+  .principles-spirit__inner {
+    width: 100%;
+    max-width: var(--site-max-width);
+    margin: 0 auto;
+  }
+
+  .principles-hero__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 32px;
+  }
+
+  :global(.principles-hero__badge) {
+    color: #8c94a1;
+  }
+
+  .principles-hero h1 {
+    width: 892px;
+    max-width: 100%;
+    margin: 0;
+    color: #f5f7fa;
+    font-family: var(--font-display);
+    font-size: 64px;
+    font-weight: 400;
+    line-height: 72px;
+    letter-spacing: -1.28px;
+  }
+
+  .principles-system {
+    padding-top: 80px;
+    padding-bottom: 80px;
+  }
+
+  .principles-system__inner {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 80px;
+  }
+
+  .principles-system__grid {
+    position: absolute;
+    top: 45px;
+    left: -257px;
+    width: 1065px;
+    height: 752px;
+    background-image:
+      linear-gradient(rgb(255 255 255 / 8%) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(255 255 255 / 8%) 1px, transparent 1px);
+    background-size: 64px 64px;
+    opacity: 0.7;
+    -webkit-mask-image: radial-gradient(
+      ellipse at center,
+      #000 0 42%,
+      transparent 72%
+    );
+    mask-image: radial-gradient(ellipse at center, #000 0 42%, transparent 72%);
+  }
+
+  .principles-system__visual {
+    position: relative;
+    z-index: 1;
+    flex-shrink: 0;
+    width: clamp(280px, 32vw, 420px);
+    aspect-ratio: 521 / 460;
+    overflow: clip;
+  }
+
+  .principles-system__asset,
+  .principles-foundation__asset {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+  }
+
+  .principles-copy-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 80px;
+  }
+
+  .principles-system__copy {
+    position: relative;
+    z-index: 1;
+    flex: 1 1 auto;
+    min-width: 0;
+    max-width: 629px;
+    margin-left: auto;
+  }
+
+  .principles-copy-block {
+    width: 100%;
+  }
+
+  .principles-copy-block h2 {
+    margin: 0 0 24px;
+    color: #f5f7fa;
+    font-family: var(--font-display);
+    font-size: 44px;
+    font-weight: 400;
+    line-height: 52px;
+    letter-spacing: -0.66px;
+  }
+
+  .principles-copy-block p {
+    margin: 0;
+    color: #f5f7fa;
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: -0.3px;
+  }
+
+  .principles-spacer {
+    height: 316px;
+    background: var(--color-bg-primary);
+  }
+
+  .principles-foundation {
+    padding-top: 80px;
+    padding-bottom: 80px;
+  }
+
+  .principles-foundation__inner {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 80px;
+  }
+
+  .principles-foundation__copy {
+    position: relative;
+    z-index: 1;
+    flex: 1 1 auto;
+    min-width: 0;
+    max-width: 613px;
+  }
+
+  .principles-foundation__visual {
+    position: relative;
+    z-index: 1;
+    flex-shrink: 0;
+    width: clamp(320px, 36vw, 500px);
+    aspect-ratio: 626 / 739;
+    opacity: 0.9;
+  }
+
+  .principles-spirit {
+    padding-top: 120px;
+    padding-bottom: 120px;
+  }
+
+  .principles-spirit__inner {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    align-items: center;
+  }
+
+  .principles-spirit__header {
+    width: 100%;
+    text-align: center;
+  }
+
+  .principles-spirit__header h2 {
+    width: 900px;
+    max-width: 100%;
+    margin: 0 auto 16px;
+    color: #f5f7fa;
+    font-family: var(--font-display);
+    font-size: 44px;
+    font-weight: 400;
+    line-height: 52px;
+    letter-spacing: -0.66px;
+  }
+
+  .principles-spirit__header p {
+    width: 900px;
+    max-width: 100%;
+    margin: 0 auto;
+    color: #8c94a1;
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 24px;
+  }
+
+  .principles-values {
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 29px 24px;
+  }
+
+  .principles-value-card {
+    padding: 40px;
+    border: 1px solid #262b33;
+    background: transparent;
+  }
+
+  .principles-value-card h3 {
+    margin: 0 0 8px;
+    color: #f5f7fa;
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 400;
+    line-height: normal;
+  }
+
+  .principles-value-card p {
+    margin: 0;
+    color: #8c94a1;
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 22px;
+  }
+
+  @media (max-width: 1180px) {
+    .principles-values {
+      height: auto;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-rows: none;
+      overflow: visible;
     }
 
-    .principles-hero,
-    .principles-list {
-        display: flex;
-        width: 100%;
-        justify-content: center;
-        padding-right: var(--site-padding-x);
-        padding-left: var(--site-padding-x);
+    .principles-value-card,
+    .principles-value-card:nth-child(n + 6) {
+      min-height: 228px;
+      padding: 32px;
     }
+  }
 
+  @media (max-width: 900px) {
     .principles-hero {
-        padding-top: 96px;
-        padding-bottom: 96px;
-    }
-
-    .principles-hero__inner,
-    .principles-list__inner {
-        width: 100%;
-        max-width: var(--site-max-width);
-    }
-
-    .principles-hero__inner {
-        max-width: 860px;
-        margin-right: auto;
-        margin-left: auto;
-    }
-
-    .principles-hero__eyebrow {
-        margin: 0 0 18px;
-        color: #8c94a1;
-        font-family: var(--font-body);
-        font-size: 13px;
-        font-weight: 500;
-        line-height: 16px;
-        letter-spacing: 1.04px;
+      padding-top: 72px;
+      padding-bottom: 44px;
     }
 
     .principles-hero h1 {
-        margin: 0;
-        color: #f5f7fa;
-        font-family: var(--font-display);
-        font-size: 64px;
-        font-weight: 400;
-        line-height: 72px;
-        letter-spacing: 0;
+      font-size: 48px;
+      line-height: 56px;
+      letter-spacing: -0.96px;
     }
 
-    .principles-hero h1 + p {
-        max-width: 720px;
-        margin: 28px 0 0;
-        color: #8c94a1;
-        font-family: var(--font-body);
-        font-size: 20px;
-        font-weight: 400;
-        line-height: 34px;
+    .principles-system,
+    .principles-foundation {
+      padding-top: 80px;
+      padding-bottom: 80px;
     }
 
-    .principles-list {
-        padding-bottom: 132px;
+    .principles-system__inner,
+    .principles-foundation__inner {
+      flex-direction: column;
+      gap: 0;
     }
 
-    .principles-list__inner {
-        border-top: 1px solid #262b33;
+    .principles-system__grid {
+      top: 44px;
+      right: calc(var(--site-padding-x) * -1);
+      left: calc(var(--site-padding-x) * -1);
+      width: auto;
+      height: 520px;
     }
 
-    .principle {
-        display: grid;
-        grid-template-columns: 96px minmax(0, 1fr);
-        gap: 48px;
-        padding: 40px 0;
-        border-bottom: 1px solid #262b33;
+    .principles-system__visual {
+      width: 100%;
+      max-width: 440px;
+      aspect-ratio: 521 / 460;
+      height: auto;
+      margin: 0 auto 80px;
     }
 
-    .principle__index {
-        margin: 7px 0 0;
-        color: #66d9b2;
-        font-family: var(--font-mono);
-        font-size: 13px;
-        font-weight: 500;
-        line-height: 18px;
+    .principles-system__copy,
+    .principles-foundation__copy {
+      width: 100%;
+      max-width: none;
+      margin-left: 0;
     }
 
-    .principle__copy {
-        max-width: 820px;
+    .principles-foundation__visual {
+      width: 100%;
+      max-width: 440px;
+      aspect-ratio: 626 / 739;
+      height: auto;
+      margin: 72px auto 0;
     }
 
-    .principle h2 {
-        margin: 0;
-        color: #f5f7fa;
-        font-family: var(--font-display);
-        font-size: 36px;
-        font-weight: 400;
-        line-height: 44px;
-        letter-spacing: 0;
+    .principles-spacer {
+      height: 160px;
     }
 
-    .principle p {
-        margin: 14px 0 0;
-        color: #8c94a1;
-        font-family: var(--font-body);
-        font-size: 18px;
-        font-weight: 400;
-        line-height: 30px;
+    .principles-values {
+      height: auto;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-rows: none;
+      overflow: visible;
     }
 
-    @media (max-width: 900px) {
-        .principles-hero {
-            padding-top: 80px;
-            padding-bottom: 80px;
-        }
+    .principles-value-card {
+      min-height: 228px;
+      padding: 32px;
+    }
+  }
 
-        .principles-hero h1 {
-            font-size: 48px;
-            line-height: 56px;
-        }
-
-        .principles-hero h1 + p {
-            font-size: 18px;
-            line-height: 30px;
-        }
-
-        .principle {
-            grid-template-columns: 64px minmax(0, 1fr);
-            gap: 28px;
-        }
+  @media (max-width: 640px) {
+    .principles-hero {
+      padding-top: 64px;
     }
 
-    @media (max-width: 640px) {
-        .principles-hero {
-            padding-top: 72px;
-            padding-bottom: 64px;
-        }
-
-        .principles-hero__eyebrow {
-            font-size: 12px;
-            line-height: 15px;
-            letter-spacing: 0.96px;
-        }
-
-        .principles-hero h1 {
-            font-size: 40px;
-            line-height: 46px;
-        }
-
-        .principles-hero h1 + p {
-            margin-top: 22px;
-            font-size: 16px;
-            line-height: 27px;
-        }
-
-        .principles-list {
-            padding-bottom: 88px;
-        }
-
-        .principle {
-            grid-template-columns: 1fr;
-            gap: 12px;
-            padding: 32px 0;
-        }
-
-        .principle__index {
-            margin-top: 0;
-        }
-
-        .principle h2 {
-            font-size: 30px;
-            line-height: 38px;
-        }
-
-        .principle p {
-            font-size: 16px;
-            line-height: 27px;
-        }
+    .principles-hero__inner {
+      gap: 28px;
     }
+
+    .principles-hero h1 {
+      font-size: 40px;
+      line-height: 46px;
+      letter-spacing: -0.64px;
+    }
+
+    .principles-system,
+    .principles-foundation {
+      padding-top: 64px;
+      padding-bottom: 64px;
+    }
+
+    .principles-copy-stack {
+      gap: 56px;
+    }
+
+    .principles-copy-block h2 {
+      margin-bottom: 20px;
+      font-size: 34px;
+      line-height: 41px;
+      letter-spacing: -0.4px;
+    }
+
+    .principles-copy-block p {
+      font-size: 17px;
+      line-height: 1.5;
+      letter-spacing: -0.2px;
+    }
+
+    .principles-system__visual {
+      max-width: 320px;
+      margin: 0 auto 56px;
+    }
+
+    .principles-system__grid {
+      height: 360px;
+      background-size: 48px 48px;
+    }
+
+    .principles-spacer {
+      height: 96px;
+    }
+
+    .principles-foundation__visual {
+      max-width: 320px;
+      margin: 56px auto 0;
+    }
+
+    .principles-spirit {
+      padding-top: 80px;
+      padding-bottom: 80px;
+    }
+
+    .principles-spirit__header {
+      text-align: left;
+    }
+
+    .principles-spirit__header h2 {
+      font-size: 34px;
+      line-height: 41px;
+      letter-spacing: -0.4px;
+    }
+
+    .principles-spirit__header p {
+      font-size: 15px;
+      line-height: 24px;
+    }
+
+    .principles-values {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    .principles-value-card {
+      min-height: 0;
+      padding: 28px;
+    }
+
+    .principles-value-card:nth-child(n + 6) {
+      padding: 28px;
+    }
+  }
 </style>
