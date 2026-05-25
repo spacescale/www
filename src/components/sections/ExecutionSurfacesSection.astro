@@ -113,7 +113,7 @@ const machineChips = [
         position: absolute;
         top: 0;
         bottom: 0;
-        left: 624px;
+        left: var(--execution-surfaces-divider-left, 624px);
         width: 1px;
         background-image: repeating-linear-gradient(
             to bottom,
@@ -131,14 +131,15 @@ const machineChips = [
 
     .execution-surfaces__surface--ignite {
         top: 56px;
-        left: 66px;
-        width: 547px;
+        left: var(--execution-surfaces-left-inset, 66px);
+        width: var(--execution-surfaces-column-width, 547px);
     }
 
     .execution-surfaces__surface--machines {
         top: 56px;
-        left: 704px;
-        width: 547px;
+        right: var(--execution-surfaces-right-inset, auto);
+        left: var(--execution-surfaces-right-left, 704px);
+        width: var(--execution-surfaces-column-width, 547px);
     }
 
     .execution-surfaces__icon {
@@ -212,58 +213,72 @@ const machineChips = [
         white-space: nowrap;
     }
 
-    @media (max-width: 1180px) {
-        .execution-surfaces__divider {
-            left: 50%;
+    @media (max-width: 1440px) {
+        .execution-surfaces__card {
+            --execution-surfaces-divider-left: 50%;
+            --execution-surfaces-left-inset: clamp(48px, 5vw, 66px);
+            --execution-surfaces-right-inset: clamp(48px, 5vw, 66px);
+            --execution-surfaces-right-left: auto;
+            --execution-surfaces-column-width: calc(50% - clamp(64px, 6vw, 80px));
+        }
+
+        .execution-surfaces__chips {
+            width: 100%;
+        }
+    }
+
+    @media (max-width: 1180px) and (min-width: 901px) {
+        .execution-surfaces__card {
+            --execution-surfaces-left-inset: 40px;
+            --execution-surfaces-column-width: calc(50% - 88px);
         }
 
         .execution-surfaces__surface--ignite {
-            left: 48px;
-            width: calc(50% - 72px);
+            width: calc(50% - 52px);
         }
 
-        .execution-surfaces__surface--machines {
-            right: 48px;
-            left: auto;
-            width: calc(50% - 72px);
+        .execution-surfaces__copy {
+            width: 100%;
         }
 
-        .execution-surfaces__surface--machines .execution-surfaces__copy {
-            margin-top: 48px;
+        .execution-surfaces__copy p {
+            max-width: 452px;
+        }
+
+        .execution-surfaces__surface--machines .execution-surfaces__chips li:nth-child(3) {
+            display: none;
+        }
+    }
+
+    @media (max-width: 1000px) and (min-width: 901px) {
+        .execution-surfaces__card {
+            --execution-surfaces-left-inset: 32px;
+        }
+
+        .execution-surfaces__surface--ignite {
+            width: calc(50% - 40px);
+        }
+
+        .execution-surfaces__chips {
+            gap: 8px;
+        }
+
+        .execution-surfaces__chips li {
+            padding-right: 6px;
+            padding-left: 6px;
+            font-size: 14px;
+            line-height: 22px;
         }
     }
 
     @media (max-width: 900px) {
-        .execution-surfaces {
-            padding-top: 64px;
-            padding-bottom: 64px;
-        }
-
-        .execution-surfaces__title {
-            margin-bottom: 56px;
-            font-size: 36px;
-            line-height: 44px;
+        .execution-surfaces__divider {
+            display: none;
         }
 
         .execution-surfaces__card {
             height: auto;
             overflow: visible;
-        }
-
-        .execution-surfaces__divider {
-            top: 50%;
-            right: 0;
-            bottom: auto;
-            left: 0;
-            width: auto;
-            height: 1px;
-            background-image: repeating-linear-gradient(
-                to right,
-                #262b33 0,
-                #262b33 6px,
-                transparent 6px,
-                transparent 12px
-            );
         }
 
         .execution-surfaces__surface {
@@ -279,6 +294,22 @@ const machineChips = [
             left: auto;
         }
 
+        .execution-surfaces__surface--machines::before {
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 0;
+            height: 1px;
+            background-image: repeating-linear-gradient(
+                to right,
+                #262b33 0,
+                #262b33 6px,
+                transparent 6px,
+                transparent 12px
+            );
+            content: "";
+        }
+
         .execution-surfaces__copy,
         .execution-surfaces__surface--machines .execution-surfaces__copy {
             width: 100%;
@@ -287,6 +318,17 @@ const machineChips = [
 
         .execution-surfaces__chips {
             width: 100%;
+        }
+
+        .execution-surfaces {
+            padding-top: 64px;
+            padding-bottom: 64px;
+        }
+
+        .execution-surfaces__title {
+            margin-bottom: 56px;
+            font-size: 36px;
+            line-height: 44px;
         }
     }
 
