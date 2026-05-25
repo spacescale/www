@@ -1,0 +1,16 @@
+<svg width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M20.5 20.5H51.5V51.5H20.5V20.5Z" stroke="#66D9A5" stroke-width="1.5"/>
+<path d="M30.5 30.5H41.5V41.5H30.5V30.5Z" stroke="#66D9A5" stroke-width="1.5"/>
+<path d="M28 12V20.5" stroke="#66D9A5" stroke-width="1.5" stroke-linecap="square"/>
+<path d="M36 12V20.5" stroke="#66D9A5" stroke-width="1.5" stroke-linecap="square"/>
+<path d="M44 12V20.5" stroke="#66D9A5" stroke-width="1.5" stroke-linecap="square"/>
+<path d="M28 51.5V60" stroke="#66D9A5" stroke-width="1.5" stroke-linecap="square"/>
+<path d="M36 51.5V60" stroke="#66D9A5" stroke-width="1.5" stroke-linecap="square"/>
+<path d="M44 51.5V60" stroke="#66D9A5" stroke-width="1.5" stroke-linecap="square"/>
+<path d="M12 28H20.5" stroke="#66D9A5" stroke-width="1.5" stroke-linecap="square"/>
+<path d="M12 36H20.5" stroke="#66D9A5" stroke-width="1.5" stroke-linecap="square"/>
+<path d="M12 44H20.5" stroke="#66D9A5" stroke-width="1.5" stroke-linecap="square"/>
+<path d="M51.5 28H60" stroke="#66D9A5" stroke-width="1.5" stroke-linecap="square"/>
+<path d="M51.5 36H60" stroke="#66D9A5" stroke-width="1.5" stroke-linecap="square"/>
+<path d="M51.5 44H60" stroke="#66D9A5" stroke-width="1.5" stroke-linecap="square"/>
+</svg>
