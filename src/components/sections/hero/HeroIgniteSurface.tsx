@@ -1,4 +1,4 @@
-import { For, Show, createMemo, createSignal, onCleanup, onMount } from "solid-js";
+import { For, Show, createEffect, createMemo, createSignal, onCleanup } from "solid-js";
 import "./HeroIgniteSurface.css";
 
 const deployCommand = "spacescale ignite my-org/trading-api:latest --region ca-east";
@@ -30,7 +30,12 @@ const PROMPT_TRAIL_COUNT = 2;
 const STATUS_CURSOR_DELAY_MS = 1200;
 const STATUS_OUTPUT_DELAY_MS = 220;
 
-export default function HeroIgniteSurface() {
+interface Props {
+    active: boolean;
+    onComplete?: () => void;
+}
+
+export default function HeroIgniteSurface(props: Props) {
     const [deployTypedLength, setDeployTypedLength] = createSignal(0);
     const [visibleDeployOutputCount, setVisibleDeployOutputCount] = createSignal(0);
     const [isEndpointVisible, setIsEndpointVisible] = createSignal(false);
@@ -64,10 +69,24 @@ export default function HeroIgniteSurface() {
         timers.push(timer);
     };
 
+    const resetSequence = () => {
+        clearTimers();
+        setDeployTypedLength(0);
+        setVisibleDeployOutputCount(0);
+        setIsEndpointVisible(false);
+        setVisiblePromptTrailCount(0);
+        setIsStatusPromptVisible(false);
+        setStatusTypedLength(0);
+        setVisibleStatusOutputCount(0);
+    };
+
     const revealStatusOutput = () => {
         statusOutputLines.forEach((_, index) => {
             queueTimer(() => {
                 setVisibleStatusOutputCount(index + 1);
+                if (index === statusOutputLines.length - 1) {
+                    props.onComplete?.();
+                }
             }, STATUS_OUTPUT_DELAY_MS * (index + 1));
         });
     };
@@ -136,7 +155,9 @@ export default function HeroIgniteSurface() {
         }, TYPE_INTERVAL_MS);
     };
 
-    onMount(() => {
+    const startSequence = () => {
+        resetSequence();
+
         if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
             setDeployTypedLength(deployCommand.length);
             setVisibleDeployOutputCount(deployOutputLines.length);
@@ -145,10 +166,20 @@ export default function HeroIgniteSurface() {
             setIsStatusPromptVisible(true);
             setStatusTypedLength(statusCommand.length);
             setVisibleStatusOutputCount(statusOutputLines.length);
+            props.onComplete?.();
             return;
         }
 
         queueTimer(typeDeployCommand, INITIAL_CURSOR_DELAY_MS);
+    };
+
+    createEffect(() => {
+        if (props.active) {
+            startSequence();
+            return;
+        }
+
+        resetSequence();
     });
 
     onCleanup(() => {
@@ -156,7 +187,7 @@ export default function HeroIgniteSurface() {
     });
 
     return (
-        <div class="hero-terminal__surface hero-ignite-surface">
+        <div class="hero-ignite-surface">
             <div class="hero-ignite-surface__lines">
                 <span class="hero-ignite-surface__line hero-ignite-surface__command">
                     <span class="hero-ignite-surface__prompt">{prompt}</span>{" "}

@@ -4,7 +4,9 @@
 }
 
 .hero-ignite-surface {
+    height: 100%;
     overflow: hidden;
+    background: #060709;
 }
 
 .hero-ignite-surface__lines {
