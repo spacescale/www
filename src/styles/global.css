@@ -514,7 +514,7 @@ button, input, textarea, select {
     }
 
     .footer-brand {
-        width: 292px;
+        width: clamp(292px, 32vw, 360px);
         flex-shrink: 0;
     }
 
@@ -562,7 +562,7 @@ button, input, textarea, select {
 
     .footer-links {
         display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns: repeat(3, max-content);
         gap: 32px 40px;
     }
 
@@ -814,6 +814,18 @@ button, input, textarea, select {
         gap: 28px 24px;
     }
 
+}
+
+@media (max-width: 420px) {
+    .footer-links {
+        grid-template-columns: repeat(2, max-content);
+        column-gap: 44px;
+        row-gap: 40px;
+    }
+
+    .footer-links section:nth-child(3) {
+        grid-column: 1;
+    }
 }
 
 @media (prefers-reduced-motion: reduce) {
