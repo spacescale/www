@@ -1,0 +1,114 @@
+.hero-terminal__surface {
+    height: calc(100% - 85px);
+    background: #060709;
+}
+
+.hero-ignite-surface {
+    height: 100%;
+    overflow: hidden;
+    background: #060709;
+}
+
+.hero-ignite-surface__lines {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin: 0;
+    padding: 24px 20px;
+    color: rgb(115 120 128);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 20px;
+}
+
+.hero-ignite-surface__line {
+    display: block;
+    min-height: 20px;
+    white-space: pre-wrap;
+}
+
+.hero-ignite-surface__command {
+    color: #c8cdd4;
+}
+
+.hero-ignite-surface__prompt {
+    color: #4d525c;
+}
+
+.hero-ignite-surface__cursor {
+    display: inline-block;
+    width: 7px;
+    height: 15px;
+    margin-left: 2px;
+    transform: translateY(2px);
+    background: rgb(115 120 128);
+    animation: hero-ignite-cursor 900ms steps(2, jump-none) infinite;
+}
+
+.hero-ignite-surface__checkpoint {
+    display: flex;
+    gap: 10px;
+    opacity: 0;
+    transform: translateY(4px);
+    animation: hero-ignite-line-in 420ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.hero-ignite-surface__mark {
+    color: rgb(102 217 165 / 78%);
+}
+
+.hero-ignite-surface__endpoint {
+    margin-top: 12px;
+    color: rgb(115 120 128);
+    opacity: 0;
+    transform: translateY(4px);
+    animation: hero-ignite-line-in 520ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.hero-ignite-surface__endpoint span {
+    color: #c8cdd4;
+}
+
+.hero-ignite-surface__status-command {
+    margin-top: 0;
+}
+
+.hero-ignite-surface__status-output {
+    color: rgb(115 120 128);
+    opacity: 0;
+    transform: translateY(4px);
+    animation: hero-ignite-line-in 360ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes hero-ignite-line-in {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes hero-ignite-cursor {
+    0%,
+    45% {
+        opacity: 1;
+    }
+
+    46%,
+    100% {
+        opacity: 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-ignite-surface__cursor {
+        animation: none;
+    }
+
+    .hero-ignite-surface__checkpoint,
+    .hero-ignite-surface__endpoint {
+        opacity: 1;
+        transform: none;
+        animation: none;
+    }
+}

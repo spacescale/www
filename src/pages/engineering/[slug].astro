@@ -2,6 +2,7 @@
 import { getCollection, render } from "astro:content";
 import SiteLayout from "../../layouts/SiteLayout.astro";
 import EngineeringArticleReader from "../../components/sections/engineering/EngineeringArticleReader";
+import { engineeringAuthors } from "../../markdown/authors";
 
 export const getStaticPaths = async () => {
     const posts = await getCollection("engineering");
@@ -14,6 +15,7 @@ export const getStaticPaths = async () => {
 
 const { post } = Astro.props;
 const { Content } = await render(post);
+const author = engineeringAuthors[post.data.author];
 const coverImage = `/assets/engineering/covers/${post.data.cardVisual}.png`;
 const posts = (await getCollection("engineering")).sort((a, b) => {
     const dateOrder = b.data.date.getTime() - a.data.date.getTime();
@@ -86,16 +88,16 @@ const readTime = Math.max(1, Math.ceil(wordCount / 220));
                             <h1>{post.data.title}</h1>
                             <div class="engineering-article__byline">
                                 {
-                                    post.data.authorUrl ? (
+                                    author.url ? (
                                         <a
-                                            href={post.data.authorUrl}
+                                            href={author.url}
                                             target="_blank"
                                             rel="noreferrer"
                                         >
-                                            {post.data.author}
+                                            {author.name}
                                         </a>
                                     ) : (
-                                        <p>{post.data.author}</p>
+                                        <p>{author.name}</p>
                                     )
                                 }
                             </div>
@@ -734,7 +736,7 @@ const readTime = Math.max(1, Math.ceil(wordCount / 220));
         margin: 32px 0;
         border-left: 1px solid rgb(102 217 178 / 42%);
         padding: 2px 0 2px 24px;
-        color: #c5ccd8;
+        color: #8c94a1;
     }
 
     .engineering-article__body :global(blockquote p) {

@@ -1,0 +1,200 @@
+.hero-terminal {
+    position: absolute;
+    top: var(--landing-hero-terminal-top);
+    left: 50%;
+    z-index: 1;
+    width: min(1280px, calc(100vw - (var(--site-padding-x) * 2)));
+    height: 770px;
+    overflow: hidden;
+    transform: translateX(-50%);
+    border: 1px solid #191c23;
+    background: #060709;
+    color: #ebedf0;
+}
+
+.hero-terminal__topbar {
+    position: relative;
+    height: 44px;
+    border-bottom: 1px solid #191c23;
+    background: #0b0d10;
+}
+
+.hero-terminal__traffic-lights {
+    position: absolute;
+    top: 16px;
+    left: 14px;
+    display: flex;
+    gap: 4px;
+}
+
+.hero-terminal__traffic-lights span {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+.hero-terminal__traffic-lights span:nth-child(1) {
+    background: #592626;
+}
+
+.hero-terminal__traffic-lights span:nth-child(2) {
+    background: #594d1f;
+}
+
+.hero-terminal__traffic-lights span:nth-child(3) {
+    background: #264d2e;
+}
+
+.hero-terminal__tabs {
+    position: absolute;
+    top: 0;
+    left: 97px;
+    display: flex;
+    height: 44px;
+    align-items: center;
+    gap: 32px;
+    padding: 8px 16px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 22px;
+    letter-spacing: 0;
+}
+
+.hero-terminal__tab {
+    position: relative;
+    display: inline-flex;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: rgb(255 255 255 / 40%);
+    font: inherit;
+    cursor: pointer;
+    transition: color 420ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.hero-terminal__tab--active {
+    color: #66d9a5;
+}
+
+.hero-terminal__tab-indicator {
+    position: absolute;
+    bottom: 0;
+    left: 10px;
+    width: 55px;
+    height: 2px;
+    background: #66d9a5;
+    content: "";
+    pointer-events: none;
+    transition:
+        width 560ms cubic-bezier(0.22, 1, 0.36, 1),
+        transform 680ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.hero-terminal__tab-indicator[data-active-tab="machines"] {
+    width: 70px;
+    transform: translateX(76px);
+}
+
+.hero-terminal__toolbar {
+    position: relative;
+    height: 41px;
+    border-bottom: 1px solid #191c23;
+    background: #0b0d10;
+}
+
+.hero-terminal__new-shell {
+    position: absolute;
+    top: 8px;
+    left: 20px;
+    display: flex;
+    align-items: flex-end;
+    gap: 18px;
+    color: #80858f;
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 500;
+    line-height: normal;
+    white-space: nowrap;
+    transition:
+        left 560ms cubic-bezier(0.22, 1, 0.36, 1),
+        transform 560ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.hero-terminal__new-shell span:first-child {
+    color: #4d525c;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.hero-terminal__session {
+    position: absolute;
+    top: 12px;
+    left: 50%;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transform: translateX(-50%);
+    color: #ebedf0;
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 500;
+    line-height: normal;
+    white-space: nowrap;
+}
+
+.hero-terminal__session span:last-child {
+    color: #4d525c;
+    font-size: 10px;
+    font-weight: 400;
+}
+
+.hero-terminal__session--machines {
+    left: 40.625%;
+    transform: none;
+}
+
+.hero-terminal__surface {
+    position: relative;
+    height: calc(100% - 85px);
+    overflow: hidden;
+    background: #060709;
+}
+
+.hero-terminal__pane {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    pointer-events: none;
+    transition:
+        opacity 620ms cubic-bezier(0.22, 1, 0.36, 1),
+        transform 760ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.hero-terminal__pane--active {
+    z-index: 1;
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(0);
+}
+
+.hero-terminal__surface[data-active-tab="ignite"] .hero-terminal__pane--machines {
+    transform: translateX(24px);
+}
+
+.hero-terminal__surface[data-active-tab="machines"] .hero-terminal__pane--ignite {
+    transform: translateX(-24px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-terminal__pane {
+        transition: none;
+        transform: none;
+    }
+
+    .hero-terminal__tab,
+    .hero-terminal__tab-indicator,
+    .hero-terminal__session {
+        transition: none;
+    }
+}

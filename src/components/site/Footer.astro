@@ -1,4 +1,6 @@
 ---
+import Badge from "../ui/Badge.astro";
+
 /*
   Footer.astro is the shared footer for marketing pages.
 
@@ -9,15 +11,26 @@
 const footerGroups = [
     {
         title: "Resources",
-        links: ["Documentation", "Changelog", "Partnerships"],
+        links: [
+            { label: "Documentation", href: "#" },
+            { label: "Changelog", href: "#" },
+            { label: "Partnerships", href: "#" },
+        ],
     },
     {
         title: "Blog",
-        links: ["Engineering", "Tutorials"],
+        links: [
+            { label: "Engineering", href: "/engineering" },
+            { label: "Tutorials", href: "#" },
+        ],
     },
     {
         title: "Company",
-        links: ["Principles", "Careers", "Privacy Policy"],
+        links: [
+            { label: "Principles", href: "/principles" },
+            { label: "Careers", href: "#" },
+            { label: "Privacy Policy", href: "#" },
+        ],
     },
 ];
 
@@ -46,10 +59,13 @@ const socialLinks = [
     <div class="footer-inner">
         <section class="footer-brand" aria-label="SpaceScale">
             <h2>Infrastructure for<br />humans and agents</h2>
-            <div class="status-badge" aria-label="System status">
-                <span aria-hidden="true"></span>
+            <Badge
+                icon="status"
+                size="compact"
+                ariaLabel="System status: All systems operational"
+            >
                 All systems operational
-            </div>
+            </Badge>
 
             <div class="social-links" aria-label="Social links">
                 {
@@ -75,7 +91,7 @@ const socialLinks = [
                         <ul>
                             {group.links.map((link) => (
                                 <li>
-                                    <a href="#">{link}</a>
+                                    <a href={link.href}>{link.label}</a>
                                 </li>
                             ))}
                         </ul>

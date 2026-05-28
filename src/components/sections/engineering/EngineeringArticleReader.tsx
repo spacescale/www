@@ -25,6 +25,14 @@ const waitForPaint = () =>
 const getHistoryState = () =>
     typeof history.state === "object" && history.state !== null ? history.state : {};
 
+const resetScrollForPushedArticle = () => {
+    if (window.scrollX === 0 && window.scrollY === 0) {
+        return;
+    }
+
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+};
+
 const isEngineeringArticleUrl = (url: URL) =>
     url.origin === window.location.origin && /^\/engineering\/[^/]+\/?$/.test(url.pathname);
 
@@ -153,6 +161,9 @@ export default function EngineeringArticleReader() {
 
                 if (shouldPushHistory) {
                     history.pushState({ [readerHistoryKey]: true }, "", targetUrl.href);
+                    // Previous/next swaps should behave like document navigation.
+                    // Browser back/forward keeps its own restored scroll position.
+                    resetScrollForPushedArticle();
                 }
 
                 window.dispatchEvent(new CustomEvent("spacescale:engineering-article-swapped"));

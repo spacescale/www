@@ -1,0 +1,301 @@
+.hero-machines-surface {
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+    background: #060709;
+    color: #ebedf0;
+    font-family: var(--font-body);
+}
+
+.hero-machines-surface__thread {
+    position: absolute;
+    right: 80px;
+    bottom: 148px;
+    left: 80px;
+}
+
+.hero-machines-surface__thread-inner {
+    display: flex;
+    min-height: 100%;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 16px;
+}
+
+.hero-machines-surface__thread-inner--shifting {
+    animation: hero-machines-thread-shift 900ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hero-machines-surface__human-message {
+    width: 700px;
+    max-width: 72%;
+    margin-left: auto;
+    padding: 14px 16px;
+    border-radius: 8px;
+    background: #13151c;
+    color: #ebedf0;
+    opacity: 0;
+    transform: translateY(12px);
+    animation: hero-machines-message-in 520ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.hero-machines-surface__human-message p {
+    margin: 0;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 22px;
+}
+
+.hero-machines-surface__agent-row {
+    display: flex;
+    min-width: 0;
+    gap: 12px;
+    opacity: 0;
+    transform: translateY(22px) scale(0.988);
+    filter: blur(2px);
+    animation: hero-machines-message-in 1100ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation-delay: 180ms;
+}
+
+.hero-machines-surface__agent-row--thinking {
+    animation-duration: 640ms;
+}
+
+.hero-machines-surface__agent-mark {
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    flex: 0 0 auto;
+    border-radius: 6px;
+    background: rgb(102 217 165 / 15%);
+}
+
+.hero-machines-surface__agent-mark span {
+    color: #66d9a5;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1;
+}
+
+.hero-machines-surface__reply-block {
+    width: min(1120px, calc(100% - 40px));
+    max-width: 100%;
+    min-width: 0;
+    padding: 12px 16px 13px;
+    overflow: hidden;
+    border: 1px solid rgb(25 28 35 / 68%);
+    border-radius: 8px;
+    background: #0a0d10;
+    color: #ebedf0;
+}
+
+.hero-machines-surface__thinking {
+    display: flex;
+    min-height: 36px;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 13px;
+    border: 1px solid rgb(25 28 35 / 54%);
+    border-radius: 8px;
+    background: rgb(10 13 16 / 72%);
+    color: #80858f;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.hero-machines-surface__thinking-dots {
+    display: flex;
+    gap: 5px;
+}
+
+.hero-machines-surface__thinking-dots span {
+    display: block;
+    width: 4px;
+    height: 4px;
+    border-radius: 999px;
+    background: rgb(102 217 165 / 72%);
+    animation: hero-machines-thinking-dot 1200ms ease-in-out infinite;
+}
+
+.hero-machines-surface__thinking-dots span:nth-child(2) {
+    animation-delay: 160ms;
+}
+
+.hero-machines-surface__thinking-dots span:nth-child(3) {
+    animation-delay: 320ms;
+}
+
+.hero-machines-surface__reply-block p {
+    margin: 0;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.hero-machines-surface__reply-command,
+.hero-machines-surface__reply-result {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 400;
+    line-height: 18px;
+    white-space: nowrap;
+}
+
+.hero-machines-surface__reply-command {
+    color: #a0a6b2;
+}
+
+.hero-machines-surface__reply-result {
+    display: block;
+    color: rgb(235 237 240 / 74%);
+}
+
+.hero-machines-surface__reply-result span {
+    margin-right: 8px;
+    color: #66d9a5;
+}
+
+.hero-machines-surface__composer {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 120px;
+    padding: 16px 80px 24px;
+    background: #0b0d10;
+}
+
+.hero-machines-surface__composer-box {
+    display: flex;
+    height: 80px;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 12px;
+    border: 1px solid #191c23;
+    border-radius: 6px;
+    background: #060709;
+}
+
+.hero-machines-surface__composer-box p {
+    margin: 0;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.hero-machines-surface__composer-placeholder {
+    color: #4d525c;
+}
+
+.hero-machines-surface__composer-text {
+    color: #ebedf0;
+}
+
+.hero-machines-surface__cursor {
+    display: inline-block;
+    width: 7px;
+    height: 15px;
+    margin-left: 2px;
+    transform: translateY(2px);
+    background: rgb(115 120 128);
+    animation: hero-machines-cursor 900ms steps(2, jump-none) infinite;
+}
+
+.hero-machines-surface__composer-actions,
+.hero-machines-surface__composer-actions button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.hero-machines-surface__composer-actions button {
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border: 0;
+    border-radius: 6px;
+    background: rgb(102 217 165 / 15%);
+    color: #66d9a5;
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 32px;
+}
+
+@keyframes hero-machines-message-in {
+    to {
+        filter: blur(0);
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes hero-machines-thread-shift {
+    from {
+        transform: translateY(12px);
+    }
+
+    to {
+        transform: translateY(0);
+    }
+}
+
+@keyframes hero-machines-line-in {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes hero-machines-cursor {
+    0%,
+    45% {
+        opacity: 1;
+    }
+
+    46%,
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes hero-machines-thinking-dot {
+    0%,
+    70%,
+    100% {
+        transform: translateY(0);
+        opacity: 0.32;
+    }
+
+    35% {
+        transform: translateY(-3px);
+        opacity: 1;
+    }
+}
+
+@media (max-width: 900px) {
+    .hero-machines-surface__thread {
+        right: 24px;
+        left: 24px;
+    }
+
+    .hero-machines-surface__composer {
+        padding-right: 24px;
+        padding-left: 24px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-machines-surface__human-message,
+    .hero-machines-surface__agent-row,
+    .hero-machines-surface__thread-inner,
+    .hero-machines-surface__cursor,
+    .hero-machines-surface__thinking-dots span {
+        filter: none;
+        opacity: 1;
+        transform: none;
+        animation: none;
+    }
+}
