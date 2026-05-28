@@ -1,7 +1,7 @@
 import { defineCollection } from "astro:content";
 import { glob } from "astro/loaders";
 import { z } from "astro/zod";
-import { authorIds } from "./data/authors";
+import { authorIds } from "./markdown/authors";
 
 // Astro 6 content collections are configured from the app source root.
 // Keep this file at `src/content.config.ts` and keep entries under `src/content`.

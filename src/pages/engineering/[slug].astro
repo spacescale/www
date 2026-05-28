@@ -2,7 +2,7 @@
 import { getCollection, render } from "astro:content";
 import SiteLayout from "../../layouts/SiteLayout.astro";
 import EngineeringArticleReader from "../../components/sections/engineering/EngineeringArticleReader";
-import { engineeringAuthors } from "../../data/authors";
+import { engineeringAuthors } from "../../markdown/authors";
 
 export const getStaticPaths = async () => {
     const posts = await getCollection("engineering");
@@ -736,7 +736,7 @@ const readTime = Math.max(1, Math.ceil(wordCount / 220));
         margin: 32px 0;
         border-left: 1px solid rgb(102 217 178 / 42%);
         padding: 2px 0 2px 24px;
-        color: #c5ccd8;
+        color: #8c94a1;
     }
 
     .engineering-article__body :global(blockquote p) {
