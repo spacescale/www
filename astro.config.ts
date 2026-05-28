@@ -4,6 +4,7 @@ import { defineConfig } from "astro/config";
 import { remarkSoftLineBreaks } from "./src/markdown/remarkSoftLineBreaks";
 
 export default defineConfig({
+    site: "https://spacescale.io",
     markdown: {
         remarkPlugins: [remarkSoftLineBreaks],
     },
