@@ -40,20 +40,6 @@ const imageUrl = image ? new URL(image, siteOrigin).toString() : undefined;
         <meta name="twitter:title" content={title} />
         <meta name="twitter:description" content={description} />
         {imageUrl && <meta name="twitter:image" content={imageUrl} />}
-        <link
-            rel="icon"
-            href="/favicon-light.svg"
-            type="image/svg+xml"
-            media="(prefers-color-scheme: light)"
-            sizes="any"
-        />
-        <link
-            rel="icon"
-            href="/favicon-dark.svg"
-            type="image/svg+xml"
-            media="(prefers-color-scheme: dark)"
-            sizes="any"
-        />
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" sizes="any" />
         <link rel="shortcut icon" href="/favicon.svg" type="image/svg+xml" />
         <title>{title}</title>
@@ -62,7 +48,9 @@ const imageUrl = image ? new URL(image, siteOrigin).toString() : undefined;
 
     <body>
         <Header />
-        <slot />
+        <div class="site-main">
+            <slot />
+        </div>
         {hasFinalCta && <slot name="final-cta" />}
         <Footer />
     </body>
