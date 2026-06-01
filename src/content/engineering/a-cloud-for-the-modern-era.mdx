@@ -8,31 +8,25 @@ cardVisual: "motherboard"
 
 I always get asked the same question. Why are you building Spacescale?
 
-As someone who has worked with a lot of cloud systems, I have come to believe that almost every cloud system is trying to solve the same core problem
+As someone who has worked with a lot of cloud systems, I have come to believe that almost every cloud system is trying to solve the same core problem.
 
 - Make deployments easy
 - Make infrastructure standardized
 - Make production systems easier to monitor, debug, and operate when things go wrong.
 
+The industry has tried to solve this problem in different ways. Some companies buy their own compute. Some rent compute from major hyperscalers, then they hire dedicated engineers to manage the systems around it. The cost may look different depending on whether they own or rent the compute. But one thing remains the same; they still pay the cost of good engineering talent. On the other hand, many companies do not have the chops to hire pre-existing infrastructure talent or manage their own production systems in-house. They see that as a risk, so they offload the problem to Platform-as-a-Service (PaaS) providers.
 
-The industry has tried to solve this problem in different ways.Some companies buy their own compute. Some rent compute from major hyperscalers. Then they hire dedicated engineers to manage the systems around it. The cost may look different depending on whether they own or rent the compute, but one thing remains the same, they still pay the cost of good engineering talent.On the other hand, many companies do not have the chops to hire pre-existing infrastructure talent or manage their own production systems in-house. They see that as a risk, so they offload the problem to Platform-as-a-Service providers.
+To be fair, the industry has made real progress. We solved a big part of packaging applications and dependencies with containers. That made software much easier to run compared to the old days, when developers manually copied files to production systems through network protocols like FTP, SSH, and the rest. Then the industry standardized around Kubernetes, a popular container orchestration system that came out of Google. Kubernetes made it easier for companies to manage software systems at scale. But every abstraction introduced another bottleneck
 
+Many hyperscalers now charge companies just to manage their Kubernetes control plane because Kubernetes itself is complex to operate. Then there are the hidden costs attached, like egress fees, seat-based pricing, managed service fees, and sometimes forcing companies to pay for services they do not really need. Almost every company that has migrated from one hyperscaler to another has seen strange bills from empty accounts, forgotten resources, or services they did not even know were still running. While hyperscalers gave us scale, they also gave us the complexity!
 
-And to be fair, the industry has made real progress. We solved a big part of packaging applications and dependencies with containers. That made software much easier to run compared to the old days, when developers manually copied files to production systems through network protocols like FTP, SSH, and the rest.Then the industry standardized around Kubernetes, a popular container orchestration system that came out of Google. Kubernetes made it easier for companies to manage software systems at scale.But every abstraction introduced another bottleneck
+PaaS providers tried to solve the other side of this problem by making deployment simple. But many of them introduced a different issue. Opacity! With many PaaS systems, the abstractions are so deep that it becomes hard to know how your application actually behaves. You do not always know whether you are paying for predictable compute. You do not know how your workload is isolated. You do not know the real threat defense model. You do not know how the CPU is oversubscribed, or whether a noisy neighbour can affect your workload. This is not just a performance concern. It is a trust concern. Some of these problems can be solved with extreme transparency, but many PaaS systems prefer to keep this information private. So every major PaaS I have known has had problems to chase. Some providers have suffered from unreliability and downtime because of poor scheduler design, the maintainability problems that come with distributed systems, lack of deep engineering talent, or sometimes just bad luck!
 
-Many hyperscalers now charge companies just to manage their Kubernetes control plane because Kubernetes itself is complex to operate. Then there are the hidden costs attached like egress fees, seat-based pricing, managed service fees, and sometimes forcing companies to pay for services they do not really need.Almost every company that has migrated from one hyperscaler to another has seen strange bills from empty accounts, forgotten resources, or services they did not even know were still running. While hyperscalers gave us scale, they also gave us the complexity!
+But I also want to give kudos to the existing providers. They brought us to where we are today. They built and open-sourced some of the primitives many of us are still building on. We are not ignoring that work. We are learning from it, building on top of it, and applying our own philosophy and design.
 
+But today's workloads have more stringent requirements. Companies are doing more computationally heavy work. They need fast starts. They need predictable compute. They need less operational overhead. They want to package their workloads in specific ways. They are orchestrating agents. They need to give secure access to tools and services so systems can work on their own. The old abstractions were not designed for all of this.
 
-PaaS providers tried to solve the other side of this problem by making deployment simple. But many of them introduced a different issue. Opacity! With many PaaS systems, the abstractions are so deep that it becomes hard to know how your application actually behaves. You do not always know whether you are paying for predictable compute. You do not know how your workload is isolated. You do not know the real threat defense model. You do not know how the CPU is oversubscribed, or whether a noisy neighbour can affect your workload. This is not just a performance concern. It is a trust concern.Some of these problems can be solved with extreme transparency, but many PaaS systems prefer to keep this information private.So every major PaaS I have known has had problems to chase. Some providers have suffered from unreliability and downtime because of poor scheduler design, the maintainability problems that come with distributed systems, lack of deep engineering talent, or sometimes just bad luck!
-
-
-But I also want to give kudos to the existing providers.They brought us to where we are today. They built and open-sourced some of the primitives many of us are still building on. We are not ignoring that work. We are learning from it, building on top of it, and applying our own philosophy and design.
-
-
-But today’s workloads have more stringent requirements. Companies are doing more computationally heavy work. They need fast starts. They need predictable compute. They need less operational overhead. They want to package their workloads in specific ways. They are orchestrating agents. They need to give secure access to tools and services so systems can work on their own. The old abstractions were not designed for all of this.
-
-
-We have studied these problems. We have learned from the mistakes existing giants have made. And we are implementing our own design into a new set of product primitives.Because in distributed systems computing, the end goal is not the only thing that matters
+We have studied these problems. We have learned from the mistakes existing giants have made. And we are implementing our own design into a new set of product primitives. Because in distributed systems computing, the end goal is not the only thing that matters
 
 - How workloads are scheduled matters.
 - How they are reconciled matters.
@@ -40,11 +34,10 @@ We have studied these problems. We have learned from the mistakes existing giant
 - How they are isolated matters.
 - How they are debugged matters.
 
-These are not small details. They are the building blocks of the platform.And I have always repeated this statement.
+These are not small details. They are the building blocks of the platform, and I have always repeated this statement.
 
-> We do not want to offer 1000+ services or create abstractions that make it hard to debug our own systems. We do not want to use a container runtime that needs its own managed control plane from a hyperscaler. We want to offer services where it matters! a battle-tested and hardened runtime, machines with superpowers, and minimalist managed services that complement our core compute primitives.
+> We do not want to offer 1000+ services or create abstractions that make it hard to debug our own systems. We do not want to use a container runtime that needs its own managed control plane from a hyperscaler. We want to offer services where it matters! A battle-tested and hardened runtime, machines with superpowers, and minimalist managed services that complement our core compute primitives.
 
-At Spacescale, we do not want to tell you to focus only on the end goal and ignore the process.We want to take you along the journey. We want to show you why you should trust us. We want to show you our process, our thinking, our tradeoffs, and why we are building differently.We want you to embrace our philosophy, challenge our assumptions, and help shape the product with your input as we build.
-
+At Spacescale, we do not want to tell you to focus only on the end goal and ignore the process. We want to take you along the journey. We want to show you why you should trust us. We want to show you our process, our thinking, our tradeoffs, and why we are building differently. We want you to embrace our philosophy, challenge our assumptions, and help shape the product with your input as we build.
 
 We are building a cloud for the modern era.
