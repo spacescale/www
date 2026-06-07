@@ -119,8 +119,24 @@ html {
 
 body {
     margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    min-height: 100dvh;
     background: var(--color-bg-primary);
     color: var(--color-text-primary);
+}
+
+/*
+    Sticky-footer spacer.
+
+    The page content lives inside .site-main. Letting it grow fills any
+    leftover vertical space on tall viewports so the footer stays pinned
+    to the bottom instead of floating up under short pages (e.g. 404).
+  */
+.site-main {
+    flex: 1 0 auto;
+    width: 100%;
 }
 
 a {
