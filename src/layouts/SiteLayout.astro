@@ -36,13 +36,26 @@ const imageUrl = image ? new URL(image, siteOrigin).toString() : undefined;
         <meta property="og:url" content={pageUrl} />
         {imageUrl && <meta property="og:image" content={imageUrl} />}
         <link rel="canonical" href={pageUrl} />
+        <meta name="theme-color" media="(prefers-color-scheme: light)" content="#eef1f4" />
+        <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#040406" />
         <meta name="twitter:card" content={imageUrl ? "summary_large_image" : "summary"} />
         <meta name="twitter:title" content={title} />
         <meta name="twitter:description" content={description} />
         {imageUrl && <meta name="twitter:image" content={imageUrl} />}
-        <link rel="icon" href="/favicon.svg" type="image/svg+xml" sizes="any" />
-        <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
-        <link rel="icon" href="/favicon-16.png" type="image/png" sizes="16x16" />
+        <link
+            rel="icon"
+            href="/favicon-light-v2.svg"
+            type="image/svg+xml"
+            media="(prefers-color-scheme: light)"
+            sizes="any"
+        />
+        <link
+            rel="icon"
+            href="/favicon-dark-v2.svg"
+            type="image/svg+xml"
+            media="(prefers-color-scheme: dark)"
+            sizes="any"
+        />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <title>{title}</title>
         {enableViewTransitions && <ClientRouter />}
