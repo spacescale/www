@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://spacescale.io/sitemap.xml
+Sitemap: https://spacescale.io/sitemap-index.xml
