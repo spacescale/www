@@ -1,0 +1,17 @@
+/favicon.svg
+  Cache-Control: no-cache, max-age=0, must-revalidate
+
+/favicon-16.png
+  Cache-Control: no-cache, max-age=0, must-revalidate
+
+/favicon-32.png
+  Cache-Control: no-cache, max-age=0, must-revalidate
+
+/favicon-light-v2.svg
+  Cache-Control: no-cache, max-age=0, must-revalidate
+
+/favicon-dark-v2.svg
+  Cache-Control: no-cache, max-age=0, must-revalidate
+
+/apple-touch-icon.png
+  Cache-Control: no-cache, max-age=0, must-revalidate
