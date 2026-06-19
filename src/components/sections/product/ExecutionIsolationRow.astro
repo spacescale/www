@@ -1,10 +1,9 @@
 <div class="execution-isolation-copy">
     <h2>Absolute Execution Isolation</h2>
     <p>
-        Simultaneous multithreading is disabled on all our compute. Every workload runs
-        inside a hardened microVM. Dedicated reservations add physical core
-        assignment and CPU pinning for workloads that need more predictable
-        execution.
+        Workloads are physically isolated at the CPU core level. No shared
+        execution state between tenants. Dedicated reservations add CPU pinning
+        for predictable performance.
     </p>
 </div>
 
