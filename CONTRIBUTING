@@ -1,0 +1,43 @@
+Contributing Guidelines
+                           Version 1.0, June 2026
+                           https://spacescale.io
+
+   GUIDELINES FOR CONTRIBUTING TO THIS PROJECT
+
+   1. Issues.
+
+      Each issue must be self contained and describe exactly one thing.
+      Before creating a new issue, search existing issues to confirm it
+      has not already been reported or proposed.
+
+   2. Pull Requests.
+
+      Keep pull requests small and focused on one change. Reference the
+      issue number in the pull request description. All pull requests
+      must target the dev branch unless explicitly stated otherwise.
+
+   3. Tests.
+
+      New features must include tests that verify the intended behavior.
+      Bug fixes should include a test that reproduces the original failure
+      when practical.
+
+   4. Code Style.
+
+      Follow the existing conventions in the codebase. Run the project
+      linter and formatter before submitting. Do not introduce unrelated
+      formatting changes in the same pull request.
+
+   5. AI Disclosure.
+
+      If any portion of a contribution was generated or substantially
+      assisted by AI tooling, this must be disclosed in the pull request
+      description.
+
+   6. Commit Messages.
+
+      Write concise commit messages that describe what changed and why.
+      Use the imperative mood. Prefix with a type when appropriate:
+      feat, fix, docs, ci, chore.
+
+   END OF GUIDELINES
