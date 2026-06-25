@@ -4,32 +4,11 @@
 
 # SpaceScale
 
-Public website for SpaceScale.
-
-## Requires
-
-- Bun
-
-## Install deps
-
-```sh
-bun install
-```
+Public website for SpaceScale. Built with [Astro](https://astro.build).
 
 ## Development
 
 ```sh
+bun install
 bun dev
-```
-
-## Build
-
-```sh
-bun run build
-```
-
-## Preview production build
-
-```sh
-bun run preview
 ```
