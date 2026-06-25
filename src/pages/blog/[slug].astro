@@ -785,10 +785,7 @@ const readTime = Math.max(1, Math.ceil(wordCount / 220));
         overflow-x: auto;
         overscroll-behavior-x: contain;
         border: 0;
-        background:
-            linear-gradient(180deg, rgb(255 255 255 / 2.5%) 0, transparent 74px),
-            linear-gradient(90deg, rgb(255 255 255 / 1.5%) 0, transparent 38%),
-            #030406 !important;
+        background: #030406 !important;
         padding: 24px 64px 24px 26px;
         color: #c8d0dc;
         font-family: var(--font-mono);
@@ -800,10 +797,14 @@ const readTime = Math.max(1, Math.ceil(wordCount / 220));
 
     .blog-article__body :global(pre code) {
         font: inherit;
+        border: 0;
+        padding: 0;
+        background: none;
+        display: block;
     }
 
     .blog-article__body :global(pre .line) {
-        display: inline;
+        display: inline !important;
     }
 
     .blog-article__body :global(.blog-code-block__copy) {
@@ -818,10 +819,19 @@ const readTime = Math.max(1, Math.ceil(wordCount / 220));
         background: #05070a;
         color: #8c94a1;
         cursor: pointer;
+        opacity: 0;
+        pointer-events: none;
         transition:
+            opacity 160ms ease,
             border-color 160ms ease,
             color 160ms ease,
             background-color 160ms ease;
+    }
+
+    .blog-article__body :global(.blog-code-block:hover .blog-code-block__copy),
+    .blog-article__body :global(.blog-code-block:focus-within .blog-code-block__copy) {
+        opacity: 1;
+        pointer-events: auto;
     }
 
     .blog-article__body :global(.blog-code-block__copy svg) {
@@ -1034,9 +1044,7 @@ const readTime = Math.max(1, Math.ceil(wordCount / 220));
 
         .blog-article__body :global(pre) {
             padding: 20px 52px 20px var(--site-padding-x);
-            background:
-                linear-gradient(180deg, rgb(255 255 255 / 1.5%) 0, transparent 62px),
-                #020304 !important;
+            background: #030406 !important;
             font-size: 11px;
             line-height: 19px;
         }

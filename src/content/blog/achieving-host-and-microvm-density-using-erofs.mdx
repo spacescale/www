@@ -15,19 +15,6 @@ For every tenant, our host daemon creates a workspace that holds the necessary f
 - Each rootfs copy made per VM burns disk I/O, adds boot latency, and wastes page cache
 - 100 VMs means 100 copies, equalling ~2 GB of duplicated data on disk
 
-```
-              rootfs.ext4
-                   |
-    +--------------+--------------+
-    |              |              |
- cp (I/O)       cp (I/O)       cp (I/O)    ... x100
-    |              |              |
- VM-1            VM-2           VM-3
-(~20 MB)        (~20 MB)       (~20 MB)
-
-100 VMs x 20 MB = 2 GB wasted on disk
-```
-
 
 ## Approaching This
 
@@ -54,27 +41,15 @@ At SpaceScale, the guest daemon ([guestd](https://github.com/spacescale/guestd/)
 
 You can navigate to the repo to see the full build script and CI file if you need to understand how the rootfs is built or draw insights from it. On every bare metal server, the root filesystem is placed at:
 
-```sh
+```
 /var/lib/spacescale/golden/rootfs.erofs
 ```
 
 All VMs attach to it as `/dev/vda` in read-only mode. The root filesystem is just 1.3 MB. The Linux page cache backs every VM from this single file, eliminating the `1.3 MB x N` problem.
 
-```
-/var/lib/spacescale/golden/rootfs.erofs
-            (1.3 MB, read-only)
-                   |
-       Linux Page Cache (single copy)
-  +--------+--------+--------+--------+
-  |        |        |        |        |
-VM-1     VM-2     VM-3      ...    VM-100
-
-100 VMs x 0 MB extra = 1.3 MB total  O(1) not O(N)
-```
-
 The scale daemon passes the following arguments in the kernel command line so the kernel boots accordingly:
 
-```sh
+```
 ro root=/dev/vda
 ```
 
@@ -84,9 +59,9 @@ ro root=/dev/vda
 For every VM, a workspace directory is created and the Firecracker jailer uses `chroot` to lock the VM into it. To get the rootfs visible inside that jail, we pass `firecracker.NewNaiveChrootStrategy` with the kernel path to the Firecracker Go SDK. The SDK's `LinkFilesHandler` then hard-links the rootfs and the kernel into the jail root automatically before the VM boots. A hard link is a new directory entry pointing to the same inode as the original file. No data is copied. Every VM jail gets its own hard link, all pointing at the same inode with zero bytes duplicated.
 
 ```
-golden/rootfs.erofs      --+
-                           +--> inode 12345 (actual 1.3 MB of data)
-j/vm-1/rootfs.erofs      --+
+golden/rootfs.erofs      ─┐
+                          ├──► inode 12345 (actual 1.3 MB of data)
+j/vm-1/rootfs.erofs      ─┘
 ```
 
 
@@ -96,7 +71,7 @@ Since the rootfs and the workload image are both read-only, there is nowhere for
 
 ```
 microVM
-+-- /dev/vda   (EROFS, ro)   base rootfs, shared across all VMs
-+-- /dev/vdb   (EROFS, ro)   workload image, per tenant
-+-- tmpfs      (RAM,   rw)   /run /tmp /dev/shm  ephemeral
+├── /dev/vda   (EROFS, ro)   base rootfs, shared across all VMs
+├── /dev/vdb   (EROFS, ro)   workload image, per tenant
+└── tmpfs      (RAM,   rw)   /run /tmp /dev/shm  ephemeral
 ```
