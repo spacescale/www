@@ -1,0 +1,116 @@
+---
+import { getCollection } from "astro:content";
+import BlogCard from "./BlogCard.astro";
+
+const posts = (await getCollection("blog")).sort((a, b) => {
+    const dateOrder = b.data.date.getTime() - a.data.date.getTime();
+    return dateOrder || a.id.localeCompare(b.id);
+});
+
+const formatPostDate = (date: Date) => {
+    const day = date.getUTCDate();
+    const month = new Intl.DateTimeFormat("en", {
+        month: "short",
+        timeZone: "UTC",
+    })
+        .format(date)
+        .toUpperCase();
+    const year = date.getUTCFullYear();
+    return `${day} ${month} ${year}`;
+};
+
+const getPostSlug = (postId: string) => postId.replace(/\.(md|mdx)$/, "");
+const getPostHref = (postId: string) => `/blog/${getPostSlug(postId)}`;
+---
+
+<section class="blog-posts" aria-label="Engineering posts">
+    <div class="blog-posts__bar-layer" aria-hidden="true">
+        <div class="blog-posts__bar"></div>
+    </div>
+    <div class="blog-posts__list">
+        {
+            posts.map((post) => (
+                <BlogCard
+                    date={formatPostDate(post.data.date)}
+                    title={post.data.title}
+                    href={getPostHref(post.id)}
+                    category={post.data.category}
+                />
+            ))
+        }
+    </div>
+</section>
+
+<style>
+    .blog-posts {
+        --blog-posts-rail-width: 80px;
+
+        position: relative;
+        display: flex;
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+        padding: 16px var(--site-padding-x) 120px;
+        overflow: clip;
+        background: var(--color-bg-primary);
+    }
+
+    .blog-posts__list {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        width: 100%;
+        max-width: 1279px;
+        flex-direction: column;
+    }
+
+    .blog-posts__bar-layer {
+        position: absolute;
+        z-index: 0;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        width: var(--blog-posts-rail-width);
+        pointer-events: none;
+    }
+
+    .blog-posts__bar {
+        position: sticky;
+        top: 0;
+        display: flex;
+        width: var(--blog-posts-rail-width);
+        height: 1215px;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-end;
+        overflow: clip;
+        background: repeating-linear-gradient(
+            135deg,
+            #ffffff 0,
+            #ffffff 2.2167px,
+            transparent 2.2167px,
+            transparent 6.807px
+        );
+        opacity: 0.14;
+    }
+
+    @media (max-width: 1180px) {
+        .blog-posts__bar-layer {
+            display: none;
+        }
+    }
+
+    @media (max-width: 900px) {
+        .blog-posts {
+            padding-top: 40px;
+            padding-bottom: 96px;
+        }
+    }
+
+    @media (max-width: 640px) {
+        .blog-posts {
+            padding-top: 32px;
+            padding-bottom: 72px;
+        }
+    }
+</style>

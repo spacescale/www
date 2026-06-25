@@ -1,18 +1,18 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
 import FinalCTA from "../components/sections/FinalCTA.astro";
-import EngineeringHero from "../components/sections/engineering/EngineeringHero.astro";
-import EngineeringPostsSection from "../components/sections/engineering/EngineeringPostsSection.astro";
+import BlogHero from "../components/sections/blog/BlogHero.astro";
+import BlogPostsSection from "../components/sections/blog/BlogPostsSection.astro";
 ---
 
 <SiteLayout
-        title="Engineering | SpaceScale"
+        title="Blog | SpaceScale"
         description="Engineering notes and build updates from SpaceScale."
         image="/assets/engineering/engineering-og.png"
 >
     <main>
-        <EngineeringHero />
-        <EngineeringPostsSection />
+        <BlogHero />
+        <BlogPostsSection />
     </main>
     <FinalCTA slot="final-cta" />
 </SiteLayout>

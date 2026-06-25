@@ -1,15 +1,15 @@
 export const authorIds = ["tobi-ogundiyan"] as const;
 
-export type EngineeringAuthorId = (typeof authorIds)[number];
+export type BlogAuthorId = (typeof authorIds)[number];
 
-type EngineeringAuthor = {
+type BlogAuthor = {
     name: string;
     url?: string;
 };
 
-export const engineeringAuthors = {
+export const blogAuthors = {
     "tobi-ogundiyan": {
         name: "Tobi Ogundiyan",
         url: "https://www.linkedin.com/in/tobilobaogundiyan/",
     },
-} satisfies Record<EngineeringAuthorId, EngineeringAuthor>;
+} satisfies Record<BlogAuthorId, BlogAuthor>;

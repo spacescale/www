@@ -1,11 +1,11 @@
 ---
 import { getCollection, render } from "astro:content";
 import SiteLayout from "../../layouts/SiteLayout.astro";
-import EngineeringArticleReader from "../../components/sections/engineering/EngineeringArticleReader";
-import { engineeringAuthors } from "../../markdown/authors";
+import BlogArticleReader from "../../components/sections/blog/BlogArticleReader";
+import { blogAuthors } from "../../markdown/authors";
 
 export const getStaticPaths = async () => {
-    const posts = await getCollection("engineering");
+    const posts = await getCollection("blog");
 
     return posts.map((post) => ({
         params: { slug: post.id.replace(/\.(md|mdx)$/, "") },
@@ -15,9 +15,8 @@ export const getStaticPaths = async () => {
 
 const { post } = Astro.props;
 const { Content } = await render(post);
-const author = engineeringAuthors[post.data.author];
-const coverImage = `/assets/engineering/covers/${post.data.cardVisual}.png`;
-const posts = (await getCollection("engineering")).sort((a, b) => {
+const author = blogAuthors[post.data.author];
+const posts = (await getCollection("blog")).sort((a, b) => {
     const dateOrder = b.data.date.getTime() - a.data.date.getTime();
 
     return dateOrder || a.id.localeCompare(b.id);
@@ -29,7 +28,7 @@ const nextPost =
         ? posts[currentPostIndex + 1]
         : undefined;
 const getPostHref = (postId: string) =>
-    `/engineering/${postId.replace(/\.(md|mdx)$/, "")}`;
+    `/blog/${postId.replace(/\.(md|mdx)$/, "")}`;
 
 const formatPostMonth = (date: Date) => {
     const month = new Intl.DateTimeFormat("en", {
@@ -57,17 +56,16 @@ const readTime = Math.max(1, Math.ceil(wordCount / 220));
 <SiteLayout
     title={`${post.data.title} | SpaceScale`}
     description={post.data.description}
-    image={coverImage}
 >
-    <main class="engineering-article">
-        <section class="engineering-article__hero-section">
-            <article class="engineering-article__shell">
-                <header class="engineering-article__hero">
-                    <div class="engineering-article__meta-row">
-                        <div class="engineering-article__meta-group">
+    <main class="blog-article">
+        <section class="blog-article__hero-section">
+            <article class="blog-article__shell">
+                <header class="blog-article__hero">
+                    <div class="blog-article__meta-row">
+                        <div class="blog-article__meta-group">
                             <p>{formatPostMonth(post.data.date)}</p>
-                            <a class="engineering-article__meta-link" href="/engineering">
-                                ENGINEERING BLOG
+                            <a class="blog-article__meta-link" href="/blog">
+                                BLOG
                             </a>
                         </div>
                         <p>{readTime} MIN READ</p>
@@ -76,17 +74,17 @@ const readTime = Math.max(1, Math.ceil(wordCount / 220));
             </article>
         </section>
 
-        <section class="engineering-article__content-section">
-            <div class="engineering-article__bar-layer" aria-hidden="true">
-                <div class="engineering-article__bar"></div>
+        <section class="blog-article__content-section">
+            <div class="blog-article__bar-layer" aria-hidden="true">
+                <div class="blog-article__bar"></div>
             </div>
 
-            <article class="engineering-article__shell">
-                <section class="engineering-article__content-card">
-                    <div class="engineering-article__reader-content">
-                        <div class="engineering-article__intro">
+            <article class="blog-article__shell">
+                <section class="blog-article__content-card">
+                    <div class="blog-article__reader-content">
+                        <div class="blog-article__intro">
                             <h1>{post.data.title}</h1>
-                            <div class="engineering-article__byline">
+                            <div class="blog-article__byline">
                                 {
                                     author.url ? (
                                         <a
@@ -103,13 +101,13 @@ const readTime = Math.max(1, Math.ceil(wordCount / 220));
                             </div>
                         </div>
 
-                        <div class="engineering-article__body-layout">
+                        <div class="blog-article__body-layout">
                             {
                                 previousPost && (
                                     <a
-                                        class="engineering-article__post-nav engineering-article__post-nav--previous"
+                                        class="blog-article__post-nav blog-article__post-nav--previous"
                                         href={getPostHref(previousPost.id)}
-                                        data-engineering-reader-link="previous"
+                                        data-blog-reader-link="previous"
                                         aria-label={`Read previous post: ${previousPost.data.title}`}
                                     >
                                         <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -119,16 +117,16 @@ const readTime = Math.max(1, Math.ceil(wordCount / 220));
                                 )
                             }
 
-                            <div class="engineering-article__body">
+                            <div class="blog-article__body">
                                 <Content />
                             </div>
 
                             {
                                 nextPost && (
                                     <a
-                                        class="engineering-article__post-nav engineering-article__post-nav--next"
+                                        class="blog-article__post-nav blog-article__post-nav--next"
                                         href={getPostHref(nextPost.id)}
-                                        data-engineering-reader-link="next"
+                                        data-blog-reader-link="next"
                                         aria-label={`Read next post: ${nextPost.data.title}`}
                                     >
                                         <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -142,21 +140,21 @@ const readTime = Math.max(1, Math.ceil(wordCount / 220));
                         {
                             (previousPost || nextPost) && (
                                 <nav
-                                    class="engineering-article__bottom-nav"
+                                    class="blog-article__bottom-nav"
                                     aria-label="Article navigation"
                                 >
                                     {
                                         previousPost && (
                                             <a
-                                                class="engineering-article__bottom-nav-link engineering-article__bottom-nav-link--previous"
+                                                class="blog-article__bottom-nav-link blog-article__bottom-nav-link--previous"
                                                 href={getPostHref(previousPost.id)}
-                                                data-engineering-reader-link="previous"
+                                                data-blog-reader-link="previous"
                                                 aria-label={`Read previous post: ${previousPost.data.title}`}
                                             >
                                                 <svg viewBox="0 0 24 24" aria-hidden="true">
                                                     <path d="M15 6l-6 6 6 6" />
                                                 </svg>
-                                                <span class="engineering-article__bottom-nav-label">
+                                                <span class="blog-article__bottom-nav-label">
                                                     Previous
                                                 </span>
                                             </a>
@@ -166,12 +164,12 @@ const readTime = Math.max(1, Math.ceil(wordCount / 220));
                                     {
                                         nextPost && (
                                             <a
-                                                class="engineering-article__bottom-nav-link engineering-article__bottom-nav-link--next"
+                                                class="blog-article__bottom-nav-link blog-article__bottom-nav-link--next"
                                                 href={getPostHref(nextPost.id)}
-                                                data-engineering-reader-link="next"
+                                                data-blog-reader-link="next"
                                                 aria-label={`Read next post: ${nextPost.data.title}`}
                                             >
-                                                <span class="engineering-article__bottom-nav-label">
+                                                <span class="blog-article__bottom-nav-label">
                                                     Next
                                                 </span>
                                                 <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -188,25 +186,25 @@ const readTime = Math.max(1, Math.ceil(wordCount / 220));
             </article>
         </section>
     </main>
-    <EngineeringArticleReader client:load />
+    <BlogArticleReader client:load />
 </SiteLayout>
 
 <script is:inline>
-    const enhanceEngineeringCodeBlocks = () => {
+    const enhanceBlogCodeBlocks = () => {
         document
-            .querySelectorAll(".engineering-article__body pre")
+            .querySelectorAll(".blog-article__body pre")
             .forEach((pre) => {
-                if (pre.parentElement?.classList.contains("engineering-code-block")) {
+                if (pre.parentElement?.classList.contains("blog-code-block")) {
                     return;
                 }
 
                 const wrapper = document.createElement("div");
-                wrapper.className = "engineering-code-block";
+                wrapper.className = "blog-code-block";
                 pre.parentNode?.insertBefore(wrapper, pre);
                 wrapper.append(pre);
 
                 const button = document.createElement("button");
-                button.className = "engineering-code-block__copy";
+                button.className = "blog-code-block__copy";
                 button.type = "button";
                 button.setAttribute("aria-label", "Copy code");
                 button.innerHTML =
@@ -230,20 +228,20 @@ const readTime = Math.max(1, Math.ceil(wordCount / 220));
     };
 
     if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", enhanceEngineeringCodeBlocks);
+        document.addEventListener("DOMContentLoaded", enhanceBlogCodeBlocks);
     } else {
-        enhanceEngineeringCodeBlocks();
+        enhanceBlogCodeBlocks();
     }
 
     window.addEventListener(
-        "spacescale:engineering-article-swapped",
-        enhanceEngineeringCodeBlocks,
+        "spacescale:blog-article-swapped",
+        enhanceBlogCodeBlocks,
     );
 </script>
 
 <style>
-    .engineering-article {
-        --engineering-article-rail-width: 80px;
+    .blog-article {
+        --blog-article-rail-width: 80px;
 
         position: relative;
         display: flex;
@@ -255,38 +253,38 @@ const readTime = Math.max(1, Math.ceil(wordCount / 220));
         color: #f5f7fa;
     }
 
-    .engineering-article__hero-section,
-    .engineering-article__content-section {
+    .blog-article__hero-section,
+    .blog-article__content-section {
         display: flex;
         width: 100%;
         justify-content: center;
         background: var(--color-bg-primary);
     }
 
-    .engineering-article__hero-section {
+    .blog-article__hero-section {
         padding: 32px var(--site-padding-x) 0;
     }
 
-    .engineering-article__content-section {
+    .blog-article__content-section {
         position: relative;
         padding: 64px var(--site-padding-x) 240px;
         overflow: clip;
     }
 
-    .engineering-article__shell {
+    .blog-article__shell {
         position: relative;
         z-index: 1;
         width: 100%;
         max-width: 1280px;
     }
 
-    .engineering-article__hero {
+    .blog-article__hero {
         position: relative;
         width: 100%;
         padding: 70px 0 20px;
     }
 
-    .engineering-article__hero::after {
+    .blog-article__hero::after {
         position: absolute;
         bottom: 0;
         left: 50%;
@@ -303,7 +301,7 @@ const readTime = Math.max(1, Math.ceil(wordCount / 220));
         content: "";
     }
 
-    .engineering-article__meta-row {
+    .blog-article__meta-row {
         position: relative;
         display: flex;
         width: 100%;
@@ -318,7 +316,7 @@ const readTime = Math.max(1, Math.ceil(wordCount / 220));
         white-space: nowrap;
     }
 
-    .engineering-article__meta-row::before {
+    .blog-article__meta-row::before {
         content: "";
         position: absolute;
         top: 30px;
@@ -329,42 +327,42 @@ const readTime = Math.max(1, Math.ceil(wordCount / 220));
         background: #66d9b2;
     }
 
-    .engineering-article__meta-row p {
+    .blog-article__meta-row p {
         margin: 0;
     }
 
-    .engineering-article__meta-link {
+    .blog-article__meta-link {
         color: #8c94a1;
         text-decoration: none;
     }
 
-    .engineering-article__meta-link:hover {
+    .blog-article__meta-link:hover {
         color: #8c94a1;
         text-decoration: none;
     }
 
-    .engineering-article__meta-link:focus-visible {
+    .blog-article__meta-link:focus-visible {
         outline: 1px solid #66d9b2;
         outline-offset: 4px;
     }
 
-    .engineering-article__meta-row > p,
-    .engineering-article__meta-group p:first-child {
+    .blog-article__meta-row > p,
+    .blog-article__meta-group p:first-child {
         color: #8c94a1;
     }
 
-    .engineering-article__meta-group {
+    .blog-article__meta-group {
         display: flex;
         gap: 32px;
         align-items: flex-start;
     }
 
-    .engineering-article__meta-group p:last-child,
-    .engineering-article__meta-group a:last-child {
+    .blog-article__meta-group p:last-child,
+    .blog-article__meta-group a:last-child {
         color: #8c94a1;
     }
 
-    .engineering-article__content-card {
+    .blog-article__content-card {
         position: relative;
         overflow: clip;
         border: 1px solid #262b33;
@@ -372,69 +370,69 @@ const readTime = Math.max(1, Math.ceil(wordCount / 220));
         background: var(--color-bg-primary);
     }
 
-    .engineering-article__reader-content {
+    .blog-article__reader-content {
         transition:
             opacity 460ms cubic-bezier(0.22, 1, 0.36, 1),
             transform 460ms cubic-bezier(0.22, 1, 0.36, 1),
             filter 460ms cubic-bezier(0.22, 1, 0.36, 1);
     }
 
-    .engineering-article[data-reader-active="true"] .engineering-article__reader-content {
+    .blog-article[data-reader-active="true"] .blog-article__reader-content {
         will-change: opacity, transform, filter;
     }
 
-    .engineering-article[data-reader-phase="exit"][data-reader-direction="next"]
-        .engineering-article__reader-content {
+    .blog-article[data-reader-phase="exit"][data-reader-direction="next"]
+        .blog-article__reader-content {
         opacity: 0;
         filter: blur(0.4px);
         transform: translateX(-72px);
     }
 
-    .engineering-article[data-reader-phase="exit"][data-reader-direction="previous"]
-        .engineering-article__reader-content {
+    .blog-article[data-reader-phase="exit"][data-reader-direction="previous"]
+        .blog-article__reader-content {
         opacity: 0;
         filter: blur(0.4px);
         transform: translateX(72px);
     }
 
-    .engineering-article[data-reader-phase="exit"][data-reader-direction="pop"]
-        .engineering-article__reader-content {
+    .blog-article[data-reader-phase="exit"][data-reader-direction="pop"]
+        .blog-article__reader-content {
         opacity: 0;
         filter: blur(0.4px);
         transform: translateY(8px);
     }
 
-    .engineering-article[data-reader-phase="enter-from"][data-reader-direction="next"]
-        .engineering-article__reader-content {
+    .blog-article[data-reader-phase="enter-from"][data-reader-direction="next"]
+        .blog-article__reader-content {
         opacity: 0;
         filter: blur(0.4px);
         transform: translateX(72px);
         transition: none;
     }
 
-    .engineering-article[data-reader-phase="enter-from"][data-reader-direction="previous"]
-        .engineering-article__reader-content {
+    .blog-article[data-reader-phase="enter-from"][data-reader-direction="previous"]
+        .blog-article__reader-content {
         opacity: 0;
         filter: blur(0.4px);
         transform: translateX(-72px);
         transition: none;
     }
 
-    .engineering-article[data-reader-phase="enter-from"][data-reader-direction="pop"]
-        .engineering-article__reader-content {
+    .blog-article[data-reader-phase="enter-from"][data-reader-direction="pop"]
+        .blog-article__reader-content {
         opacity: 0;
         filter: blur(0.4px);
         transform: translateY(8px);
         transition: none;
     }
 
-    .engineering-article__intro {
+    .blog-article__intro {
         display: flex;
         flex-direction: column;
         gap: 16px;
     }
 
-    .engineering-article__intro h1 {
+    .blog-article__intro h1 {
         margin: 0;
         color: #ffffff;
         font-family: var(--font-display);
@@ -444,7 +442,7 @@ const readTime = Math.max(1, Math.ceil(wordCount / 220));
         letter-spacing: -0.66px;
     }
 
-    .engineering-article__byline {
+    .blog-article__byline {
         display: flex;
         gap: 7px;
         align-items: center;
@@ -457,8 +455,8 @@ const readTime = Math.max(1, Math.ceil(wordCount / 220));
         white-space: nowrap;
     }
 
-    .engineering-article__byline p,
-    .engineering-article__byline a {
+    .blog-article__byline p,
+    .blog-article__byline a {
         margin: 0;
         overflow: hidden;
         color: inherit;
@@ -466,19 +464,19 @@ const readTime = Math.max(1, Math.ceil(wordCount / 220));
         text-overflow: ellipsis;
     }
 
-    .engineering-article__byline a:focus-visible {
+    .blog-article__byline a:focus-visible {
         outline: 1px solid #66d9b2;
         outline-offset: 4px;
     }
 
-    .engineering-article__body-layout {
+    .blog-article__body-layout {
         position: relative;
         width: 100%;
         max-width: 820px;
         margin: 56px auto 0;
     }
 
-    .engineering-article__post-nav {
+    .blog-article__post-nav {
         position: absolute;
         top: 50%;
         display: grid;
@@ -496,15 +494,15 @@ const readTime = Math.max(1, Math.ceil(wordCount / 220));
             opacity 160ms ease;
     }
 
-    .engineering-article__post-nav--previous {
+    .blog-article__post-nav--previous {
         left: -126px;
     }
 
-    .engineering-article__post-nav--next {
+    .blog-article__post-nav--next {
         right: -126px;
     }
 
-    .engineering-article__post-nav svg {
+    .blog-article__post-nav svg {
         width: 20px;
         height: 20px;
         fill: none;
@@ -514,22 +512,22 @@ const readTime = Math.max(1, Math.ceil(wordCount / 220));
         stroke-width: 1.25;
     }
 
-    .engineering-article__post-nav:hover,
-    .engineering-article__post-nav:focus-visible {
+    .blog-article__post-nav:hover,
+    .blog-article__post-nav:focus-visible {
         color: #d8dee8;
     }
 
-    .engineering-article__post-nav:focus-visible {
+    .blog-article__post-nav:focus-visible {
         color: #d8dee8;
     }
 
-    .engineering-article__bottom-nav {
+    .blog-article__bottom-nav {
         display: none;
         align-items: center;
         justify-content: space-between;
     }
 
-    .engineering-article__bottom-nav-link {
+    .blog-article__bottom-nav-link {
         display: flex;
         gap: 12px;
         align-items: center;
@@ -539,12 +537,12 @@ const readTime = Math.max(1, Math.ceil(wordCount / 220));
         text-decoration: none;
     }
 
-    .engineering-article__bottom-nav-link--next {
+    .blog-article__bottom-nav-link--next {
         margin-left: auto;
         text-align: right;
     }
 
-    .engineering-article__bottom-nav-link svg {
+    .blog-article__bottom-nav-link svg {
         width: 20px;
         height: 20px;
         flex: 0 0 auto;
@@ -555,7 +553,7 @@ const readTime = Math.max(1, Math.ceil(wordCount / 220));
         stroke-width: 1.25;
     }
 
-    .engineering-article__bottom-nav-label {
+    .blog-article__bottom-nav-label {
         font-family: var(--font-mono);
         font-size: 12px;
         font-weight: 500;
@@ -564,17 +562,17 @@ const readTime = Math.max(1, Math.ceil(wordCount / 220));
         text-transform: uppercase;
     }
 
-    .engineering-article__bottom-nav-link:hover,
-    .engineering-article__bottom-nav-link:focus-visible {
+    .blog-article__bottom-nav-link:hover,
+    .blog-article__bottom-nav-link:focus-visible {
         color: #d8dee8;
     }
 
-    .engineering-article__bottom-nav-link:focus-visible {
+    .blog-article__bottom-nav-link:focus-visible {
         outline: 1px solid #66d9b2;
         outline-offset: 6px;
     }
 
-    .engineering-article__body {
+    .blog-article__body {
         width: 100%;
         color: #8c94a1;
         font-family: var(--font-body);
@@ -584,9 +582,9 @@ const readTime = Math.max(1, Math.ceil(wordCount / 220));
         letter-spacing: -0.08px;
     }
 
-    .engineering-article__body :global(h1),
-    .engineering-article__body :global(h2),
-    .engineering-article__body :global(h3) {
+    .blog-article__body :global(h1),
+    .blog-article__body :global(h2),
+    .blog-article__body :global(h3) {
         margin: 52px 0 18px;
         color: #f5f7fa;
         font-family: var(--font-display);
@@ -594,17 +592,17 @@ const readTime = Math.max(1, Math.ceil(wordCount / 220));
         letter-spacing: 0;
     }
 
-    .engineering-article__body :global(h1) {
+    .blog-article__body :global(h1) {
         font-size: 34px;
         line-height: 40px;
     }
 
-    .engineering-article__body :global(h2) {
+    .blog-article__body :global(h2) {
         font-size: 28px;
         line-height: 34px;
     }
 
-    .engineering-article__body :global(h3) {
+    .blog-article__body :global(h3) {
         color: #d8dee8;
         font-family: var(--font-body);
         font-size: 20px;
@@ -612,22 +610,22 @@ const readTime = Math.max(1, Math.ceil(wordCount / 220));
         letter-spacing: -0.08px;
     }
 
-    .engineering-article__body :global(h1:first-child),
-    .engineering-article__body :global(h2:first-child),
-    .engineering-article__body :global(h3:first-child) {
+    .blog-article__body :global(h1:first-child),
+    .blog-article__body :global(h2:first-child),
+    .blog-article__body :global(h3:first-child) {
         margin-top: 0;
     }
 
-    .engineering-article__body :global(p) {
+    .blog-article__body :global(p) {
         margin: 0 0 24px;
     }
 
-    .engineering-article__body :global(p:last-child) {
+    .blog-article__body :global(p:last-child) {
         margin-bottom: 0;
     }
 
-    .engineering-article__body :global(ul),
-    .engineering-article__body :global(ol) {
+    .blog-article__body :global(ul),
+    .blog-article__body :global(ol) {
         display: flex;
         flex-direction: column;
         gap: 3px;
@@ -636,23 +634,23 @@ const readTime = Math.max(1, Math.ceil(wordCount / 220));
         list-style: none;
     }
 
-    .engineering-article__body :global(li ul),
-    .engineering-article__body :global(li ol) {
+    .blog-article__body :global(li ul),
+    .blog-article__body :global(li ol) {
         margin: 7px 0 0;
     }
 
-    .engineering-article__body :global(ol) {
-        counter-reset: engineering-list;
+    .blog-article__body :global(ol) {
+        counter-reset: blog-list;
     }
 
-    .engineering-article__body :global(li) {
+    .blog-article__body :global(li) {
         position: relative;
         padding-left: 20px;
         color: #8c94a1;
         line-height: 23px;
     }
 
-    .engineering-article__body :global(ul li::before) {
+    .blog-article__body :global(ul li::before) {
         position: absolute;
         top: 9px;
         left: 2px;
@@ -662,11 +660,11 @@ const readTime = Math.max(1, Math.ceil(wordCount / 220));
         content: "";
     }
 
-    .engineering-article__body :global(ol li) {
-        counter-increment: engineering-list;
+    .blog-article__body :global(ol li) {
+        counter-increment: blog-list;
     }
 
-    .engineering-article__body :global(ol li::before) {
+    .blog-article__body :global(ol li::before) {
         position: absolute;
         top: 0;
         left: 0;
@@ -674,10 +672,10 @@ const readTime = Math.max(1, Math.ceil(wordCount / 220));
         font-family: var(--font-mono);
         font-size: 11px;
         line-height: 23px;
-        content: counter(engineering-list, decimal-leading-zero);
+        content: counter(blog-list, decimal-leading-zero);
     }
 
-    .engineering-article__body :global(code) {
+    .blog-article__body :global(code) {
         border: 1px solid rgb(38 43 51 / 78%);
         padding: 2px 5px;
         background: #05070a;
@@ -687,7 +685,7 @@ const readTime = Math.max(1, Math.ceil(wordCount / 220));
         letter-spacing: 0;
     }
 
-    .engineering-article__body :global(table) {
+    .blog-article__body :global(table) {
         width: 100%;
         margin: 32px 0;
         border-collapse: collapse;
@@ -696,20 +694,20 @@ const readTime = Math.max(1, Math.ceil(wordCount / 220));
         line-height: 22px;
     }
 
-    .engineering-article__body :global(th),
-    .engineering-article__body :global(td) {
+    .blog-article__body :global(th),
+    .blog-article__body :global(td) {
         border-bottom: 1px solid #262b33;
         padding: 13px 16px;
         text-align: left;
         vertical-align: top;
     }
 
-    .engineering-article__body :global(th) {
+    .blog-article__body :global(th) {
         color: rgb(102 217 178 / 78%);
         font-weight: 400;
     }
 
-    .engineering-article__body :global(hr) {
+    .blog-article__body :global(hr) {
         width: 100%;
         height: 1px;
         margin: 44px 0;
@@ -723,7 +721,7 @@ const readTime = Math.max(1, Math.ceil(wordCount / 220));
         );
     }
 
-    .engineering-article__body :global(img) {
+    .blog-article__body :global(img) {
         display: block;
         width: 100%;
         height: auto;
@@ -732,28 +730,28 @@ const readTime = Math.max(1, Math.ceil(wordCount / 220));
         background: #040406;
     }
 
-    .engineering-article__body :global(blockquote) {
+    .blog-article__body :global(blockquote) {
         margin: 32px 0;
         border-left: 1px solid rgb(102 217 178 / 42%);
         padding: 2px 0 2px 24px;
         color: #8c94a1;
     }
 
-    .engineering-article__body :global(blockquote p) {
+    .blog-article__body :global(blockquote p) {
         margin-bottom: 0;
     }
 
-    .engineering-article__body :global(strong) {
+    .blog-article__body :global(strong) {
         color: rgb(102 217 178 / 78%);
         font-weight: 400;
     }
 
-    .engineering-article__body :global(em) {
+    .blog-article__body :global(em) {
         color: #b9c1cd;
         font-style: italic;
     }
 
-    .engineering-article__body :global(a) {
+    .blog-article__body :global(a) {
         overflow-wrap: anywhere;
         color: rgb(102 217 178 / 78%);
         text-decoration-line: underline;
@@ -764,14 +762,14 @@ const readTime = Math.max(1, Math.ceil(wordCount / 220));
             text-decoration-color 160ms ease;
     }
 
-    .engineering-article__body :global(a:hover),
-    .engineering-article__body :global(a:focus-visible) {
+    .blog-article__body :global(a:hover),
+    .blog-article__body :global(a:focus-visible) {
         color: #9debcf;
         text-decoration-line: underline;
         text-decoration-color: rgb(157 235 207 / 56%);
     }
 
-    .engineering-article__body :global(.engineering-code-block) {
+    .blog-article__body :global(.blog-code-block) {
         position: relative;
         margin: 32px 0;
         overflow: hidden;
@@ -782,7 +780,7 @@ const readTime = Math.max(1, Math.ceil(wordCount / 220));
             inset 0 -1px 0 rgb(255 255 255 / 2%);
     }
 
-    .engineering-article__body :global(pre) {
+    .blog-article__body :global(pre) {
         margin: 0;
         overflow-x: auto;
         overscroll-behavior-x: contain;
@@ -800,11 +798,15 @@ const readTime = Math.max(1, Math.ceil(wordCount / 220));
         white-space: pre;
     }
 
-    .engineering-article__body :global(pre code) {
+    .blog-article__body :global(pre code) {
         font: inherit;
     }
 
-    .engineering-article__body :global(.engineering-code-block__copy) {
+    .blog-article__body :global(pre .line) {
+        display: inline;
+    }
+
+    .blog-article__body :global(.blog-code-block__copy) {
         position: absolute;
         top: 10px;
         right: 10px;
@@ -822,7 +824,7 @@ const readTime = Math.max(1, Math.ceil(wordCount / 220));
             background-color 160ms ease;
     }
 
-    .engineering-article__body :global(.engineering-code-block__copy svg) {
+    .blog-article__body :global(.blog-code-block__copy svg) {
         width: 15px;
         height: 15px;
         fill: none;
@@ -831,34 +833,34 @@ const readTime = Math.max(1, Math.ceil(wordCount / 220));
         stroke-width: 1.35;
     }
 
-    .engineering-article__body :global(.engineering-code-block__copy:hover),
-    .engineering-article__body :global(.engineering-code-block__copy:focus-visible),
-    .engineering-article__body :global(.engineering-code-block__copy[data-copied="true"]) {
+    .blog-article__body :global(.blog-code-block__copy:hover),
+    .blog-article__body :global(.blog-code-block__copy:focus-visible),
+    .blog-article__body :global(.blog-code-block__copy[data-copied="true"]) {
         border-color: #3a414c;
         color: #d8dee8;
         background: #090c10;
     }
 
-    .engineering-article__body :global(.engineering-code-block__copy:focus-visible) {
+    .blog-article__body :global(.blog-code-block__copy:focus-visible) {
         outline: 1px solid #4b5563;
         outline-offset: 3px;
     }
 
-    .engineering-article__bar-layer {
+    .blog-article__bar-layer {
         position: absolute;
         z-index: 0;
         top: 0;
         bottom: 0;
         left: 0;
-        width: var(--engineering-article-rail-width);
+        width: var(--blog-article-rail-width);
         pointer-events: none;
     }
 
-    .engineering-article__bar {
+    .blog-article__bar {
         position: sticky;
         top: 0;
         display: flex;
-        width: var(--engineering-article-rail-width);
+        width: var(--blog-article-rail-width);
         height: 1215px;
         flex-direction: column;
         align-items: center;
@@ -875,30 +877,30 @@ const readTime = Math.max(1, Math.ceil(wordCount / 220));
     }
 
     @media (max-width: 1360px) {
-        .engineering-article__post-nav--previous {
+        .blog-article__post-nav--previous {
             left: -74px;
         }
 
-        .engineering-article__post-nav--next {
+        .blog-article__post-nav--next {
             right: -74px;
         }
     }
 
     @media (max-width: 1180px) {
-        .engineering-article__bar-layer {
+        .blog-article__bar-layer {
             display: none;
         }
 
-        .engineering-article__content-card {
+        .blog-article__content-card {
             padding-right: 64px;
             padding-left: 64px;
         }
 
-        .engineering-article__post-nav {
+        .blog-article__post-nav {
             display: none;
         }
 
-        .engineering-article__bottom-nav {
+        .blog-article__bottom-nav {
             display: flex;
             gap: 32px;
             margin-top: 72px;
@@ -908,129 +910,129 @@ const readTime = Math.max(1, Math.ceil(wordCount / 220));
     }
 
     @media (max-width: 900px) {
-        .engineering-article__hero-section {
+        .blog-article__hero-section {
             padding-top: 24px;
         }
 
-        .engineering-article__content-section {
+        .blog-article__content-section {
             padding-top: 48px;
             padding-bottom: 184px;
         }
 
-        .engineering-article__hero {
+        .blog-article__hero {
             padding-top: 56px;
         }
 
-        .engineering-article__content-card {
+        .blog-article__content-card {
             padding: 48px;
         }
     }
 
     @media (max-width: 640px) {
-        .engineering-article__hero-section {
+        .blog-article__hero-section {
             padding-top: 16px;
         }
 
-        .engineering-article__content-section {
+        .blog-article__content-section {
             padding-top: 40px;
             padding-bottom: 144px;
         }
 
-        .engineering-article__hero {
+        .blog-article__hero {
             padding-top: 48px;
         }
 
-        .engineering-article__meta-row {
+        .blog-article__meta-row {
             gap: 24px;
             overflow-x: auto;
         }
 
-        .engineering-article__meta-row::before {
+        .blog-article__meta-row::before {
             left: 94px;
             width: 132px;
             height: 48px;
         }
 
-        .engineering-article__content-card {
+        .blog-article__content-card {
             border: 0;
             padding: 0;
         }
 
-        .engineering-article__intro h1 {
+        .blog-article__intro h1 {
             font-size: 36px;
             line-height: 42px;
             letter-spacing: -0.4px;
         }
 
-        .engineering-article__body-layout {
+        .blog-article__body-layout {
             margin-top: 44px;
         }
 
-        .engineering-article__bottom-nav {
+        .blog-article__bottom-nav {
             gap: 24px;
             justify-content: space-between;
             margin-top: 56px;
             padding-top: 28px;
         }
 
-        .engineering-article__bottom-nav-link {
+        .blog-article__bottom-nav-link {
             width: auto;
             min-width: 92px;
             height: 36px;
         }
 
-        .engineering-article__bottom-nav-link--previous {
+        .blog-article__bottom-nav-link--previous {
             justify-content: flex-start;
         }
 
-        .engineering-article__bottom-nav-link--next {
+        .blog-article__bottom-nav-link--next {
             margin-left: 0;
             justify-content: flex-end;
             text-align: right;
         }
 
-        .engineering-article__body :global(h1) {
+        .blog-article__body :global(h1) {
             font-size: 30px;
             line-height: 36px;
         }
 
-        .engineering-article__body :global(h2) {
+        .blog-article__body :global(h2) {
             font-size: 25px;
             line-height: 31px;
         }
 
-        .engineering-article__body :global(h3) {
+        .blog-article__body :global(h3) {
             font-size: 19px;
             line-height: 27px;
         }
 
-        .engineering-article__body :global(table) {
+        .blog-article__body :global(table) {
             margin: 28px 0;
             table-layout: fixed;
             font-size: 13px;
             line-height: 19px;
         }
 
-        .engineering-article__body :global(th),
-        .engineering-article__body :global(td) {
+        .blog-article__body :global(th),
+        .blog-article__body :global(td) {
             padding: 11px 8px;
             overflow-wrap: anywhere;
         }
 
-        .engineering-article__body :global(th:nth-child(1)),
-        .engineering-article__body :global(td:nth-child(1)),
-        .engineering-article__body :global(th:nth-child(2)),
-        .engineering-article__body :global(td:nth-child(2)) {
+        .blog-article__body :global(th:nth-child(1)),
+        .blog-article__body :global(td:nth-child(1)),
+        .blog-article__body :global(th:nth-child(2)),
+        .blog-article__body :global(td:nth-child(2)) {
             width: 28%;
         }
 
-        .engineering-article__body :global(.engineering-code-block) {
+        .blog-article__body :global(.blog-code-block) {
             margin: 28px calc(var(--site-padding-x) * -1);
             border-right: 0;
             border-left: 0;
         }
 
-        .engineering-article__body :global(pre) {
+        .blog-article__body :global(pre) {
             padding: 20px 52px 20px var(--site-padding-x);
             background:
                 linear-gradient(180deg, rgb(255 255 255 / 1.5%) 0, transparent 62px),
@@ -1039,7 +1041,7 @@ const readTime = Math.max(1, Math.ceil(wordCount / 220));
             line-height: 19px;
         }
 
-        .engineering-article__body :global(.engineering-code-block__copy) {
+        .blog-article__body :global(.blog-code-block__copy) {
             top: 8px;
             right: var(--site-padding-x);
             width: 28px;
@@ -1048,7 +1050,7 @@ const readTime = Math.max(1, Math.ceil(wordCount / 220));
     }
 
     @media (prefers-reduced-motion: reduce) {
-        .engineering-article__reader-content {
+        .blog-article__reader-content {
             transition: none;
         }
     }

@@ -2,11 +2,11 @@ import { onCleanup, onMount } from "solid-js";
 
 type ReaderDirection = "previous" | "next" | "pop";
 
-const articleSelector = ".engineering-article";
-const heroSelector = ".engineering-article__hero";
-const readerContentSelector = ".engineering-article__reader-content";
-const readerLinkSelector = "[data-engineering-reader-link]";
-const readerHistoryKey = "spacescaleEngineeringReader";
+const articleSelector = ".blog-article";
+const heroSelector = ".blog-article__hero";
+const readerContentSelector = ".blog-article__reader-content";
+const readerLinkSelector = "[data-blog-reader-link]";
+const readerHistoryKey = "spacescaleBlogReader";
 const exitMs = 380;
 const enterMs = 520;
 
@@ -33,8 +33,8 @@ const resetScrollForPushedArticle = () => {
     window.scrollTo({ top: 0, left: 0, behavior: "auto" });
 };
 
-const isEngineeringArticleUrl = (url: URL) =>
-    url.origin === window.location.origin && /^\/engineering\/[^/]+\/?$/.test(url.pathname);
+const isBlogArticleUrl = (url: URL) =>
+    url.origin === window.location.origin && /^\/blog\/[^/]+\/?$/.test(url.pathname);
 
 const prefersReducedMotion = () =>
     window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -126,7 +126,7 @@ export default function EngineeringArticleReader() {
 
             const targetUrl = new URL(href, window.location.href);
 
-            if (!isEngineeringArticleUrl(targetUrl) || prefersReducedMotion()) {
+            if (!isBlogArticleUrl(targetUrl) || prefersReducedMotion()) {
                 window.location.assign(targetUrl.href);
                 return;
             }
@@ -166,7 +166,7 @@ export default function EngineeringArticleReader() {
                     resetScrollForPushedArticle();
                 }
 
-                window.dispatchEvent(new CustomEvent("spacescale:engineering-article-swapped"));
+                window.dispatchEvent(new CustomEvent("spacescale:blog-article-swapped"));
 
                 await waitForPaint();
                 setReaderState(direction, "enter");
@@ -203,7 +203,7 @@ export default function EngineeringArticleReader() {
             event.preventDefault();
 
             const direction =
-                link.dataset.engineeringReaderLink === "previous" ? "previous" : "next";
+                link.dataset.blogReaderLink === "previous" ? "previous" : "next";
 
             void navigateWithReader(link.href, direction, true);
         };
@@ -211,7 +211,7 @@ export default function EngineeringArticleReader() {
         const onPopState = () => {
             const targetUrl = new URL(window.location.href);
 
-            if (!isEngineeringArticleUrl(targetUrl)) {
+            if (!isBlogArticleUrl(targetUrl)) {
                 return;
             }
 
