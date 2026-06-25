@@ -13,25 +13,25 @@ The guest root filesystem is one of the critical parts of [Firecracker microVMs]
 For every tenant, our host daemon creates a workspace that holds the necessary files and dependencies each microVM needs to run. For every VM launch, a new rootfs is used for that VM. As testing progressed, it dawned on me that this root filesystem is tiny and can be shared between other VMs. At SpaceScale, the rootfs only mounts the `/proc` directory so it can read the kernel command line settings passed by our scale daemon before it starts its work. It became evident that:
 
 - Each rootfs copy made per VM burns disk I/O, adds boot latency, and wastes page cache
-- 100 VMs means 100 copies, equalling ~2 GB of duplicated data on disk
+- 100 VMs means 100 copies, equaling 2 GB of duplicated data on disk
 
 
-## Approaching This
+### Approaching This
 
-As always, taking a first principles approach. I knew that to stop duplication and use one root filesystem across all VMs, it had to be read-only and immutable. EXT4 was not a suitable contender because it is mutable by design. After some research I came across [SquashFS](https://docs.kernel.org/filesystems/squashfs.html), a general-purpose highly compressed immutable filesystem for Linux, largely used in embedded systems. Looking deeper, I found that its high compression can introduce CPU overhead and a performance bottleneck when decompressing data on reads. Because I knew so little at this point, I decided to look for an alternative, which led me to [EROFS](https://erofs.docs.kernel.org/en/latest/)
+As always, I took a first principles approach. I knew that to stop duplication and use one root filesystem across all VMs, it had to be read-only and immutable. EXT4 was not a suitable contender because it is mutable by design. After some research I came across [SquashFS](https://docs.kernel.org/filesystems/squashfs.html), a general-purpose highly compressed immutable filesystem for Linux, largely used in embedded systems. Looking deeper, I found that its high compression can introduce CPU overhead and a performance bottleneck when decompressing data on reads. Because I knew so little at this point, I decided to look for an alternative, which led me to [EROFS](https://erofs.docs.kernel.org/en/latest/).
 
 
-## Enhanced Read Only File system (EROFS)
+### Enhanced Read Only File System (EROFS)
 
 It is a general-purpose, high-performance read-only filesystem created by a Huawei engineer named Gao Xiang to solve the problem of Android system updates taking too much space and making phones slow. Upon seeing this I knew it was the right choice over SquashFS because it had solved the performance bottleneck caused by SquashFS decompression. In the [original research paper](https://www.usenix.org/system/files/atc19-gao.pdf), EROFS is shown to be optimized for read performance and surpasses existing compressed read-only filesystems with noticeable benchmarks, reducing application boot times by 22% and saving up to 45% of storage usage. These benchmarks make it attractive for SpaceScale to use not just for the root filesystem but also for the materialization of a tenant's OCI images on per-region builder nodes. Digging deeper, I discovered it has already been adopted in the container ecosystem by [Kata Containers](https://katacontainers.io) specifically for their rootfs and the [Nydus](https://nydus.dev) project. Everything started making sense.
 
 
-## How we share the base RootFS
+### How We Share the Base RootFS
 
 
 At SpaceScale, the guest daemon ([guestd](https://github.com/spacescale/guestd/)) is open source because it will live inside a tenant's VM. The rootfs is built on every guestd release in CI to avoid drift with the daemon. The snippet below is from the CI file:
 
-```yaml
+```sh
   - name: Build rootfs EROFS image
         run: |
           ./scripts/build-rootfs.sh \
@@ -54,7 +54,7 @@ ro root=/dev/vda
 ```
 
 
-## Hard-linking RootFS for the Firecracker Jailer
+### Hard-Linking RootFS for the Firecracker Jailer
 
 For every VM, a workspace directory is created and the Firecracker jailer uses `chroot` to lock the VM into it. To get the rootfs visible inside that jail, we pass `firecracker.NewNaiveChrootStrategy` with the kernel path to the Firecracker Go SDK. The SDK's `LinkFilesHandler` then hard-links the rootfs and the kernel into the jail root automatically before the VM boots. A hard link is a new directory entry pointing to the same inode as the original file. No data is copied. Every VM jail gets its own hard link, all pointing at the same inode with zero bytes duplicated.
 
@@ -65,9 +65,9 @@ j/vm-1/rootfs.erofs      ─┘
 ```
 
 
-## Handling Writes
+### Handling Writes
 
-Since the rootfs and the workload image are both read-only, there is nowhere for the running workload to write to by default. This is intentional because Ignite is SpaceScale's serverless runtime for stateless workloads, it is not designed to persist state inside the VM hence uses tmpfs. For other services that would need state in the future a writable EXT4 layer works for this case.
+Since the rootfs and the workload image are both read-only, there is nowhere for the running workload to write to by default. This is intentional because Ignite is SpaceScale's serverless runtime for stateless workloads. It is not designed to persist state inside the VM, so guestd uses tmpfs for writable paths. For other services that would need state in the future, a writable EXT4 layer would work for this case.
 
 ```
 microVM
