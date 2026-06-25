@@ -1,0 +1,16 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+import BlogHero from "../components/sections/blog/BlogHero.astro";
+import BlogPostsSection from "../components/sections/blog/BlogPostsSection.astro";
+---
+
+<SiteLayout
+        title="Blog | SpaceScale"
+        description="Engineering notes and build updates from SpaceScale."
+        image="/assets/blog/blog-og.png"
+>
+    <main>
+        <BlogHero />
+        <BlogPostsSection />
+    </main>
+</SiteLayout>

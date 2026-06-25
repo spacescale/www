@@ -1,8 +1,3 @@
-.hero-terminal__surface {
-    height: calc(100% - 85px);
-    background: #060709;
-}
-
 .hero-ignite-surface {
     height: 100%;
     overflow: hidden;
