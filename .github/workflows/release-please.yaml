@@ -4,6 +4,13 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
+    inputs:
+      force_deploy:
+        description: "Run a one-off production deploy"
+        required: false
+        default: false
+        type: boolean
 
 permissions:
   contents: write
@@ -12,7 +19,56 @@ permissions:
 jobs:
   release-please:
     runs-on: ubuntu-latest
+    outputs:
+      release_created: ${{ steps.release.outputs.release_created }}
+      tag_name: ${{ steps.release.outputs.tag_name }}
     steps:
-      - uses: googleapis/release-please-action@v4
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - id: release
+        uses: googleapis/release-please-action@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+
+  deploy:
+    name: Build and deploy production
+    needs: release-please
+    if: ${{ needs.release-please.outputs.release_created == 'true' || github.event.inputs.force_deploy == 'true' }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      deployments: write
+    concurrency:
+      group: cloudflare-pages-production
+      cancel-in-progress: false
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Build
+        run: bun run build
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v4
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy dist --project-name=spacescale --branch=main
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
