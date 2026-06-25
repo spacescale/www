@@ -1,0 +1,63 @@
+<section class="blog-hero" aria-label="Blog">
+    <div class="blog-hero__inner">
+        <p class="blog-hero__eyebrow">SPACESCALE BLOG</p>
+    </div>
+</section>
+
+<style>
+    .blog-hero {
+        position: relative;
+        display: flex;
+        width: 100%;
+        align-items: flex-start;
+        padding: 48px var(--site-padding-x) 20px;
+        background: var(--color-bg-primary);
+    }
+
+    .blog-hero::after {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        height: 1px;
+        background-image: repeating-linear-gradient(
+            to right,
+            #262b33 0,
+            #262b33 6px,
+            transparent 6px,
+            transparent 12px
+        );
+        content: "";
+    }
+
+    .blog-hero__inner {
+        position: relative;
+        display: flex;
+        width: 100%;
+        flex-direction: column;
+        overflow: clip;
+    }
+
+    .blog-hero__eyebrow {
+        margin: 0;
+        color: #8c94a1;
+        font-family: var(--font-body);
+        font-size: 13px;
+        font-weight: 500;
+        line-height: 16px;
+        letter-spacing: 1.04px;
+        white-space: nowrap;
+    }
+
+    @media (max-width: 640px) {
+        .blog-hero {
+            padding-top: 36px;
+        }
+
+        .blog-hero__eyebrow {
+            font-size: 12px;
+            line-height: 15px;
+            letter-spacing: 0.96px;
+        }
+    }
+</style>
