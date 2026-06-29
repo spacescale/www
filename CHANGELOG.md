@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/spacescale/www/compare/v1.1.0...v1.2.0) (2026-06-29)
+
+
+### Features
+
+* **blog:** per-VM guest networking without a bridge ([#111](https://github.com/spacescale/www/issues/111)) ([7502c54](https://github.com/spacescale/www/commit/7502c547f841a372dcecfd538d74442fa844f378))
+
 ## [1.1.0](https://github.com/spacescale/www/compare/v1.0.9...v1.1.0) (2026-06-25)
 
 
