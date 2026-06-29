@@ -1,0 +1,179 @@
+---
+title: "Per-VM Guest Networking Without a Bridge"
+description: "How we designed isolated point-to-point Layer 2 networking for every Firecracker microVM using TAP devices, dynamic /30 subnet allocation, and a mutex-protected lease ring."
+author: "tobi-ogundiyan"
+date: "2026-06-29"
+category: "ENGINEERING"
+---
+
+Building the [Layer 2](https://en.wikipedia.org/wiki/Data_link_layer) local host [TAP](https://en.wikipedia.org/wiki/TUN/TAP) networking was not as easy as I thought. [Firecracker](https://firecracker-microvm.github.io) is dumb by design. It does not manage guest networking or IP allocation. It only provides a TAP device and the entire responsibility of local host networking falls on the host. This is a blessing because it gives us the flexibility to manage the network topology from the host daemon without fighting the [VMM](https://en.wikipedia.org/wiki/Hypervisor). In the current setup, the guest IP settings are passed to the guest daemon inside the VM as arguments via custom kernel command line flags:
+
+```
+guestd.ipv4=<vm-ipaddress>
+guestd.gateway=<default-gateway>
+```
+
+### The Hardcoded Starting Point
+
+To get the boot path working end to end, I hardcoded a single private IP address of `172.16.0.2/30` as the VM address and `172.16.0.1/30` as the gateway. For every VM we want to form a point-to-point link where the guest and its [default gateway](https://en.wikipedia.org/wiki/Default_gateway) are the only nodes on their own network. According to [CIDR](https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing) rules, a `/30` mask gives exactly 4 addresses with only two usable:
+
+```
+172.16.0.0  --  network address    [unusable]
+172.16.0.1  --  default gateway    (host)
+172.16.0.2  --  guest VM address
+172.16.0.3  --  broadcast address  [unusable]
+```
+
+The first VM worked. I was able to ping it and it responded. So how do we scale beyond one guest?
+
+### Scaling Beyond One Guest
+
+The initial design was just for one guest. If two TAPs share the same IP, the host acting as the router will not know where to send packets addressed to that IP and will eventually drop them. This is commonly called an IP conflict, which is why we cannot reuse `172.16.0.2` for another VM.
+
+The solution was to carve out a larger private address pool. Per [RFC 1918](https://datatracker.ietf.org/doc/html/rfc1918) and CIDR rules, we can reserve `172.16.0.0/16` as our per-host VM address pool and slice it into smaller point-to-point blocks. The host portion is 16 bits. Doing the maths:
+
+```
+172.16.0.0/16
+├── 65,536 total addresses  [2^16]
+├── ÷ 4 addresses per /30   [network, gateway, guest, broadcast]
+└── = 16,384 isolated VM networks per host
+```
+
+With this larger address pool, we can hand out 16,384 unique point-to-point links per host, far beyond what a single bare-metal host will ever schedule.
+
+VMs will get consecutive `/30` blocks using this addressing scheme:
+
+```
+network           host              guest             broadcast
+──────────────────────────────────────────────────────────────────
+172.16.0.0/30     172.16.0.1        172.16.0.2        172.16.0.3
+172.16.0.4/30     172.16.0.5        172.16.0.6        172.16.0.7
+172.16.0.8/30     172.16.0.9        172.16.0.10       172.16.0.11
+...
+172.16.0.252/30   172.16.0.253      172.16.0.254      172.16.0.255
+172.16.1.0/30     172.16.1.1        172.16.1.2        172.16.1.3
+```
+
+Now that the maths is done, the next challenge was teaching the host daemon how to hand out these `/30` blocks to VMs and reclaim them when VMs die.
+
+### Leasing and Clawbacks
+
+I had previously built a context ID allocator for host-to-guest communication over [vsock](https://man7.org/linux/man-pages/man7/vsock.7.html) that uses a mutex-protected ring to lease out IDs and claw them back when a lease expires. I decided to reuse that exact pattern to build a subnet allocator.
+
+The idea is simple. We maintain a pool of 16,384 subnet indices (0 to 16,383). When a VM boots, it acquires the next free index. When a VM dies, it releases its index back to the pool. The index maps deterministically to a concrete `/30`. Index 0 is always `172.16.0.0/30`, index 1 is always `172.16.0.4/30`, and so on. No state needs to be persisted. The mapping is pure arithmetic.
+
+First we define constants for the network base addresses and the valid index range:
+
+```go
+const (
+    subnetBaseA      byte   = 172
+    subnetBaseB      byte   = 16
+    maxSubnetIndex   uint16 = 16383 // (65536 / 4) - 1
+    firstSubnetIndex uint16 = 0
+)
+```
+
+The allocator struct tracks active leases with a mutex-protected map and a cursor that remembers where to scan next:
+
+```go
+type subnetAllocator struct {
+    mu   sync.Mutex
+    next uint16
+    used map[uint16]struct{}
+}
+```
+
+To lease the next available `/30`, the `Acquire` method scans forward from the current cursor. If the current index is free, it claims it, advances the cursor, and returns the computed subnet. If the index is already in use, it advances and tries the next one. If it comes full circle back to where it started, the pool is exhausted:
+
+```go
+func (a *subnetAllocator) Acquire() (Subnet, error) {
+    a.mu.Lock()
+    defer a.mu.Unlock()
+    start := a.next
+    for {
+        if _, exists := a.used[index]; !exists {
+            a.used[index] = struct{}{}
+            a.advanceLocked()
+            return subnetForIndex(index), nil
+        }
+
+        a.advanceLocked()
+        if a.next == start {
+            return Subnet{}, errNoSubnetAvailable
+        }
+    }
+}
+```
+
+The `subnetForIndex` function is where the address arithmetic lives. Each `/30` block consumes 4 addresses, so we multiply the index by 4 to get the starting offset within the `/16` pool. We then split that offset across the third and fourth octets using bit shifting. Shifting right by 8 gives us the third octet, how many full 256-address blocks we have crossed. Masking with `0xFF` gives us the remainder for the fourth octet. The host takes `offset + 1` and the guest takes `offset + 2`:
+
+```go
+func subnetForIndex(index uint16) Subnet {
+    offset := uint32(index) * 4
+    hostIP  := net.IPv4(subnetBaseA, subnetBaseB, byte(offset>>8), byte(offset&0xFF)+1)
+    guestIP := net.IPv4(subnetBaseA, subnetBaseB, byte(offset>>8), byte(offset&0xFF)+2)
+
+    return Subnet{
+        Index:     index,
+        HostCIDR:  hostIP.String() + "/30",
+        GuestCIDR: guestIP.String() + "/30",
+        HostIP:    hostIP.To4(),
+        GuestIP:   guestIP.To4(),
+    }
+}
+```
+
+On VM death, the corresponding `Release` is called to free the index back to the pool. The cursor rewinds to the freed index so it becomes the next candidate. Recently released subnets get reused immediately rather than waiting for the ring to wrap around:
+
+```go
+func (a *subnetAllocator) Release(index uint16) {
+    a.mu.Lock()
+    defer a.mu.Unlock()
+    delete(a.used, index)
+    if index < a.next {
+        a.next = index
+    }
+}
+```
+
+### TAPs on Real Hardware
+
+I deleted the existing stale TAPs and launched new VMs to verify the subnet allocator was working as expected and it did. The host daemon uses the naming convention `tap<parts-of-microvm-id>` to create TAP interfaces:
+
+```go
+func tapNameForMicroVM(microvmID string) string {
+    id := strings.ToLower(strings.ReplaceAll(microvmID, "-", ""))
+    if len(id) > 11 {
+        id = id[:11]
+    }
+    return "tap" + id
+}
+```
+
+Which is why the TAP interface name looks like this:
+
+```
+14: tap193b5f8fddd: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP
+    link/ether 42:3b:ad:5a:50:a7 brd ff:ff:ff:ff:ff:ff
+    inet 172.16.0.1/30 brd 172.16.0.3 scope global tap193b5f8fddd
+```
+
+From the host side, `ip addr` correctly shows the gateway address (`172.16.0.1`) and the broadcast address (`172.16.0.3`), the last address of the `/30`. It does not show the guest VM address because that resides on the virtual `eth0` interface inside the VM. But if we send an [ICMP](https://datatracker.ietf.org/doc/html/rfc792) packet to the guest from the host, it responds:
+
+```
+ubuntu@spacescale:~$ ping 172.16.0.2
+PING 172.16.0.2 (172.16.0.2) 56(84) bytes of data.
+64 bytes from 172.16.0.2: icmp_seq=1 ttl=64 time=0.233 ms
+64 bytes from 172.16.0.2: icmp_seq=2 ttl=64 time=0.273 ms
+^C
+--- 172.16.0.2 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1005ms
+```
+
+### Surviving Restarts
+
+With the current leasing approach, the allocator is purely in-memory. For [Ignite](https://spacescale.io), our stateless serverless runtime which is our current focus, this is intentional. If the host daemon restarts while VMs are still alive, the allocator starts empty. The workloads are re-auctioned and all orphaned VMs are killed on startup with their TAP interfaces removed. This design is deliberately optimised for Ignite. When persistent workloads enter the picture, this will need to change. The allocator would need to reconstruct active leases from host state instead of starting fresh.
+
+### What is Next
+
+A lot of things are still ahead for SpaceScale networking. A `/32` point-to-point configuration would eliminate the two unusable addresses per `/30` block and quadruple the theoretical host capacity, but at current VM densities the `/30` headroom is more than sufficient. Guest-to-guest networking on the same host, multi-host routing, and IPv6 addressing are future concerns we will tackle as we need them. A lot is still to come.
