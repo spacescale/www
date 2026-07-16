@@ -9,7 +9,7 @@
         "@astrojs/markdown-remark": "7.2.0",
         "@astrojs/mdx": "7.0.0",
         "@astrojs/sitemap": "3.7.3",
-        "@astrojs/solid-js": "7.0.0",
+        "@astrojs/solid-js": "7.0.1",
         "astro": "7.0.6",
         "solid-js": "1.9.13",
         "typescript": "6.0.3",
@@ -60,7 +60,7 @@
 
     "@astrojs/sitemap": ["@astrojs/sitemap@3.7.3", "", { "dependencies": { "sitemap": "^9.0.0", "stream-replace-string": "^2.0.0", "zod": "^4.3.6" } }, "sha512-f8euLVsyeAmAkSm/1M2Kb8sL8byQmfgbvBNaHFItCheTj/IpiJYSEWVcqDHZ/yEHxiS7+w87mQkzwZaPHmk5GA=="],
 
-    "@astrojs/solid-js": ["@astrojs/solid-js@7.0.0", "", { "dependencies": { "vite": "^8.0.13", "vite-plugin-solid": "^2.11.12" }, "peerDependencies": { "solid-devtools": "^0.34.5", "solid-js": "^1.9.13" }, "optionalPeers": ["solid-devtools"] }, "sha512-ydm/goGuP6igN2cquEdDSVFGnr7RQSjIiV4BONsHAskLftcTi2rgJM/PmtuOtv1QkBPt8NcVu+cNvFzXm0Tm2Q=="],
+    "@astrojs/solid-js": ["@astrojs/solid-js@7.0.1", "", { "dependencies": { "vite": "^8.0.13", "vite-plugin-solid": "^2.11.12" }, "peerDependencies": { "solid-devtools": "^0.34.5", "solid-js": "^1.9.13" }, "optionalPeers": ["solid-devtools"] }, "sha512-Q1pBsferyLkw4yoJtgpbnu1/HSIOCx3QCoH3FAqNLZ/JnJpzQVPaT6aL/6yB67irxYThM5UA81hZCP5eVDAyyA=="],
 
     "@astrojs/telemetry": ["@astrojs/telemetry@3.3.2", "", { "dependencies": { "ci-info": "^4.4.0", "dset": "^3.1.4", "is-docker": "^4.0.0", "is-wsl": "^3.1.1", "which-pm-runs": "^1.1.0" } }, "sha512-j8DNruA8ors99Al39RYZPJK4DC1bKkoNm93mAMuBhY9TCNC4R8n1q7ovFnJ5qhGh5Lsh7pa1gpQVpYpsJPeTHQ=="],
 
