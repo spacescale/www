@@ -6,25 +6,25 @@ date: "2026-06-29"
 category: "ENGINEERING"
 ---
 
-Building the [Layer 2](https://en.wikipedia.org/wiki/Data_link_layer) local host [TAP](https://en.wikipedia.org/wiki/TUN/TAP) networking was not as easy as I thought. [Firecracker](https://firecracker-microvm.github.io) is dumb by design. It does not manage guest networking or IP allocation. It only provides a TAP device and the entire responsibility of local host networking falls on the host. This is a blessing because it gives us the flexibility to manage the network topology from the host daemon without fighting the [VMM](https://en.wikipedia.org/wiki/Hypervisor). In the current setup, the guest IP settings are passed to the guest daemon inside the VM as arguments via custom kernel command line flags:
+Building the [Layer 2](https://en.wikipedia.org/wiki/Data_link_layer) local host [TAP](https://en.wikipedia.org/wiki/TUN/TAP) networking was not as easy as I thought. [Firecracker](https://firecracker-microvm.github.io) is dumb by design. It does not manage guest networking or IP allocation. It only provides a TAP device, and the entire responsibility of local host networking falls on the host. This is a blessing because it gives us the flexibility to manage the network topology from the host daemon without fighting the [VMM](https://en.wikipedia.org/wiki/Hypervisor). In the current setup, the guest IP settings are passed to the guest daemon inside the VM as arguments via custom kernel command line flags:
 
-```
+```sh
 guestd.ipv4=<vm-ipaddress>
 guestd.gateway=<default-gateway>
 ```
 
 ### The Hardcoded Starting Point
 
-To get the boot path working end to end, I hardcoded a single private IP address of `172.16.0.2/30` as the VM address and `172.16.0.1/30` as the gateway. For every VM we want to form a point-to-point link where the guest and its [default gateway](https://en.wikipedia.org/wiki/Default_gateway) are the only nodes on their own network. According to [CIDR](https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing) rules, a `/30` mask gives exactly 4 addresses with only two usable:
+To get the boot path working end to end, I hardcoded a single private IP address of `172.16.0.2/30` as the VM address and `172.16.0.1/30` as the gateway. For every VM, we want to form a point-to-point link where the guest and its [default gateway](https://en.wikipedia.org/wiki/Default_gateway) are the only nodes on their own network. According to [CIDR](https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing) rules, a `/30` mask gives exactly 4 addresses, with only two usable:
 
-```
+```sh
 172.16.0.0  --  network address    [unusable]
 172.16.0.1  --  default gateway    (host)
 172.16.0.2  --  guest VM address
 172.16.0.3  --  broadcast address  [unusable]
 ```
 
-The first VM worked. I was able to ping it and it responded. So how do we scale beyond one guest?
+The first VM worked. I was able to ping it, and it responded. So how do we scale beyond one guest?
 
 ### Scaling Beyond One Guest
 
@@ -32,7 +32,7 @@ The initial design was just for one guest. If two TAPs share the same IP, the ho
 
 The solution was to carve out a larger private address pool. Per [RFC 1918](https://datatracker.ietf.org/doc/html/rfc1918) and CIDR rules, we can reserve `172.16.0.0/16` as our per-host VM address pool and slice it into smaller point-to-point blocks. The host portion is 16 bits. Doing the maths:
 
-```
+```sh
 172.16.0.0/16
 ├── 65,536 total addresses  [2^16]
 ├── ÷ 4 addresses per /30   [network, gateway, guest, broadcast]
@@ -43,8 +43,8 @@ With this larger address pool, we can hand out 16,384 unique point-to-point link
 
 VMs will get consecutive `/30` blocks using this addressing scheme:
 
-```
-network           host              guest             broadcast
+```sh
+network           host/gateway      guest             broadcast
 ──────────────────────────────────────────────────────────────────
 172.16.0.0/30     172.16.0.1        172.16.0.2        172.16.0.3
 172.16.0.4/30     172.16.0.5        172.16.0.6        172.16.0.7
@@ -138,7 +138,7 @@ func (a *subnetAllocator) Release(index uint16) {
 
 ### TAPs on Real Hardware
 
-I deleted the existing stale TAPs and launched new VMs to verify the subnet allocator was working as expected and it did. The host daemon uses the naming convention `tap<parts-of-microvm-id>` to create TAP interfaces:
+I deleted the existing stale TAPs and launched new VMs to verify the subnet allocator was working as expected, and it did. The host daemon uses the naming convention `tap<parts-of-microvm-id>` to create TAP interfaces:
 
 ```go
 func tapNameForMicroVM(microvmID string) string {
@@ -152,7 +152,7 @@ func tapNameForMicroVM(microvmID string) string {
 
 Which is why the TAP interface name looks like this:
 
-```
+```sh
 14: tap193b5f8fddd: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP
     link/ether 42:3b:ad:5a:50:a7 brd ff:ff:ff:ff:ff:ff
     inet 172.16.0.1/30 brd 172.16.0.3 scope global tap193b5f8fddd
@@ -160,7 +160,7 @@ Which is why the TAP interface name looks like this:
 
 From the host side, `ip addr` correctly shows the gateway address (`172.16.0.1`) and the broadcast address (`172.16.0.3`), the last address of the `/30`. It does not show the guest VM address because that resides on the virtual `eth0` interface inside the VM. But if we send an [ICMP](https://datatracker.ietf.org/doc/html/rfc792) packet to the guest from the host, it responds:
 
-```
+```sh
 ubuntu@spacescale:~$ ping 172.16.0.2
 PING 172.16.0.2 (172.16.0.2) 56(84) bytes of data.
 64 bytes from 172.16.0.2: icmp_seq=1 ttl=64 time=0.233 ms
@@ -172,7 +172,7 @@ PING 172.16.0.2 (172.16.0.2) 56(84) bytes of data.
 
 ### Surviving Restarts
 
-With the current leasing approach, the allocator is purely in-memory. For [Ignite](https://spacescale.io), our stateless serverless runtime which is our current focus, this is intentional. If the host daemon restarts while VMs are still alive, the allocator starts empty. The workloads are re-auctioned and all orphaned VMs are killed on startup with their TAP interfaces removed. This design is deliberately optimised for Ignite. When persistent workloads enter the picture, this will need to change. The allocator would need to reconstruct active leases from host state instead of starting fresh.
+With the current leasing approach, the allocator is purely in-memory. For [Ignite](https://spacescale.io), our stateless serverless runtime, which is our current focus, this is intentional. If the host daemon restarts while VMs are still alive, the allocator starts empty. The workloads are re-auctioned, and all orphaned VMs are killed on startup with their TAP interfaces removed. This design is deliberately optimised for Ignite. When persistent workloads enter the picture, this will need to change. The allocator would need to reconstruct active leases from host state instead of starting fresh.
 
 ### What is Next
 
