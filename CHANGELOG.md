@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.1](https://github.com/spacescale/www/compare/v1.2.0...v1.2.1) (2026-08-13)
+
+
+### Bug Fixes
+
+* trigger release for grammar fixes and dependency updates ([#138](https://github.com/spacescale/www/issues/138)) ([d97e031](https://github.com/spacescale/www/commit/d97e0316c2c70e3128af1f304c7f404b3a50a9ec))
+
 ## [1.2.0](https://github.com/spacescale/www/compare/v1.1.0...v1.2.0) (2026-06-29)
 
 
