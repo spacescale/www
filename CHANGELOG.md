@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.2](https://github.com/spacescale/www/compare/v1.2.1...v1.2.2) (2026-08-20)
+
+
+### Bug Fixes
+
+* update tagline to cloud infrastructure for humans and AI agents ([f15e06d](https://github.com/spacescale/www/commit/f15e06d4f60d69ecab0590cb3768963f3abce54e))
+* update tagline to cloud infrastructure for humans and AI agents ([8b2f895](https://github.com/spacescale/www/commit/8b2f895f6491c597a4f20bb44b4d51563bd962f8))
+
 ## [1.2.1](https://github.com/spacescale/www/compare/v1.2.0...v1.2.1) (2026-08-13)
 
 
