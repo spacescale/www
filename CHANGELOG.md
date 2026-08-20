@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.3](https://github.com/spacescale/www/compare/v1.2.2...v1.2.3) (2026-08-20)
+
+
+### Bug Fixes
+
+* tune tagline layout for two-line wrap across screens ([2ced31c](https://github.com/spacescale/www/commit/2ced31ca58b58bda9f7a1994ca515b0e173cb42d))
+* tune tagline layout for two-line wrap across screens ([dc84845](https://github.com/spacescale/www/commit/dc84845c3a4c75c19013878babb0531739544438))
+
 ## [1.2.2](https://github.com/spacescale/www/compare/v1.2.1...v1.2.2) (2026-08-20)
 
 
