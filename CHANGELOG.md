@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.1](https://github.com/spacescale/www/compare/v1.3.0...v1.3.1) (2026-08-21)
+
+
+### Bug Fixes
+
+* remove principles page, simplify blog article reader, fix meta title ([20428f3](https://github.com/spacescale/www/commit/20428f3ac26398438c11a52ada2e12569fbb12e5))
+
 ## [1.3.0](https://github.com/spacescale/www/compare/v1.2.4...v1.3.0) (2026-08-21)
 
 
