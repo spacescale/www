@@ -229,7 +229,7 @@ button, input, textarea, select {
     height: 39px;
     padding: 0 12px;
 
-    color: #8c94a1;
+    color: #f5f7fa;
     background: transparent;
     border-radius: 0;
 
@@ -376,7 +376,7 @@ button, input, textarea, select {
     align-items: center;
     gap: 32px;
 
-    padding: 56px 80px 40px;
+    padding: 64px 24px;
 
     background: var(--color-bg-primary);
     color: var(--color-text-primary);
@@ -414,58 +414,47 @@ button, input, textarea, select {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 16px;
+    gap: 32px;
+    padding-top: 64px;
+    margin-right: 32px;
 
-    width: 470px;
-}
-
-.footer-brand h2 {
-    margin: 0;
-
-    color: #ffffff;
-    font-family: var(--font-display);
-    font-size: 30px;
-    font-weight: 400;
-    line-height: 110%;
-    letter-spacing: 0;
-}
-
-.footer-brand h2 .title-line {
-    display: block;
+    width: 100%;
+    max-width: 320px;
 }
 
 /*
   Right side footer link columns.
 */
 .footer-links {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     align-items: flex-start;
-    gap: 64px;
+    gap: 108px;
+    padding-top: 24px;
 }
 
 .footer-links section {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 12px;
+    gap: 24px;
 }
 
 .footer-links h3 {
     margin: 0;
 
-    color: #8c94a1;
-    font-family: var(--font-mono);
+    color: #fff;
+    font-family: var(--font-body);
     font-size: 14px;
     font-weight: 400;
     line-height: normal;
     letter-spacing: 0;
-    text-transform: uppercase;
 }
 
 
 .footer-links ul {
     display: grid;
-    gap: 12px;
+    gap: 8px;
 
     margin: 0;
     padding: 0;
@@ -476,7 +465,7 @@ button, input, textarea, select {
 .footer-links a {
     color: rgba(255, 255, 255, 0.70);
     font-family: var(--font-body);
-    font-size: 13px;
+    font-size: 14px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
@@ -487,37 +476,11 @@ button, input, textarea, select {
     color: #f5f7fa;
 }
 
-.social-links {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-}
-
-.social-links a {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    width: 16px;
-    height: 16px;
-
-    color: #8c94a1;
-    font-family: var(--font-body);
-    font-size: 11px;
-    font-weight: 600;
-    line-height: 1;
-}
-
 .site-social-icon {
     display: block;
     background: currentColor;
     mask: var(--site-social-icon) center / contain no-repeat;
     -webkit-mask: var(--site-social-icon) center / contain no-repeat;
-}
-
-.social-links .site-social-icon {
-    width: 16px;
-    height: 16px;
 }
 
 @media (max-width: 1180px) {
@@ -539,7 +502,7 @@ button, input, textarea, select {
     }
 
     .footer-links {
-        gap: 40px;
+        gap: 108px;
     }
 }
 
@@ -569,21 +532,16 @@ button, input, textarea, select {
     .site-footer {
         align-items: stretch;
         gap: 32px;
-        padding: 48px var(--site-padding-x) 32px;
     }
 
     .footer-inner {
         gap: 40px;
     }
 
-    .footer-brand h2 {
-        font-size: 27px;
-    }
-
     .footer-links {
         display: grid;
         grid-template-columns: repeat(3, max-content);
-        gap: 32px 40px;
+        gap: 108px;
     }
 
     .footer-divider {
@@ -814,7 +772,7 @@ button, input, textarea, select {
     }
 
     .site-footer {
-        padding-top: 40px;
+        padding: 48px 24px;
     }
 
     .footer-inner {
@@ -823,15 +781,11 @@ button, input, textarea, select {
 
     .footer-brand {
         width: 100%;
-        max-width: 420px;
-    }
-
-    .footer-brand h2 {
-        font-size: 23px;
+        max-width: 320px;
     }
 
     .footer-links {
-        gap: 28px 24px;
+        gap: 48px 56px;
     }
 
 }
@@ -839,8 +793,8 @@ button, input, textarea, select {
 @media (max-width: 420px) {
     .footer-links {
         grid-template-columns: repeat(2, max-content);
-        column-gap: 44px;
-        row-gap: 40px;
+        column-gap: 64px;
+        row-gap: 56px;
     }
 
     .footer-links section:nth-child(3) {
