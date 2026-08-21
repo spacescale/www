@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.4](https://github.com/spacescale/www/compare/v1.2.3...v1.2.4) (2026-08-21)
+
+
+### Bug Fixes
+
+* prevent tagline word gluing and two-line wrap on mobile ([ae83d50](https://github.com/spacescale/www/commit/ae83d508420f8984ec5a235a219ef7d7c7237904))
+* prevent tagline word gluing and two-line wrap on mobile ([aa447b4](https://github.com/spacescale/www/commit/aa447b4ae12282153c72ec2374c1b5f400e847b6))
+
 ## [1.2.3](https://github.com/spacescale/www/compare/v1.2.2...v1.2.3) (2026-08-20)
 
 
