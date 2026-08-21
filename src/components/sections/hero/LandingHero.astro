@@ -12,8 +12,7 @@ import Badge from "../../ui/Badge.astro";
         </Badge>
 
         <h1 id="landing-hero-title" class="landing-hero__title">
-            Cloud infrastructure<br />
-            for humans and AI agents.
+            <span class="title-line">Cloud infrastructure</span><span class="title-line">for humans and AI agents.</span>
         </h1>
 
         <p class="landing-hero__support">
@@ -82,7 +81,10 @@ import Badge from "../../ui/Badge.astro";
         font-weight: 400;
         line-height: var(--landing-hero-title-line-height);
         letter-spacing: 0;
-        text-wrap: balance;
+    }
+
+    .title-line {
+        display: block;
     }
 
     .landing-hero__support {
@@ -123,17 +125,13 @@ import Badge from "../../ui/Badge.astro";
             --landing-hero-padding-top: 84px;
             --landing-hero-padding-bottom: 88px;
             --landing-hero-title-width: 100%;
-            --landing-hero-title-size: 36px;
-            --landing-hero-title-line-height: 42px;
+            --landing-hero-title-size: clamp(21px, 6.5vw, 27px);
+            --landing-hero-title-line-height: 32px;
             --landing-hero-terminal-top: 460px;
         }
 
         .landing-hero__title {
             margin-top: 28px;
-        }
-
-        .landing-hero__title br {
-            display: none;
         }
     }
 </style>
