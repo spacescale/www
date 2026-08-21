@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.3.0](https://github.com/spacescale/www/compare/v1.2.4...v1.3.0) (2026-08-21)
+
+
+### Features
+
+* redesign footer layout and refine hero and cta styling ([febde90](https://github.com/spacescale/www/commit/febde9013127a870ab3f8943d1e7130b0d5eef74))
+
+
+### Bug Fixes
+
+* remove artificial telemetry and logs section from home page ([a0d256e](https://github.com/spacescale/www/commit/a0d256ebb223cf366c70c3ce4f3457c09d63e61a))
+
 ## [1.2.4](https://github.com/spacescale/www/compare/v1.2.3...v1.2.4) (2026-08-21)
 
 
